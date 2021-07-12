@@ -18,14 +18,14 @@ create table if not exists skill
 		constraint skill_user_id_fk
 			references user
 				on update cascade on delete cascade,
-	"id " INTEGER not null
+	id INTEGER not null
 		constraint skill_pk
 			primary key autoincrement,
 	text nvarchar not null
 );
 
 create unique index "skill_id _uindex"
-	on skill ("id ");
+	on skill (id);
 
 create table if not exists Experience
 (
@@ -42,7 +42,7 @@ create table if not exists Experience
 create unique index Experience_id_uindex
 	on Experience (id);
 
-create table Connection
+create table if not exists Connection
 (
 	id INTEGER not null
 		constraint Connection_pk
@@ -99,4 +99,88 @@ create table if not exists Message
 
 create unique index Message_id_uindex
 	on Message (id);
+
+create table if not exists Post
+(
+	user_id INTEGER not null
+		constraint Post_user_id_fk
+			references user
+				on update cascade on delete cascade,
+	id INTEGER not null
+		constraint Post_pk
+			primary key autoincrement,
+	picture blob,
+	text text,
+	time nvarchar(50) not null,
+	share INTEGER
+		constraint Post_Post_id_fk
+			references Post
+				on update cascade
+);
+
+create unique index Post_id_uindex
+	on Post (id);
+
+create table if not exists Comment
+(
+	id INTEGER not null
+		constraint Comment_pk
+			primary key autoincrement,
+	time varchar(50) not null,
+	user_id INTEGER not null
+		constraint Comment_user_id_fk
+			references user
+				on update cascade on delete cascade,
+	text text not null,
+	comment_reply_id INTEGER
+		constraint Comment_Comment_id_fk
+			references Comment
+				on update cascade on delete cascade,
+	post_id INTEGER
+		constraint Comment_Post_id_fk
+			references Post
+				on update cascade on delete cascade
+);
+
+create unique index Comment_id_uindex
+	on Comment (id);
+
+create table if not exists Like
+(
+	id INTEGER not null
+		constraint Like_pk
+			primary key autoincrement,
+	comment_id INTEGER
+		constraint Like_Comment_id_fk
+			references Comment
+				on update cascade on delete cascade,
+	post_id INTEGER
+		constraint Like_Post_id_fk
+			references Post
+				on update cascade on delete cascade,
+	time varchar(50) not null
+);
+
+create unique index Like_id_uindex
+	on Like (id);
+
+create table if not exists Endorse
+(
+	id INTEGER not null
+		constraint Endorse_pk
+			primary key autoincrement,
+	skill_id INTEGER not null
+		constraint "Endorse_skill_id_fk"
+			references skill
+				on update cascade on delete cascade,
+	user_id INTEGER not null
+		constraint Endorse_user_id_fk
+			references user
+				on update cascade on delete cascade
+);
+
+create unique index Endorse_id_uindex
+	on Endorse (id);
+
+
 
