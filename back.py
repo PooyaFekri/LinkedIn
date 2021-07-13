@@ -1,7 +1,7 @@
 import datetime
 import sqlite3
 from sqlite3 import Error
-from tables.user import User
+from tables import User
 
 
 def create_connection(db_file, *args, **kwargs):

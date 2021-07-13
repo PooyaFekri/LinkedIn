@@ -7,4 +7,4 @@ from tables.like import Like
 from tables.message import Message
 from tables.post import Post
 from tables.room import Room
-from skill import Skill
+from tables.skill import Skill
