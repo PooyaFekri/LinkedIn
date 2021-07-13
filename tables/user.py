@@ -21,6 +21,34 @@ class User(Table):
     def login(cls, *args, **kwargs):
         res = super().find(kwargs)
         if len(res):
+            '''
+            {status : (false or true), user: user object}
+            '''
             return {'status': True, 'user': res[0]}
         else:
             return {'status': False}
+
+    @classmethod
+    def signup(cls, *args, **kwargs):
+        try:
+            super().insert(kwargs)
+            return {'status': True}
+        except Exception as e:
+            '''
+                { status : (false or true), error : cause of error}
+            '''
+            return {'status': False, 'error': e}
+
+    def delete(self, *args, **kwargs):
+        try:
+            super().delete_via_pk(self.id)
+            return {'status': True}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    def update(self, *args, **kwargs):
+        try:
+            super().update_via_pk(kwargs, self.id)
+            return {'status': True}
+        except Exception as e:
+            return {'status': False, 'error': e}

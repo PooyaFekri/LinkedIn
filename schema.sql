@@ -1,7 +1,7 @@
 create table if not exists user
 (
-	"first name" nvarchar not null,
-	"last name" nvarchar not null,
+	first_name nvarchar not null,
+	last_name nvarchar not null,
 	intro nvarchar,
 	birthday nchar(50) not null,
 	id INTEGER not null
