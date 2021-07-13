@@ -9,7 +9,7 @@ create table if not exists user
 			primary key autoincrement
 );
 
-create unique index user_id_uindex
+create unique index if not exists user_id_uindex
 	on user (id);
 
 alter table user
@@ -30,7 +30,7 @@ alter table user
 alter table user
 	add "tel num" nvarchar(20);
 
-create unique index user_username_uindex
+create unique index if not exists user_username_uindex
 	on user (username);
 
 
@@ -46,7 +46,7 @@ create table if not exists skill
 	text nvarchar not null
 );
 
-create unique index "skill_id _uindex"
+create unique index if not exists "skill_id _uindex"
 	on skill (id);
 
 create table if not exists Experience
@@ -61,7 +61,7 @@ create table if not exists Experience
 	text nvarchar not null
 );
 
-create unique index Experience_id_uindex
+create unique index if not exists Experience_id_uindex
 	on Experience (id);
 
 create table if not exists Connection
@@ -80,7 +80,7 @@ create table if not exists Connection
 	connected INTEGER not null
 );
 
-create unique index Connection_id_uindex
+create unique index if not exists Connection_id_uindex
 	on Connection (id);
 
 
@@ -94,7 +94,7 @@ create table if not exists Room
 	archive boolean not null
 );
 
-create unique index Room_id_uindex
+create unique index if not exists Room_id_uindex
 	on Room (id);
 
 
@@ -119,7 +119,7 @@ create table if not exists Message
 	time varchar(50) not null
 );
 
-create unique index Message_id_uindex
+create unique index if not exists Message_id_uindex
 	on Message (id);
 
 create table if not exists Post
@@ -140,7 +140,7 @@ create table if not exists Post
 				on update cascade
 );
 
-create unique index Post_id_uindex
+create unique index if not exists Post_id_uindex
 	on Post (id);
 
 create table if not exists Comment
@@ -164,7 +164,7 @@ create table if not exists Comment
 				on update cascade on delete cascade
 );
 
-create unique index Comment_id_uindex
+create unique index if not exists Comment_id_uindex
 	on Comment (id);
 
 create table if not exists Like
@@ -183,7 +183,7 @@ create table if not exists Like
 	time varchar(50) not null
 );
 
-create unique index Like_id_uindex
+create unique index if not exists Like_id_uindex
 	on Like (id);
 
 create table if not exists Endorse
@@ -201,7 +201,7 @@ create table if not exists Endorse
 				on update cascade on delete cascade
 );
 
-create unique index Endorse_id_uindex
+create unique index if not exists Endorse_id_uindex
 	on Endorse (id);
 
 
