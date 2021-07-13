@@ -12,6 +12,28 @@ create table if not exists user
 create unique index user_id_uindex
 	on user (id);
 
+alter table user
+	add username nvarchar(100) not null;
+
+alter table user
+	add password nvarchar(100) not null;
+
+alter table user
+	add nationality nvarchar(80);
+
+alter table user
+	add email nvarchar(90) not null;
+
+alter table user
+	add address nvarchar(200);
+
+alter table user
+	add "tel num" nvarchar(20);
+
+create unique index user_username_uindex
+	on user (username);
+
+
 create table if not exists skill
 (
 	user_id INTEGER not null
