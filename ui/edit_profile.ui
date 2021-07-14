@@ -13,14 +13,11 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <property name="layoutDirection">
-   <enum>Qt::LeftToRight</enum>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="firstName">
      <property name="text">
-      <string>First name :</string>
+      <string>first name</string>
      </property>
     </widget>
    </item>
@@ -28,9 +25,9 @@
     <widget class="QLineEdit" name="lineEdit"/>
    </item>
    <item>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="lastName">
      <property name="text">
-      <string>Last name :</string>
+      <string>last name</string>
      </property>
     </widget>
    </item>
@@ -38,9 +35,9 @@
     <widget class="QLineEdit" name="lineEdit_2"/>
    </item>
    <item>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="intro">
      <property name="text">
-      <string>Telephone number :</string>
+      <string>intro</string>
      </property>
     </widget>
    </item>
@@ -48,9 +45,9 @@
     <widget class="QLineEdit" name="lineEdit_3"/>
    </item>
    <item>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="birthday">
      <property name="text">
-      <string>Email Address:</string>
+      <string>birthday</string>
      </property>
     </widget>
    </item>
@@ -58,53 +55,66 @@
     <widget class="QLineEdit" name="lineEdit_4"/>
    </item>
    <item>
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="username">
      <property name="text">
-      <string>Natnality:</string>
+      <string>username</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QFontComboBox" name="fontComboBox"/>
+    <widget class="QLineEdit" name="lineEdit_5"/>
    </item>
    <item>
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="password">
      <property name="text">
-      <string>Birthday:</string>
+      <string>password</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QDateEdit" name="dateEdit">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="keyboardTracking">
-      <bool>true</bool>
-     </property>
-     <property name="dateTime">
-      <datetime>
-       <hour>0</hour>
-       <minute>0</minute>
-       <second>0</second>
-       <year>2000</year>
-       <month>1</month>
-       <day>1</day>
-      </datetime>
-     </property>
-    </widget>
+    <widget class="QLineEdit" name="lineEdit_6"/>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QLabel" name="email">
      <property name="text">
-      <string>Next</string>
+      <string>email</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCommandLinkButton" name="commandLinkButton">
+    <widget class="QLineEdit" name="lineEdit_7"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="address">
+     <property name="text">
+      <string>address</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="lineEdit_8"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="telNum">
+     <property name="text">
+      <string>tel num</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="lineEdit_9"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="back">
      <property name="text">
       <string>Back</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="submit">
+     <property name="text">
+      <string>Submit</string>
      </property>
     </widget>
    </item>
