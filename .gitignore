@@ -130,3 +130,4 @@ dmypy.json
 *.sqlite
 Project.pdf
 .idea/
+test.py
