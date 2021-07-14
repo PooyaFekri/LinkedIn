@@ -1,4 +1,4 @@
-from tables.table import Table
+from .table import Table
 
 
 class Endorse(Table):
