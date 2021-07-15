@@ -9,7 +9,7 @@ def create_database():
         exe_query(query)
 
 
-def exe_query(query, args=()):
+def exe_query(query, *args):
     con_obj = sqlite3.connect(DB_PATH)
     courser = con_obj.execute(query, args)
     result = courser.fetchall()
