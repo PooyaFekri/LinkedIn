@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from .edit_profile import ui as ui_edit_profile
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -61,8 +61,10 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
+        from .home import ui as ui_home
         self.retranslateUi(MainWindow)
+        self.EditProfile.clicked.connect(lambda : ui_edit_profile.setupUi(MainWindow))
+        self.Back.clicked.connect(lambda : ui_home.setupUi(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

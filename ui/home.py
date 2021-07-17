@@ -2,6 +2,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from .room import ui as ui_room
 from .network import ui as ui_network
 from .post import ui as ui_post
+from .profile_me import ui as ui_me
+from .SeeOtherPerson import ui as ui_ohter_persion
+
 # from .notifi // TODO: notif should be completed
 # from .jobs // TODO: jobs should be completed
 from .profile_me import ui as ui_profile
@@ -109,9 +112,10 @@ class Ui_MainWindow(object):
         self.homeButton.clicked.connect(lambda : ui.setupUi(MainWindow))
         self.NetworkButton.clicked.connect(lambda : ui_network.setupUi(MainWindow))
         self.NewPostButton.clicked.connect(lambda : ui_post.setupUi(MainWindow))
+        self.profile_button.clicked.connect(lambda : ui_me.setupUi(MainWindow))
         # self.notif //TODO
         # self.jobs //TODO
-        self.SeeProfile.clicked.connect(lambda : print("s1"))
+        self.SeeProfile.clicked.connect(lambda : ui_ohter_persion.setupUi(MainWindow))
         self.LikeButton.clicked.connect(lambda : print("s2"))
         self.CommentButton.clicked.connect(lambda : print("s3"))
         self.ShareButton.clicked.connect(lambda : print("s4"))
