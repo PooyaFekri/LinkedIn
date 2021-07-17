@@ -34,7 +34,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QCommandLinkButton" name="Back_button">
+   <widget class="QCommandLinkButton" name="forget_password_button">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -44,7 +44,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Back</string>
+     <string>Forget password</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -129,7 +129,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

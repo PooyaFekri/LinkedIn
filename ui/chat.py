@@ -1,17 +1,23 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Chat(object):
-    def setupUi(self, Chat):
-        Chat.setObjectName("Chat")
-        Chat.resize(600, 600)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Chat)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(600, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.widget = QtWidgets.QWidget(self.centralwidget)
+        self.widget.setGeometry(QtCore.QRect(10, 5, 581, 551))
+        self.widget.setObjectName("widget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.scrollArea = QtWidgets.QScrollArea(Chat)
+        self.scrollArea = QtWidgets.QScrollArea(self.widget)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 580, 478))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 577, 443))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.chat_frame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.chat_frame.setGeometry(QtCore.QRect(10, 9, 551, 141))
@@ -29,25 +35,43 @@ class Ui_Chat(object):
         self.username_label.setObjectName("username_label")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
-        self.lineEdit_message = QtWidgets.QLineEdit(Chat)
+        self.lineEdit_message = QtWidgets.QLineEdit(self.widget)
         self.lineEdit_message.setObjectName("lineEdit_message")
         self.verticalLayout.addWidget(self.lineEdit_message)
-        self.Send_button = QtWidgets.QPushButton(Chat)
+        self.Send_button = QtWidgets.QPushButton(self.widget)
         self.Send_button.setObjectName("Send_button")
         self.verticalLayout.addWidget(self.Send_button)
-        self.Back = QtWidgets.QCommandLinkButton(Chat)
+        self.Back = QtWidgets.QCommandLinkButton(self.widget)
         self.Back.setObjectName("Back")
         self.verticalLayout.addWidget(self.Back)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 22))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(Chat)
-        QtCore.QMetaObject.connectSlotsByName(Chat)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, Chat):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        Chat.setWindowTitle(_translate("Chat", "Form"))
-        self.label.setText(_translate("Chat", "User_Name:"))
-        self.username_label.setText(_translate("Chat", "user_name"))
-        self.Send_button.setText(_translate("Chat", "Send"))
-        self.Back.setText(_translate("Chat", "Back"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "User_Name:"))
+        self.username_label.setText(_translate("MainWindow", "user_name"))
+        self.Send_button.setText(_translate("MainWindow", "Send"))
+        self.Back.setText(_translate("MainWindow", "Back"))
 
-ui = Ui_Chat()
+
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
+#     sys.exit(app.exec_())
+
+ui = Ui_MainWindow()

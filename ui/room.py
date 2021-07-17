@@ -1,20 +1,22 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Room(object):
-    def setupUi(self, Room):
-        Room.setObjectName("Room")
-        Room.resize(600, 600)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Room)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(600, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.ArchiveList = QtWidgets.QPushButton(Room)
+        self.ArchiveList = QtWidgets.QPushButton(self.centralwidget)
         self.ArchiveList.setObjectName("ArchiveList")
         self.verticalLayout.addWidget(self.ArchiveList)
-        self.scrollArea = QtWidgets.QScrollArea(Room)
+        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 580, 504))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 580, 505))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.Chat_room = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.Chat_room.setGeometry(QtCore.QRect(19, 10, 541, 101))
@@ -47,35 +49,39 @@ class Ui_Room(object):
         self.Archive_this_chat.setObjectName("Archive_this_chat")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
-        self.Back = QtWidgets.QCommandLinkButton(Room)
-        self.Back.setObjectName("Back")
-        self.verticalLayout.addWidget(self.Back)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 22))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(Room)
-        QtCore.QMetaObject.connectSlotsByName(Room)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, Room):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        Room.setWindowTitle(_translate("Room", "Form"))
-        self.ArchiveList.setText(_translate("Room", "Archive chat"))
-        self.SeeChat.setText(_translate("Room", "Chat"))
-        self.label.setText(_translate("Room", "User Name:"))
-        self.UserName.setText(_translate("Room", "User_"))
-        self.label_3.setText(_translate("Room", "Name :"))
-        self.FirstName_lastName.setText(_translate("Room", "Name_last_name"))
-        self.checkBoxRead.setText(_translate("Room", "Read"))
-        self.Delete_this_chat.setText(_translate("Room", "Delete"))
-        self.Archive_this_chat.setText(_translate("Room", "Archive"))
-        self.Back.setText(_translate("Room", "Back"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.ArchiveList.setText(_translate("MainWindow", "Archive chat"))
+        self.SeeChat.setText(_translate("MainWindow", "Chat"))
+        self.label.setText(_translate("MainWindow", "User Name:"))
+        self.UserName.setText(_translate("MainWindow", "User_"))
+        self.label_3.setText(_translate("MainWindow", "Name :"))
+        self.FirstName_lastName.setText(_translate("MainWindow", "Name_last_name"))
+        self.checkBoxRead.setText(_translate("MainWindow", "Read"))
+        self.Delete_this_chat.setText(_translate("MainWindow", "Delete"))
+        self.Archive_this_chat.setText(_translate("MainWindow", "Archive"))
 
 
 # if __name__ == "__main__":
 #     import sys
 #     app = QtWidgets.QApplication(sys.argv)
-#     Room = QtWidgets.QWidget()
-#     ui = Ui_Room()
-#     ui.setupUi(Room)
-#     Room.show()
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
 #     sys.exit(app.exec_())
 
-ui = Ui_Room()
+ui = Ui_MainWindow()

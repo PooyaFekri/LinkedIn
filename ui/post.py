@@ -1,39 +1,53 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Post(object):
-    def setupUi(self, Post):
-        Post.setObjectName("Post")
-        Post.resize(600, 600)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Post)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(601, 629)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.widget = QtWidgets.QWidget(self.centralwidget)
+        self.widget.setGeometry(QtCore.QRect(10, -16, 581, 601))
+        self.widget.setObjectName("widget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.plainTextEdit = QtWidgets.QPlainTextEdit(Post)
+        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.widget)
         self.plainTextEdit.setObjectName("plainTextEdit")
         self.verticalLayout.addWidget(self.plainTextEdit)
-        self.sendButton = QtWidgets.QPushButton(Post)
+        self.sendButton = QtWidgets.QPushButton(self.widget)
         self.sendButton.setObjectName("sendButton")
         self.verticalLayout.addWidget(self.sendButton)
-        self.Back_button = QtWidgets.QCommandLinkButton(Post)
+        self.Back_button = QtWidgets.QCommandLinkButton(self.widget)
         self.Back_button.setObjectName("Back_button")
         self.verticalLayout.addWidget(self.Back_button)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 601, 22))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(Post)
-        QtCore.QMetaObject.connectSlotsByName(Post)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, Post):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        Post.setWindowTitle(_translate("Post", "Form"))
-        self.sendButton.setText(_translate("Post", "Send"))
-        self.Back_button.setText(_translate("Post", "Back"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.sendButton.setText(_translate("MainWindow", "Send"))
+        self.Back_button.setText(_translate("MainWindow", "Back"))
 
 
 # if __name__ == "__main__":
 #     import sys
 #     app = QtWidgets.QApplication(sys.argv)
-#     Post = QtWidgets.QWidget()
-#     ui = Ui_Post()
-#     ui.setupUi(Post)
-#     Post.show()
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
 #     sys.exit(app.exec_())
 
-ui = Ui_Post()
+ui = Ui_MainWindow()
