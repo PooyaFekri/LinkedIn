@@ -26,7 +26,7 @@ class User(Table):
             '''
             return {'status': True, 'user': res[0]}
         else:
-            return {'status': False}
+            return {'status': False, 'error': 'invalid username or password'}
 
     @classmethod
     def signup(cls, *args, **kwargs):
