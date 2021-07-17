@@ -1,5 +1,4 @@
-# from ui import lunch_app
+from ui.login import lunch_app
 
 if __name__ == '__main__':
-    pass
-    # lunch_app()
+    lunch_app()

@@ -73,6 +73,9 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QTextBrowser" name="Error_textBrowser"/>
+      </item>
      </layout>
     </item>
    </layout>
