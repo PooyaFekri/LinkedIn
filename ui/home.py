@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Home(object):
     def setupUi(self, Home):
         Home.setObjectName("Home")
-        Home.resize(600, 559)
+        Home.resize(600, 600)
         self.scrollArea = QtWidgets.QScrollArea(Home)
         self.scrollArea.setGeometry(QtCore.QRect(9, 149, 581, 221))
         self.scrollArea.setWidgetResizable(True)
