@@ -75,8 +75,10 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
+        from .profile_me import ui as ui_profile_me
         self.retranslateUi(MainWindow)
+        self.back_button.clicked.connect(lambda : ui_profile_me.setupUi(MainWindow))
+        self.submit_button.clicked.connect(lambda : ui_profile_me.setupUi(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
