@@ -49,7 +49,13 @@ class Ui_Login(object):
         self.retranslateUi(Login)
         self.LoginButton.clicked.connect(lambda :ui_home.setupUi(Login))
 
+<<<<<<< Updated upstream
         QtCore.QMetaObject.connectSlotsByName(Login)
+=======
+        self.login_button.clicked.connect(lambda : (ui_home.setupUi(login)))
+        self.signup_button.clicked.connect(lambda : ui_confirm_password.setupUi(login))
+        QtCore.QMetaObject.connectSlotsByName(login)
+>>>>>>> Stashed changes
 
     def retranslateUi(self, Login):
         _translate = QtCore.QCoreApplication.translate
