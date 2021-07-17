@@ -205,4 +205,23 @@ create unique index if not exists Endorse_id_uindex
 	on Endorse (id);
 
 
+create table if not exists Notification
+(
+    id      integer      not null
+        constraint Notification_pk
+            primary key autoincrement,
+    user_id integer      not null
+        references user
+            on update cascade on delete cascade,
+    type_id integer      not null,
+    type    nvarchar(50) not null,
+    time    nvarchar(50) not null,
+    event   nvarchar(50),
+    visited boolean default false not null
+);
+
+create unique index if not exists Notification_id_uindex
+    on Notification (id);
+
+
 
