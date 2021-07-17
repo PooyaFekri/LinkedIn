@@ -48,6 +48,8 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "NewPassword:"))
         self.label_4.setText(_translate("MainWindow", "Email :"))
 
+    def forgot_password(self, MainWindow):
+        pass
 
 # if __name__ == "__main__":
 #     import sys

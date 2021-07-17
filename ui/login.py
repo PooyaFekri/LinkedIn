@@ -1,7 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+
+from tables import User
 from .forget_password import ui as ui_forgot_password
 from .home import ui as ui_home
 from .signup import ui as ui_signup
+from utils.validate_input import ValidateInput
 
 
 class Ui_MainWindow(object):
@@ -48,7 +51,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.LoginButton.clicked.connect(self.login)
+        self.LoginButton.clicked.connect(lambda: self.login(MainWindow))
         self.forget_password_button.clicked.connect(lambda: ui_forgot_password.setupUi(MainWindow))
         self.SignUpButton.clicked.connect(lambda: ui_signup.setupUi(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -62,15 +65,21 @@ class Ui_MainWindow(object):
         self.UserName_libale.setText(_translate("MainWindow", "UserName"))
         self.LoginButton.setText(_translate("MainWindow", "Login"))
 
-    def login(self):
-        # lambda: ui_home.setupUi(MainWindow)
-        username = self.UserName_lineEdit.text()
-        password = self.Password_lineEdit.text()
-        if password == "" or username == "":
+    def login(self, MainWindow):
+        variables = {
+            "username": self.UserName_lineEdit.text(),
+            "password": self.Password_lineEdit.text()
+        }
+
+        if ValidateInput.is_empty(*list(variables.values())):
             self.Error_textBrowser.setText('Your password or username is empty')
         else:
             self.Error_textBrowser.setText('')
-        print(username, password)
+            res = User.login(**variables)
+            if res["status"]:
+                ui_home.setupUi(MainWindow)
+            else:
+                self.Error_textBrowser.setText(res["error"])
 
 
 def lunch_app():

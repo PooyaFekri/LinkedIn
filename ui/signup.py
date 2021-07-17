@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from utils.validate_input import ValidateInput
+from tables import User
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -71,9 +72,9 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.sign_up_button.clicked.connect(self.signup)
+        self.sign_up_button.clicked.connect(lambda: self.signup(MainWindow))
         from .login import ui as ui_login
-        self.back_button.clicked.connect(lambda : ui_login.setupUi(MainWindow))
+        self.back_button.clicked.connect(lambda: ui_login.setupUi(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -89,26 +90,33 @@ class Ui_MainWindow(object):
         self.sign_up_button.setText(_translate("MainWindow", "Sign Up "))
         self.back_button.setText(_translate("MainWindow", "Back"))
 
-    def signup(self):
-        vars = {
-            "firstName": self.lineEdit_firstName.text(),
-            "lastName" : self.lineEdit_lastName.text(),
-            "email" : self.lineEdit_email.text(),
-            "username" : self.lineEdit_username.text(),
-            "password" : self.lineEdit_password.text(),
-            "conf_password" : self.lineEdit_confirm_password.text(),
-            "date" : self.dateEdit.date()
+    def signup(self, MainWindow):
+        variables = {
+            "first_name": self.lineEdit_firstName.text(),
+            "last_name": self.lineEdit_lastName.text(),
+            "email": self.lineEdit_email.text(),
+            "username": self.lineEdit_username.text(),
+            "password": self.lineEdit_password.text(),
+            "birthday": self.dateEdit.dateTime().currentDateTime().toPyDateTime()
         }
-        # TODO : validate inputs
-        print(vars)
 
-        # firstName= self.lineEdit_firstName.text()
-        # lastName = self.lineEdit_lastName.text()
-        # email = self.lineEdit_email.text()
-        # username = self.lineEdit_username.text()
-        # password = self.lineEdit_password.text()
-        # conf_password = self.lineEdit_confirm_password.text()
-        # date = self.dateEdit.date()
+        conf_password= self.lineEdit_confirm_password.text()
+        # TODO : validate inputs
+        if ValidateInput.is_empty(*list(variables.values())):
+            # TODO : send response if the boxs are empty
+            pass
+        elif variables["password"] != conf_password:
+            # TODO
+            pass
+        else:
+            res = User.signup(**variables)
+            print("dsd")
+            print(res)
+            if res["status"]:
+                from .home import ui as ui_home
+                print("dsd")
+                ui_home.setupUi(MainWindow)
+                print("dsd")
 
 
 
