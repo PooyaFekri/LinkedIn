@@ -39,8 +39,8 @@ class Room(Table):
     @classmethod
     def find_via_pk(cls, pk: Union[str, int]) -> dict:
         try:
-            message = super().find_via_pk(pk)
-            return {'status': True, 'message': message}
+            room = super().find_via_pk(pk)
+            return {'status': True, 'room': room}
         except Exception as e:
             return {'status': False, 'error': e}
 
