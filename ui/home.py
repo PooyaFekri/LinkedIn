@@ -115,7 +115,6 @@ class Ui_MainWindow(object):
         self.profile_button.clicked.connect(lambda : ui_me.setupUi(MainWindow))
         # self.notif //TODO
         # self.jobs //TODO
-        self.SeeProfile.clicked.connect(lambda : ui_ohter_persion.setupUi(MainWindow))
         self.LikeButton.clicked.connect(lambda : print("s2"))
         self.CommentButton.clicked.connect(lambda : print("s3"))
         self.ShareButton.clicked.connect(lambda : print("s4"))
