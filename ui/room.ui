@@ -33,7 +33,7 @@
          <x>0</x>
          <y>0</y>
          <width>580</width>
-         <height>505</height>
+         <height>463</height>
         </rect>
        </property>
        <widget class="QFrame" name="Chat_room">
@@ -159,6 +159,13 @@
       </widget>
      </widget>
     </item>
+    <item>
+     <widget class="QCommandLinkButton" name="BackButton">
+      <property name="text">
+       <string>Back</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -167,7 +174,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

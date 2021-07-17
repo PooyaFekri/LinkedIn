@@ -1,4 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from .room import ui as ui_room
+from .network import ui as ui_network
+from .post import ui as ui_post
+# from .notifi // TODO: notif should be completed
+# from .jobs // TODO: jobs should be completed
+from .profile_me import ui as ui_profile
+# from .comment import ui as ui_comment //TODO: edit comment file
 
 
 class Ui_MainWindow(object):
@@ -46,7 +53,7 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 579, 379))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.frame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
-        self.frame.setGeometry(QtCore.QRect(10, 10, 561, 151))
+        self.frame.setGeometry(QtCore.QRect(10, 10, 561, 191))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -77,13 +84,20 @@ class Ui_MainWindow(object):
         self.UserName = QtWidgets.QLabel(self.frame)
         self.UserName.setGeometry(QtCore.QRect(400, 30, 71, 20))
         self.UserName.setObjectName("UserName")
+        self.label = QtWidgets.QLabel(self.frame)
+        self.label.setGeometry(QtCore.QRect(16, 160, 81, 20))
+        self.label.setObjectName("label")
+        self.ShareFrom = QtWidgets.QLabel(self.frame)
+        self.ShareFrom.setGeometry(QtCore.QRect(106, 160, 301, 20))
+        self.ShareFrom.setText("")
+        self.ShareFrom.setObjectName("ShareFrom")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.message_button = QtWidgets.QPushButton(self.centralwidget)
         self.message_button.setGeometry(QtCore.QRect(200, 90, 75, 23))
         self.message_button.setObjectName("message_button")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -91,6 +105,17 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        self.message_button.clicked.connect(lambda : ui_room.setupUi(MainWindow))
+        self.homeButton.clicked.connect(lambda : ui.setupUi(MainWindow))
+        self.NetworkButton.clicked.connect(lambda : ui_network.setupUi(MainWindow))
+        self.NewPostButton.clicked.connect(lambda : ui_post.setupUi(MainWindow))
+        # self.notif //TODO
+        # self.jobs //TODO
+        self.SeeProfile.clicked.connect(lambda : print("s1"))
+        self.LikeButton.clicked.connect(lambda : print("s2"))
+        self.CommentButton.clicked.connect(lambda : print("s3"))
+        self.ShareButton.clicked.connect(lambda : print("s4"))
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -111,6 +136,7 @@ class Ui_MainWindow(object):
         self.SeeProfile.setText(_translate("MainWindow", "see profile"))
         self.label_3.setText(_translate("MainWindow", "from :"))
         self.UserName.setText(_translate("MainWindow", "User name "))
+        self.label.setText(_translate("MainWindow", "Share from:"))
         self.message_button.setText(_translate("MainWindow", "message"))
 
 

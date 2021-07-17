@@ -51,6 +51,9 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        from .home import ui as ui_home
+        self.back_button.clicked.connect(lambda : ui_home.setupUi(MainWindow))
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

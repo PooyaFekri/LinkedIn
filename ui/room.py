@@ -16,7 +16,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 580, 505))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 580, 463))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.Chat_room = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.Chat_room.setGeometry(QtCore.QRect(19, 10, 541, 101))
@@ -49,9 +49,12 @@ class Ui_MainWindow(object):
         self.Archive_this_chat.setObjectName("Archive_this_chat")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
+        self.BackButton = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.BackButton.setObjectName("BackButton")
+        self.verticalLayout.addWidget(self.BackButton)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -59,6 +62,8 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        from .home import ui as ui_home
+        self.BackButton.clicked.connect(lambda : ui_home.setupUi(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -73,6 +78,7 @@ class Ui_MainWindow(object):
         self.checkBoxRead.setText(_translate("MainWindow", "Read"))
         self.Delete_this_chat.setText(_translate("MainWindow", "Delete"))
         self.Archive_this_chat.setText(_translate("MainWindow", "Archive"))
+        self.BackButton.setText(_translate("MainWindow", "Back"))
 
 
 # if __name__ == "__main__":
