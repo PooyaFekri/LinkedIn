@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from .forget_password import ui as ui_forgot_password
 from .home import ui as ui_home
-from .confirm_password import ui as ui_signup
+from .signup import ui as ui_signup
 
 
 class Ui_MainWindow(object):
@@ -23,9 +23,9 @@ class Ui_MainWindow(object):
         self.label.setGeometry(QtCore.QRect(10, 577, 582, 17))
         self.label.setText("")
         self.label.setObjectName("label")
-        self.SingUpButton = QtWidgets.QPushButton(self.centralwidget)
-        self.SingUpButton.setGeometry(QtCore.QRect(10, 151, 582, 25))
-        self.SingUpButton.setObjectName("SingUpButton")
+        self.SignUpButton = QtWidgets.QPushButton(self.centralwidget)
+        self.SignUpButton.setGeometry(QtCore.QRect(10, 151, 582, 25))
+        self.SignUpButton.setObjectName("SignUpButton")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setGeometry(QtCore.QRect(10, 66, 582, 17))
         self.label_3.setObjectName("label_3")
@@ -48,20 +48,29 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-
-        self.LoginButton.clicked.connect(lambda : ui_home.setupUi(MainWindow))
-        self.forget_password_button.clicked.connect(lambda : ui_forgot_password.setupUi(MainWindow))
-        self.SingUpButton.clicked.connect(lambda : ui_signup.setupUi(MainWindow))
+        self.LoginButton.clicked.connect(self.login)
+        self.forget_password_button.clicked.connect(lambda: ui_forgot_password.setupUi(MainWindow))
+        self.SignUpButton.clicked.connect(lambda: ui_signup.setupUi(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.forget_password_button.setText(_translate("MainWindow", "Forget password"))
-        self.SingUpButton.setText(_translate("MainWindow", "Sign up"))
+        self.SignUpButton.setText(_translate("MainWindow", "Sign up"))
         self.label_3.setText(_translate("MainWindow", "Password"))
         self.UserName_libale.setText(_translate("MainWindow", "UserName"))
         self.LoginButton.setText(_translate("MainWindow", "Login"))
+
+    def login(self):
+        # lambda: ui_home.setupUi(MainWindow)
+        username = self.UserName_lineEdit.text()
+        password = self.Password_lineEdit.text()
+        if password == "" or username == "":
+            self.Error_textBrowser.setText('Your password or username is empty')
+        else:
+            self.Error_textBrowser.setText('')
+        print(username, password)
 
 
 def lunch_app():
@@ -71,5 +80,6 @@ def lunch_app():
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
 
 ui = Ui_MainWindow()
