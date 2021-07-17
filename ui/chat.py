@@ -1,0 +1,77 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(600, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.widget = QtWidgets.QWidget(self.centralwidget)
+        self.widget.setGeometry(QtCore.QRect(10, 5, 581, 551))
+        self.widget.setObjectName("widget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.scrollArea = QtWidgets.QScrollArea(self.widget)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 577, 443))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.chat_frame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
+        self.chat_frame.setGeometry(QtCore.QRect(10, 9, 551, 141))
+        self.chat_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.chat_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.chat_frame.setObjectName("chat_frame")
+        self.textBrowser_message = QtWidgets.QTextBrowser(self.chat_frame)
+        self.textBrowser_message.setGeometry(QtCore.QRect(10, 0, 371, 131))
+        self.textBrowser_message.setObjectName("textBrowser_message")
+        self.label = QtWidgets.QLabel(self.chat_frame)
+        self.label.setGeometry(QtCore.QRect(420, 10, 81, 16))
+        self.label.setObjectName("label")
+        self.username_label = QtWidgets.QLabel(self.chat_frame)
+        self.username_label.setGeometry(QtCore.QRect(430, 40, 71, 16))
+        self.username_label.setObjectName("username_label")
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.verticalLayout.addWidget(self.scrollArea)
+        self.lineEdit_message = QtWidgets.QLineEdit(self.widget)
+        self.lineEdit_message.setObjectName("lineEdit_message")
+        self.verticalLayout.addWidget(self.lineEdit_message)
+        self.Send_button = QtWidgets.QPushButton(self.widget)
+        self.Send_button.setObjectName("Send_button")
+        self.verticalLayout.addWidget(self.Send_button)
+        self.Back = QtWidgets.QCommandLinkButton(self.widget)
+        self.Back.setObjectName("Back")
+        self.verticalLayout.addWidget(self.Back)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 22))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "User_Name:"))
+        self.username_label.setText(_translate("MainWindow", "user_name"))
+        self.Send_button.setText(_translate("MainWindow", "Send"))
+        self.Back.setText(_translate("MainWindow", "Back"))
+
+
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
+#     sys.exit(app.exec_())
+
+ui = Ui_MainWindow()

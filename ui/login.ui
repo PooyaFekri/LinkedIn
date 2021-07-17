@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>login</class>
- <widget class="QMainWindow" name="login">
-  <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
-  </property>
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,65 +14,114 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>UserName :</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string> Password :</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineEdit_2">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string>Loggin</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="text">
-         <string>sign up</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCommandLinkButton" name="commandLinkButton">
-        <property name="text">
-         <string>forget password</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
+   <widget class="QLineEdit" name="UserName_lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>35</y>
+      <width>582</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Password_lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>89</y>
+      <width>582</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QCommandLinkButton" name="forget_password_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>182</y>
+      <width>582</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Forget password</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>577</y>
+      <width>582</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SingUpButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>151</y>
+      <width>582</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sign up</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>66</y>
+      <width>582</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Password</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="UserName_libale">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>12</y>
+      <width>582</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>UserName</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="Error_textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>224</y>
+      <width>582</width>
+      <height>347</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="LoginButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>120</y>
+      <width>582</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Login</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

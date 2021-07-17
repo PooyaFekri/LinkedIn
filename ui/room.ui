@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,161 +11,167 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>MainWindow</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QPushButton" name="ArchiveList">
-     <property name="text">
-      <string>Archive chat</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>580</width>
-        <height>504</height>
-       </rect>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="ArchiveList">
+      <property name="text">
+       <string>Archive chat</string>
       </property>
-      <widget class="QFrame" name="frame">
+     </widget>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>19</x>
-         <y>10</y>
-         <width>541</width>
-         <height>101</height>
+         <x>0</x>
+         <y>0</y>
+         <width>580</width>
+         <height>505</height>
         </rect>
        </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <widget class="QPushButton" name="SeeChat">
+       <widget class="QFrame" name="Chat_room">
         <property name="geometry">
          <rect>
-          <x>14</x>
+          <x>19</x>
           <y>10</y>
-          <width>101</width>
-          <height>81</height>
+          <width>541</width>
+          <height>101</height>
          </rect>
         </property>
-        <property name="text">
-         <string>Chat</string>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
         </property>
-       </widget>
-       <widget class="QLabel" name="label">
-        <property name="geometry">
-         <rect>
-          <x>140</x>
-          <y>20</y>
-          <width>81</width>
-          <height>16</height>
-         </rect>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
         </property>
-        <property name="text">
-         <string>User Name:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="UserName">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>40</y>
-          <width>47</width>
-          <height>13</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>User_</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_3">
-        <property name="geometry">
-         <rect>
-          <x>140</x>
-          <y>60</y>
-          <width>47</width>
-          <height>13</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Name :</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="FirstName_lastName">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>80</y>
-          <width>81</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Name_last_name</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBoxRead">
-        <property name="geometry">
-         <rect>
-          <x>420</x>
-          <y>20</y>
-          <width>70</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Read</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="Delete">
-        <property name="geometry">
-         <rect>
-          <x>410</x>
-          <y>70</y>
-          <width>75</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Delete</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="Archive_this_chat">
-        <property name="geometry">
-         <rect>
-          <x>410</x>
-          <y>40</y>
-          <width>75</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Archive</string>
-        </property>
+        <widget class="QPushButton" name="SeeChat">
+         <property name="geometry">
+          <rect>
+           <x>14</x>
+           <y>10</y>
+           <width>101</width>
+           <height>81</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Chat</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>20</y>
+           <width>81</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>User Name:</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="UserName">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>40</y>
+           <width>47</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>User_</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_3">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>60</y>
+           <width>47</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Name :</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="FirstName_lastName">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>80</y>
+           <width>81</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Name_last_name</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxRead">
+         <property name="geometry">
+          <rect>
+           <x>420</x>
+           <y>20</y>
+           <width>70</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Read</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Delete_this_chat">
+         <property name="geometry">
+          <rect>
+           <x>410</x>
+           <y>70</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Delete</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Archive_this_chat">
+         <property name="geometry">
+          <rect>
+           <x>410</x>
+           <y>40</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Archive</string>
+         </property>
+        </widget>
        </widget>
       </widget>
      </widget>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCommandLinkButton" name="Back">
-     <property name="text">
-      <string>Back</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
