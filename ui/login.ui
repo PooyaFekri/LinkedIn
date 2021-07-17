@@ -28,7 +28,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="username_edit">
         <property name="text">
          <string/>
         </property>
@@ -42,7 +42,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_2">
+       <widget class="QLineEdit" name="password_edit">
         <property name="text">
          <string/>
         </property>
@@ -53,21 +53,21 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="login_button">
         <property name="text">
-         <string>Loggin</string>
+         <string>Login</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="signup_button">
         <property name="text">
          <string>sign up</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCommandLinkButton" name="commandLinkButton">
+       <widget class="QCommandLinkButton" name="forget_password_button">
         <property name="text">
          <string>forget password</string>
         </property>

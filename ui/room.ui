@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>Room</class>
+ <widget class="QWidget" name="Room">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -35,7 +35,7 @@
         <height>504</height>
        </rect>
       </property>
-      <widget class="QFrame" name="frame">
+      <widget class="QFrame" name="Chat_room">
        <property name="geometry">
         <rect>
          <x>19</x>
@@ -128,7 +128,7 @@
          <string>Read</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="Delete">
+       <widget class="QPushButton" name="Delete_this_chat">
         <property name="geometry">
          <rect>
           <x>410</x>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>Comment</class>
+ <widget class="QWidget" name="Comment">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -59,7 +59,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QCheckBox" name="Like">
+     <widget class="QCheckBox" name="Like_button">
       <property name="geometry">
        <rect>
         <x>370</x>
@@ -72,7 +72,7 @@
        <string>like</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Reply">
+     <widget class="QPushButton" name="Reply_button">
       <property name="geometry">
        <rect>
         <x>370</x>
@@ -98,7 +98,7 @@
        <string>UserName:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="USER_NAME">
+     <widget class="QLabel" name="username">
       <property name="geometry">
        <rect>
         <x>370</x>
@@ -111,7 +111,7 @@
        <string>User_</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="SeeProfile">
+     <widget class="QPushButton" name="SeeProfile_button">
       <property name="geometry">
        <rect>
         <x>370</x>
@@ -127,7 +127,7 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QPushButton" name="Send">
+  <widget class="QPushButton" name="Send_button">
    <property name="geometry">
     <rect>
      <x>380</x>
@@ -140,7 +140,7 @@
     <string>send</string>
    </property>
   </widget>
-  <widget class="QCommandLinkButton" name="Back">
+  <widget class="QCommandLinkButton" name="Back_button">
    <property name="geometry">
     <rect>
      <x>380</x>

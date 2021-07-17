@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>EditProfile</class>
+ <widget class="QWidget" name="EditProfile">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit"/>
+    <widget class="QLineEdit" name="lineEdit_firstName"/>
    </item>
    <item>
     <widget class="QLabel" name="lastName">
@@ -32,7 +32,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_2"/>
+    <widget class="QLineEdit" name="lineEdit_lastName"/>
    </item>
    <item>
     <widget class="QLabel" name="intro">
@@ -42,7 +42,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_3"/>
+    <widget class="QLineEdit" name="lineEdit_intro"/>
    </item>
    <item>
     <widget class="QLabel" name="birthday">
@@ -52,7 +52,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_4"/>
+    <widget class="QDateEdit" name="dateEdit_birthday"/>
    </item>
    <item>
     <widget class="QLabel" name="username">
@@ -62,7 +62,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_5"/>
+    <widget class="QLineEdit" name="lineEdit_username"/>
    </item>
    <item>
     <widget class="QLabel" name="password">
@@ -72,7 +72,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_6"/>
+    <widget class="QLineEdit" name="lineEdit_password"/>
    </item>
    <item>
     <widget class="QLabel" name="email">
@@ -82,7 +82,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_7"/>
+    <widget class="QLineEdit" name="lineEdit_email"/>
    </item>
    <item>
     <widget class="QLabel" name="address">
@@ -92,7 +92,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_8"/>
+    <widget class="QLineEdit" name="lineEdit_address"/>
    </item>
    <item>
     <widget class="QLabel" name="telNum">
@@ -102,17 +102,17 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_9"/>
+    <widget class="QLineEdit" name="lineEdit_telNum"/>
    </item>
    <item>
-    <widget class="QPushButton" name="back">
+    <widget class="QPushButton" name="back_button">
      <property name="text">
       <string>Back</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="submit">
+    <widget class="QPushButton" name="submit_button">
      <property name="text">
       <string>Submit</string>
      </property>

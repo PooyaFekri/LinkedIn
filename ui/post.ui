@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>Post</class>
+ <widget class="QWidget" name="Post">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -18,14 +18,14 @@
     <widget class="QPlainTextEdit" name="plainTextEdit"/>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="sendButton">
      <property name="text">
       <string>Send</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCommandLinkButton" name="commandLinkButton">
+    <widget class="QCommandLinkButton" name="Back_button">
      <property name="text">
       <string>Back</string>
      </property>

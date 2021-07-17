@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>Network</class>
+ <widget class="QWidget" name="Network">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -70,7 +70,7 @@
          <string>Username:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="username2">
+       <widget class="QLabel" name="username_edit">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -83,7 +83,7 @@
          <string>username</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="Is_connect">
         <property name="geometry">
          <rect>
           <x>460</x>
@@ -114,7 +114,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QCommandLinkButton" name="commandLinkButton">
+    <widget class="QCommandLinkButton" name="back_button">
      <property name="text">
       <string>Back</string>
      </property>

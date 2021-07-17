@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>EnterProfile</class>
+ <widget class="QWidget" name="EnterProfile">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -25,7 +25,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit"/>
+    <widget class="QLineEdit" name="lineEdit_firstName"/>
    </item>
    <item>
     <widget class="QLabel" name="label_2">
@@ -35,7 +35,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_2"/>
+    <widget class="QLineEdit" name="lineEdit_lastName"/>
    </item>
    <item>
     <widget class="QLabel" name="label_3">
@@ -45,7 +45,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_3"/>
+    <widget class="QLineEdit" name="lineEdit_telNum"/>
    </item>
    <item>
     <widget class="QLabel" name="label_4">
@@ -55,17 +55,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_4"/>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Natnality:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QFontComboBox" name="fontComboBox"/>
+    <widget class="QLineEdit" name="lineEdit_emailAdd"/>
    </item>
    <item>
     <widget class="QLabel" name="label_6">
@@ -75,7 +65,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QDateEdit" name="dateEdit">
+    <widget class="QDateEdit" name="dateEdit_birthday">
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
      </property>
@@ -95,14 +85,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="next_Button">
      <property name="text">
       <string>Next</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCommandLinkButton" name="commandLinkButton">
+    <widget class="QCommandLinkButton" name="back_Button">
      <property name="text">
       <string>Back</string>
      </property>

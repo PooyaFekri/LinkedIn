@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>Chat</class>
+ <widget class="QWidget" name="Chat">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -28,7 +28,7 @@
         <height>478</height>
        </rect>
       </property>
-      <widget class="QFrame" name="frame">
+      <widget class="QFrame" name="chat_frame">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -43,7 +43,7 @@
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QTextBrowser" name="textBrowser">
+       <widget class="QTextBrowser" name="textBrowser_message">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -66,7 +66,7 @@
          <string>User_Name:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="User_name">
+       <widget class="QLabel" name="username_label">
         <property name="geometry">
          <rect>
           <x>430</x>
@@ -84,10 +84,10 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit"/>
+    <widget class="QLineEdit" name="lineEdit_message"/>
    </item>
    <item>
-    <widget class="QPushButton" name="Send">
+    <widget class="QPushButton" name="Send_button">
      <property name="text">
       <string>Send</string>
      </property>
