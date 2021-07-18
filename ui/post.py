@@ -1,8 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+import datetime
+from tables import Post, notification, Connection
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, data):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(601, 629)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -33,8 +35,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         from .home import ui as ui_home
-        # TODO: check empty dictionary
-        self.Back_button.clicked.connect(lambda : ui_home.setupUi(MainWindow, {}))
+        self.sendButton.clicked.connect(self.post(MainWindow, data))
+        self.Back_button.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -44,7 +46,18 @@ class Ui_MainWindow(object):
         self.sendButton.setText(_translate("MainWindow", "Send"))
         self.Back_button.setText(_translate("MainWindow", "Back"))
 
-
+    def post(self, MainWindow, data):
+        text = self.plainTextEdit.toPlainText()
+        time = datetime.datetime.now()
+        user_id = data.get("user").id
+        data = {"user_id": user_id, "time": time, "text": text}
+        Post.insert(**data)
+        connections = Connection.find_user_connections(user_id)
+        for connection in connections:
+            connect_user_id = user_id if connection.user_caller_id != user_id else connection.user_caller_id
+            data = {"user_id":connect_user_id,"time":time,type:"Post"}
+        notification.Notification.insert(**data)
+        ui.setupUi(MainWindow,data)
 # if __name__ == "__main__":
 #     import sys
 #     app = QtWidgets.QApplication(sys.argv)
