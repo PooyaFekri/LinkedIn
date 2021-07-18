@@ -93,3 +93,11 @@ class Connection(Table):
             return {'status': True, 'is_connected': bool(len(connection))}
         except Exception as e:
             return {'status': False, 'error': e}
+
+    @classmethod
+    def find(cls, *args, **kwargs):
+        try:
+            connection = super().find(kwargs)
+            return {'status': True, 'connection': connection}
+        except Exception as e:
+            return {'status': False, 'error': e}

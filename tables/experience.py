@@ -10,8 +10,7 @@ class Experience(Table):
         self.user_id = data[1]
         self.text = data[2]
         self.start_time = data[3]
-        if len(data) == 5:
-            self.end_time = data[4]
+        self.end_time = data[4]
 
     @classmethod
     def add(cls, *args, **kwargs):
