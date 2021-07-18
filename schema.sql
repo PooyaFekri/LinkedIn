@@ -64,6 +64,12 @@ create table if not exists Experience
 create unique index if not exists Experience_id_uindex
 	on Experience (id);
 
+alter table Experience
+	add start_time nvarchar(50) not null;
+
+alter table Experience
+	add end_time nvarchar(50);
+
 create table if not exists Connection
 (
 	id INTEGER not null
@@ -225,5 +231,19 @@ create table if not exists Notification
 create unique index if not exists Notification_id_uindex
     on Notification (id);
 
+create table if not exists Language
+(
+	id integer not null
+		constraint Language_pk
+			primary key autoincrement,
+	user_id integer not null
+		constraint Language_user_id_fk
+			references user
+				on update cascade on delete cascade,
+	language integer not null
+);
+
+create unique index if not exists Language_id_uindex
+	on Language (id);
 
 
