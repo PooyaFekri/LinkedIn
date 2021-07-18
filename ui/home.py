@@ -109,9 +109,9 @@ class Ui_MainWindow(object):
         self.data = data
         self.retranslateUi(MainWindow)
         self.message_button.clicked.connect(lambda : ui_room.setupUi(MainWindow))
-        self.homeButton.clicked.connect(lambda : ui.setupUi(MainWindow))
+        self.homeButton.clicked.connect(lambda : ui.setupUi(MainWindow,self.data))
         self.NetworkButton.clicked.connect(lambda : ui_network.setupUi(MainWindow))
-        self.NewPostButton.clicked.connect(lambda : ui_post.setupUi(MainWindow))
+        self.NewPostButton.clicked.connect(lambda : ui_post.setupUi(MainWindow,self.data))
         self.profile_button.clicked.connect(lambda : ui_me.setupUi(MainWindow,self.data))
         # self.notif //TODO
         # self.jobs //TODO
