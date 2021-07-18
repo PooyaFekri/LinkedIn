@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow,data):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 645)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -76,11 +76,44 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         from .profile_me import ui as ui_profile_me
+        # print(data)
         self.retranslateUi(MainWindow)
-        self.back_button.clicked.connect(lambda : ui_profile_me.setupUi(MainWindow))
-        self.submit_button.clicked.connect(lambda : ui_profile_me.setupUi(MainWindow))
+        self.back_button.clicked.connect(lambda : ui_profile_me.setupUi(MainWindow,data))
+        self.submit_button.clicked.connect(lambda : self.submit(MainWindow,data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def submit(self,MainWindow,data):
+        user = data.get("user")
+        dict = {}
+        if self.lineEdit_intro.text() != "":
+            user.intro = self.lineEdit_intro.text()
+            dict["intro"] = user.intro
+        if self.lineEdit_email.text() != "":
+            user.email = self.lineEdit_email.text()
+            dict["email"] = user.email
+        if self.lineEdit_address.text() != "":
+            user.address = self.lineEdit_address.text()
+        if self.lineEdit_password.text() != "":
+            dict["password"] = self.lineEdit_password.text()
+        if self.lineEdit_address.text() != "":
+            user.address = self.lineEdit_address.text()
+            dict["address"] = user.address
+        if self.lineEdit_firstName.text() != "":
+            user.first_name = self.lineEdit_firstName.text()
+            dict["first_name"] = user.first_name
+        if self.lineEdit_lastName.text() != "":
+            user.last_name = self.lineEdit_lastName.text()
+            dict["last_name"] = user.last_name
+
+        if self.lineEdit_telNum.text() != "":
+            user.tel_num = self.lineEdit_telNum.text()
+            dict["tel num"] = user.tel_num
+
+        if self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime() != user.birthday:
+            dict["birthday"] = self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime()
+            user.birthday = self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime()
+        user.update(**dict)
+        self.setupUi(MainWindow,data)
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
