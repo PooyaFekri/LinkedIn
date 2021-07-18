@@ -52,3 +52,11 @@ class User(Table):
             return {'status': True}
         except Exception as e:
             return {'status': False, 'error': e}
+
+    @classmethod
+    def find_users(cls, *args, **kwargs):
+        try:
+            likes = super().find(kwargs)
+            return {'status': True, 'likes': likes}
+        except Exception as e:
+            return {'status': False, 'error': e}
