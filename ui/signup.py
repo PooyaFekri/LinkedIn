@@ -99,7 +99,7 @@ class Ui_MainWindow(object):
             "password": self.lineEdit_password.text(),
             "birthday": self.dateEdit.dateTime().currentDateTime().toPyDateTime()
         }
-
+        from .login import ui as ui_login
         conf_password= self.lineEdit_confirm_password.text()
         # TODO : validate inputs
         if ValidateInput.is_empty(*list(variables.values())):
@@ -115,7 +115,7 @@ class Ui_MainWindow(object):
             if res["status"]:
                 from .home import ui as ui_home
                 print("dsd")
-                ui_home.setupUi(MainWindow)
+                ui_login.setupUi(MainWindow)
                 print("dsd")
 
 

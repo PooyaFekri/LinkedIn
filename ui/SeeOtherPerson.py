@@ -1,10 +1,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from tables import Language
+
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow,data,user):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(633, 600)
+        MainWindow.resize(633, 724)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -24,30 +26,46 @@ class Ui_MainWindow(object):
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setObjectName("label_5")
         self.verticalLayout.addWidget(self.label_5)
-        self.Skill_textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.Skill_textBrowser.setObjectName("Skill_textBrowser")
-        self.verticalLayout.addWidget(self.Skill_textBrowser)
-        self.EnrolSkill = QtWidgets.QPushButton(self.centralwidget)
+        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 613, 68))
+        self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
+        self.frame = QtWidgets.QFrame(self.scrollAreaWidgetContents_2)
+        self.frame.setGeometry(QtCore.QRect(10, 19, 591, 81))
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.EnrolSkill = QtWidgets.QPushButton(self.frame)
+        self.EnrolSkill.setGeometry(QtCore.QRect(10, 50, 571, 20))
         self.EnrolSkill.setObjectName("EnrolSkill")
-        self.verticalLayout.addWidget(self.EnrolSkill)
+        self.lineEdit_skill = QtWidgets.QLineEdit(self.frame)
+        self.lineEdit_skill.setGeometry(QtCore.QRect(10, 10, 571, 20))
+        self.lineEdit_skill.setObjectName("lineEdit_skill")
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
+        self.verticalLayout.addWidget(self.scrollArea)
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
-        self.Intro_textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.Intro_textBrowser.setObjectName("Intro_textBrowser")
-        self.verticalLayout.addWidget(self.Intro_textBrowser)
+        self.textBrowser_intro = QtWidgets.QTextBrowser(self.centralwidget)
+        self.textBrowser_intro.setObjectName("textBrowser_intro")
+        self.verticalLayout.addWidget(self.textBrowser_intro)
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setObjectName("label_4")
         self.verticalLayout.addWidget(self.label_4)
-        self.about_textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.about_textBrowser.setObjectName("about_textBrowser")
-        self.verticalLayout.addWidget(self.about_textBrowser)
+        self.textBrowser_about = QtWidgets.QTextBrowser(self.centralwidget)
+        self.textBrowser_about.setObjectName("textBrowser_about")
+        self.verticalLayout.addWidget(self.textBrowser_about)
         self.languages_fontComboBox = QtWidgets.QFontComboBox(self.centralwidget)
         self.languages_fontComboBox.setObjectName("languages_fontComboBox")
         self.verticalLayout.addWidget(self.languages_fontComboBox)
         self.connect_checkBox = QtWidgets.QCheckBox(self.centralwidget)
         self.connect_checkBox.setObjectName("connect_checkBox")
         self.verticalLayout.addWidget(self.connect_checkBox)
+        self.nextPage_Button = QtWidgets.QPushButton(self.centralwidget)
+        self.nextPage_Button.setObjectName("nextPage_Button")
+        self.verticalLayout.addWidget(self.nextPage_Button)
         self.Back = QtWidgets.QCommandLinkButton(self.centralwidget)
         self.Back.setObjectName("Back")
         self.verticalLayout.addWidget(self.Back)
@@ -60,21 +78,36 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(MainWindow,user)
+        from .home import ui as ui_home
+        self.Back.clicked.connect(lambda :ui_home.setupUi(MainWindow,data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, MainWindow):
+
+    def retranslateUi(self, MainWindow,user):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "userName:"))
+        self.Username.setText(user.username)
         self.Username.setText(_translate("MainWindow", "userName"))
         self.label_3.setText(_translate("MainWindow", "name:"))
+        self.Name.setText(user.first_name+" "+user.last_name)
         self.Name.setText(_translate("MainWindow", "first name + last name"))
         self.label_5.setText(_translate("MainWindow", "skill:"))
         self.EnrolSkill.setText(_translate("MainWindow", "Enrol Skill"))
         self.label_2.setText(_translate("MainWindow", "Intro :"))
+        self.textBrowser_intro.setText(user.intro)
         self.label_4.setText(_translate("MainWindow", "about:"))
+        # self.textBrowser_about.setText(user.about)
+        language_support = Language.find_user_lang(user.id)
+        # self.connect_checkBox.
+        if language_support['status']:
+            for k in language_support['languages']:
+                self.languages_fontComboBox.addItem(k)
+        else:
+            print(language_support['error'])
         self.connect_checkBox.setText(_translate("MainWindow", "Connect"))
+        self.nextPage_Button.setText(_translate("MainWindow", "next page"))
         self.Back.setText(_translate("MainWindow", "Back"))
 
 
@@ -88,4 +121,5 @@ class Ui_MainWindow(object):
 #     ui.setupUi(MainWindow)
 #     MainWindow.show()
 #     sys.exit(app.exec_())
+
 ui = Ui_MainWindow()
