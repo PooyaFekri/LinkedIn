@@ -8,7 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Language
+from tables import Language, Connection
 
 
 class Ui_MainWindow(object):

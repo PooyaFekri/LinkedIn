@@ -78,6 +78,22 @@ class Connection(Table):
 
     @classmethod
     def is_connected(cls, user1_id, user2_id):
+        try:
+            connection = cls.get_connect_with_users_id(user1_id, user2_id)
+            return {'status': True, 'is_connected': bool(len(connection))}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    @classmethod
+    def find(cls, *args, **kwargs):
+        try:
+            connection = super().find(kwargs)
+            return {'status': True, 'connection': connection}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    @classmethod
+    def get_connect_with_users_id(cls, user1_id, user2_id):
         _filter1 = {
             'user_invited_id': user1_id,
             'user_caller_id': user2_id
@@ -88,16 +104,8 @@ class Connection(Table):
             'user_caller_id': user1_id
         }
         try:
-            connection = super().find(_filter1) + super().find(_filter2)
+            connections = super().find(_filter1) + super().find(_filter2)
 
-            return {'status': True, 'is_connected': bool(len(connection))}
-        except Exception as e:
-            return {'status': False, 'error': e}
-
-    @classmethod
-    def find(cls, *args, **kwargs):
-        try:
-            connection = super().find(kwargs)
-            return {'status': True, 'connection': connection}
+            return {'status': True, 'connections': connections}
         except Exception as e:
             return {'status': False, 'error': e}
