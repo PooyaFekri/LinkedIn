@@ -1,4 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from .newConnection_invitation import ui as ui_newConnection
+from .SeeConnections import ui as ui_seeConnection
 
 
 class Ui_MainWindow(object):
@@ -54,7 +56,8 @@ class Ui_MainWindow(object):
         from .home import ui as ui_home
         # TODO: check empty dictionary
         self.back_button.clicked.connect(lambda : ui_home.setupUi(MainWindow, {}))
-
+        self.newConnection.clicked.connect(lambda :ui_newConnection.setupUi(MainWindow))
+        self.connections.clicked.connect(lambda : ui_seeConnection.setupUi(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
