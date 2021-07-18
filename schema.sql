@@ -169,22 +169,24 @@ create unique index if not exists Comment_id_uindex
 
 create table if not exists Like
 (
-	id INTEGER not null
-		constraint Like_pk
-			primary key autoincrement,
-	comment_id INTEGER
-		constraint Like_Comment_id_fk
-			references Comment
-				on update cascade on delete cascade,
-	post_id INTEGER
-		constraint Like_Post_id_fk
-			references Post
-				on update cascade on delete cascade,
-	time varchar(50) not null
+    id         INTEGER     not null
+        constraint Like_pk
+            primary key autoincrement,
+    comment_id INTEGER
+        references Comment
+            on update cascade on delete cascade,
+    post_id    INTEGER
+        references Post
+            on update cascade on delete cascade,
+    time       varchar(50) not null,
+    user_id    integer     not null
+        references user
+            on update cascade on delete cascade
 );
 
-create unique index if not exists Like_id_uindex
-	on Like (id);
+create unique index Like_id_uindex
+    on Like (id);
+
 
 create table if not exists Endorse
 (

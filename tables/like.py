@@ -10,6 +10,7 @@ class Like(Table):
         self.comment_id = data[1]
         self.post_id = data[2]
         self.time = data[3]
+        self.user_id = data[4]
 
     @classmethod
     def like(cls, *args, **kwargs):
@@ -45,5 +46,16 @@ class Like(Table):
         try:
             super().delete_via_pk(self.id)
             return {'status': True}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    @classmethod
+    def get_user_likes(cls, user_id):
+        _filter = {
+            'user_id': user_id
+        }
+        try:
+            likes = super().find(_filter)
+            return {'status': True, 'likes': likes}
         except Exception as e:
             return {'status': False, 'error': e}
