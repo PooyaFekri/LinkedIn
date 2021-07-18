@@ -22,9 +22,9 @@ class Connection(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
-    def accept_request(self, user_caller_id):
+    def accept_request(self):
         try:
-            super().update_via_pk({'user_caller_id': user_caller_id}, self.id)
+            super().update_via_pk({'connected': True}, self.id)
             return {'status': True}
         except Exception as e:
             return {'status': False, 'error': e}
@@ -80,7 +80,7 @@ class Connection(Table):
     def is_connected(cls, user1_id, user2_id):
         try:
             connection = cls.get_connect_with_users_id(user1_id, user2_id)
-            return {'status': True, 'is_connected': bool(len(connection))}
+            return {'status': True, 'is_connected': bool(connection) and connection.connected}
         except Exception as e:
             return {'status': False, 'error': e}
 
@@ -104,8 +104,15 @@ class Connection(Table):
             'user_caller_id': user1_id
         }
         try:
-            connections = super().find(_filter1) + super().find(_filter2)
+            connection = super().find(_filter1) + super().find(_filter2)
 
-            return {'status': True, 'connections': connections}
+            return {'status': True, 'connection': connection[-1]}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    def delete(self):
+        try:
+            super().delete_via_pk(self.id)
+            return {'status': True}
         except Exception as e:
             return {'status': False, 'error': e}
