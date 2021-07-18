@@ -1,5 +1,6 @@
 from typing import Union
 
+from app import exe_query
 from . import Connection
 from .table import Table
 
@@ -88,3 +89,12 @@ class User(Table):
             return {'status': True, 'users': users}
         except Exception as e:
             return {'status': False, 'error': e}
+    @classmethod
+    def search(cls, *args):
+        query = f'SELECT * FROM {cls._table_name} WHERE username LIKE %?%'
+        try:
+            users = exe_query(query, *args)
+            return {'status': True, 'users': users}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
