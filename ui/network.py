@@ -4,7 +4,8 @@ from .SeeConnections import ui as ui_seeConnection
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, data):
+        self.data = data
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -55,9 +56,9 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         from .home import ui as ui_home
         # TODO: check empty dictionary
-        self.back_button.clicked.connect(lambda : ui_home.setupUi(MainWindow, {}))
-        self.newConnection.clicked.connect(lambda :ui_newConnection.setupUi(MainWindow))
-        self.connections.clicked.connect(lambda : ui_seeConnection.setupUi(MainWindow))
+        self.back_button.clicked.connect(lambda: ui_home.setupUi(MainWindow, self.data))
+        self.newConnection.clicked.connect(lambda: ui_newConnection.setupUi(MainWindow, self.data))
+        self.connections.clicked.connect(lambda: ui_seeConnection.setupUi(MainWindow, self.data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
