@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import User
+from tables import User, Connection
+from tables import Post
 from .forget_password import ui as ui_forgot_password
 from .home import ui as ui_home
 from .signup import ui as ui_signup
@@ -81,8 +82,9 @@ class Ui_MainWindow(object):
             res = User.login(**variables)
             if res["status"]:
                 # data = {"user":res["user"],"post":}
-                data = {"user":res["user"]}
-                ui_home.setupUi(MainWindow,data)
+                user_id = res["user"].id
+                data = {"user": res["user"], "posts": Connection.get_related_posts(user_id)}
+                ui_home.setupUi(MainWindow, data)
             else:
                 self.Error_textBrowser.setText(res["error"])
 

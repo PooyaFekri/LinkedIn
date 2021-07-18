@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLineEdit" name="lineEdit_skill"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="add_skill_Button">
+      <property name="text">
+       <string>add skill</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_delete_skill"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="delete_skill_Button">
+      <property name="text">
+       <string>Delete skill</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_language"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="add_language_Button">
+      <property name="text">
+       <string>add language</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_remove_language"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="remove_language_pushButton">
+      <property name="text">
+       <string>remove language</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Start :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QDateEdit" name="dateEdit_start_date"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>End :</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QDateEdit" name="dateEdit_end_date"/>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_exprince_name"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="add_exprince">
+      <property name="text">
+       <string>add exprince</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_remove_exprince"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="remove_exprince_Button">
+      <property name="text">
+       <string>remove exprince</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="sumbit_pushButton">
+      <property name="text">
+       <string>Submit</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCommandLinkButton" name="Back_LinkButton">
+      <property name="text">
+       <string>back</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

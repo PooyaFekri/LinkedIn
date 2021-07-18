@@ -52,7 +52,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         from .home import ui as ui_home
-        self.back_button.clicked.connect(lambda : ui_home.setupUi(MainWindow))
+        # TODO: check empty dictionary
+        self.back_button.clicked.connect(lambda : ui_home.setupUi(MainWindow, {}))
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

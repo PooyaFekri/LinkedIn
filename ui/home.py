@@ -12,7 +12,7 @@ from .profile_me import ui as ui_profile
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow,data):
+    def setupUi(self, MainWindow, data):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
