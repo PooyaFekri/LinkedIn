@@ -12,7 +12,7 @@ from .profile_me import ui as ui_profile
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow,*args, **kwargs):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -106,19 +106,18 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
+        self.data = kwargs
         self.retranslateUi(MainWindow)
         self.message_button.clicked.connect(lambda : ui_room.setupUi(MainWindow))
         self.homeButton.clicked.connect(lambda : ui.setupUi(MainWindow))
         self.NetworkButton.clicked.connect(lambda : ui_network.setupUi(MainWindow))
         self.NewPostButton.clicked.connect(lambda : ui_post.setupUi(MainWindow))
-        self.profile_button.clicked.connect(lambda : ui_me.setupUi(MainWindow))
+        self.profile_button.clicked.connect(lambda : ui_me.setupUi(MainWindow,self.data["user"]))
         # self.notif //TODO
         # self.jobs //TODO
         self.LikeButton.clicked.connect(lambda : print("s2"))
         self.CommentButton.clicked.connect(lambda : print("s3"))
         self.ShareButton.clicked.connect(lambda : print("s4"))
-
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

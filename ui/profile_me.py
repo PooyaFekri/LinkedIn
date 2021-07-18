@@ -1,8 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from .edit_profile import ui as ui_edit_profile
 
+
+def find_skill(user):
+    pass
+
+
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow,user):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -10,6 +15,7 @@ class Ui_MainWindow(object):
         self.Username_info = QtWidgets.QLabel(self.centralwidget)
         self.Username_info.setGeometry(QtCore.QRect(50, 60, 121, 31))
         self.Username_info.setObjectName("Username_info")
+        # self.Username_info.setText()
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(20, 100, 47, 13))
         self.label_4.setObjectName("label_4")
@@ -62,23 +68,26 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         from .home import ui as ui_home
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(MainWindow,user)
         self.EditProfile.clicked.connect(lambda : ui_edit_profile.setupUi(MainWindow))
         self.Back.clicked.connect(lambda : ui_home.setupUi(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, MainWindow,user):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.Username_info.setText(_translate("MainWindow", "user name "))
+        self.Username_info.setText(_translate("MainWindow", user.username))
         self.label_4.setText(_translate("MainWindow", "Name :"))
-        self.FirstnameAndLastName.setText(_translate("MainWindow", "Name + Last name"))
+        self.FirstnameAndLastName.setText(_translate("MainWindow", user.first_name+" "+user.last_name))
         self.label_6.setText(_translate("MainWindow", "Introduction:"))
+        self.about.setText(user.intro)
         self.label.setText(_translate("MainWindow", "user name :"))
         self.label_7.setText(_translate("MainWindow", "skills:"))
+        self.Skill.setText(find_skill(user))
         self.EditProfile.setText(_translate("MainWindow", "Edit profile"))
         self.Back.setText(_translate("MainWindow", "Back"))
         self.label_8.setText(_translate("MainWindow", "about :"))
+        # self.about.setText(user.)
         self.label_9.setText(_translate("MainWindow", "support language:"))
 
 
