@@ -8,7 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Language
+from tables import Language, connection, Connection
 
 
 class Ui_MainWindow(object):
@@ -86,13 +86,15 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow,user)
+        self.retranslateUi(MainWindow,data,user)
         from .home import ui as ui_home
-        self.Back.clicked.connect(lambda :ui_home.setupUi(MainWindow,data))
+        # self.Back.clicked.connect(lambda :ui_home.setupUi(MainWindow,data))
+        self.Back.clicked.connect(lambda : self.back_home(MainWindow,data,user))
+        # self.connect_checkBox.clicked.connect(lambda : self.connect_or_disconnect())
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
 
-    def retranslateUi(self, MainWindow,user):
+    def retranslateUi(self, MainWindow,data,user):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "userName:"))
@@ -108,24 +110,39 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "about:"))
         # self.textBrowser_about.setText(user.about)
         language_support = Language.find_user_lang(user.id)
-        # self.connect_checkBox.
+        #todo check this after
+        if Connection.is_connected(data['user_id'],user.id):
+            self.connect_checkBox.mask()
         if language_support['status']:
             for k in language_support['languages']:
                 self.languages_fontComboBox.addItem(k)
         else:
             print(language_support['error'])
+        #todo check this after
         self.connect_checkBox.setText(_translate("MainWindow", "Connect"))
+
         self.nextPage_Button.setText(_translate("MainWindow", "next page"))
         self.Back.setText(_translate("MainWindow", "Back"))
 
+    def connect_or_disconnect(self,data,usr):
 
+        if self.connect_checkBox.isTristate():
+            pass
+        else:
+            if Connection.is_connected(data.get('user').id,usr.id):
+                pass
+    def back_home(self,MainWindow,data, user):
 
+        from .home import ui as ui_home
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+        self.connect_or_disconnect(data,user)
+        ui_home.setupUi(MainWindow,data)
+
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
+#     sys.exit(app.exec_())
