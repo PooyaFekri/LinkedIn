@@ -8,6 +8,7 @@ from utils.validate_input import ValidateInput
 
 
 class Ui_MainWindow(object):
+    user = None
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
@@ -66,6 +67,7 @@ class Ui_MainWindow(object):
         self.LoginButton.setText(_translate("MainWindow", "Login"))
 
     def login(self, MainWindow):
+        global user
         variables = {
             "username": self.UserName_lineEdit.text(),
             "password": self.Password_lineEdit.text()
@@ -77,7 +79,8 @@ class Ui_MainWindow(object):
             self.Error_textBrowser.setText('')
             res = User.login(**variables)
             if res["status"]:
-                ui_home.setupUi(MainWindow)
+                data = {"user":res["user"]}
+                ui_home.setupUi(MainWindow, **data)
             else:
                 self.Error_textBrowser.setText(res["error"])
 
@@ -89,6 +92,5 @@ def lunch_app():
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
 
 ui = Ui_MainWindow()
