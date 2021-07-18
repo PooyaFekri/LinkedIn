@@ -56,7 +56,7 @@ class User(Table):
     @classmethod
     def find_users(cls, *args, **kwargs):
         try:
-            likes = super().find(kwargs)
-            return {'status': True, 'likes': likes}
+            users = super().find(kwargs)
+            return {'status': True, 'users': users}
         except Exception as e:
             return {'status': False, 'error': e}
