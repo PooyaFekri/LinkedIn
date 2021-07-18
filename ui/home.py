@@ -3,7 +3,7 @@ from .room import ui as ui_room
 from .network import ui as ui_network
 from .post import ui as ui_post
 from .profile_me import ui as ui_me
-from .SeeOtherPerson import ui as ui_ohter_persion
+# from .SeeOtherPerson import ui as ui_ohter_persion
 
 # from .notifi // TODO: notif should be completed
 # from .jobs // TODO: jobs should be completed

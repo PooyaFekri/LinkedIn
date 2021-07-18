@@ -1,7 +1,10 @@
 import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QLabel, QVBoxLayout, QWidget, QScrollArea
 
+from .simple import ui as ui_simple
 from tables import User, Connection
 from tables.notification import Notification
 
@@ -94,7 +97,7 @@ class Ui_NewConnection(object):
 
         self.retranslateUi(NewConnection)
         from .network import ui as ui_network
-        self.BackButton.clicked.connect(lambda: ui_network.setupUi(NewConnection))
+        self.BackButton.clicked.connect(lambda: ui_network.setupUi(NewConnection,self.data))
         self.SearchButton.clicked.connect(lambda: self.search())
         QtCore.QMetaObject.connectSlotsByName(NewConnection)
 
@@ -117,24 +120,24 @@ class Ui_NewConnection(object):
 
     def search(self):
         username = self.lineEdit_username.text()
-        res = User.search(username).get("users")
+        users = self.data.get("user").search(username).get("users")
+
         for user in users:
-            frame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
-            frame.setGeometry(QtCore.QRect(10, 10, 561, 71))
-            frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-            frame.setFrameShadow(QtWidgets.QFrame.Raised)
-            frame.setObjectName(user.id)
-            username = QtWidgets.QLabel(frame)
+            username = QtWidgets.QLabel()
             username.setGeometry(QtCore.QRect(10, 10, 141, 16))
             username.setObjectName("username")
-            username_text = QtWidgets.QLabel(frame)
+            username_text = QtWidgets.QLabel()
             username_text.setGeometry(QtCore.QRect(10, 40, 141, 16))
             username_text.setObjectName("username_edit")
-            seeProfile_search = QtWidgets.QPushButton(frame)
+            seeProfile_search = QtWidgets.QPushButton()
             seeProfile_search.setGeometry(QtCore.QRect(350, 20, 91, 23))
             seeProfile_search.setObjectName("seeProfile_search")
-            ConnectButton = QtWidgets.QPushButton(frame)
+            ConnectButton = QtWidgets.QPushButton()
             ConnectButton.setGeometry(QtCore.QRect(450, 20, 89, 25))
+            self.verticalLayout.addWidget(username)
+            self.verticalLayout.addWidget(username_text)
+            self.verticalLayout.addWidget(seeProfile_search)
+            self.verticalLayout.addWidget(ConnectButton)
             ConnectButton.setObjectName("ConnectButton")
             username_text.setText(user.username)
             seeProfile_search.setText("See Profile")
@@ -142,21 +145,21 @@ class Ui_NewConnection(object):
             # TODO: complete this part
             # seeProfile_search.clicked.connect(lambda )
             ConnectButton.clicked.connect(lambda: self.connect(user.id))
-
+            # self.scrollArea_users.setWidget(frame)
             # self.scrollArea_users.setWidget(self.scrollAreaWidgetContents)
 
     def connect(self, user):
         # TODO: check if user send connect request before
         kwargs = {
             'user_caller_id': self.data.get('user').id,
-            'user_invited_id': user.id
+            'user_invited_id': user
         }
         res = Connection.connect_request(**kwargs)
         if res.get('status'):
             res = Connection.find(**kwargs)
             if res.get('status'):
-                Notification.notify(user_id=user.id,
-                                    type_id=res.get('connection'),
+                Notification.notify(user_id=user,
+                                    type_id=res.get('connection')[-1].id,
                                     type='Connection',
                                     time=datetime.datetime.now(),
                                     )
