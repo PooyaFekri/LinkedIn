@@ -1,37 +1,27 @@
 create table if not exists user
 (
-	first_name nvarchar not null,
-	last_name nvarchar not null,
-	intro nvarchar,
-	birthday nchar(50) not null,
-	id INTEGER not null
-		constraint user_pk
-			primary key autoincrement
+    first_name  nvarchar      not null,
+    last_name   nvarchar      not null,
+    intro       nvarchar,
+    birthday    nchar(50)     not null,
+    id          INTEGER       not null
+        constraint user_pk
+            primary key autoincrement,
+    username    nvarchar(100) not null,
+    password    nvarchar(100) not null,
+    nationality nvarchar(80),
+    email       nvarchar(90)  not null,
+    address     nvarchar(200),
+    "tel num"   nvarchar(20)
 );
 
 create unique index if not exists user_id_uindex
-	on user (id);
-
-alter table user
-	add username nvarchar(100) not null;
-
-alter table user
-	add password nvarchar(100) not null;
-
-alter table user
-	add nationality nvarchar(80);
-
-alter table user
-	add email nvarchar(90) not null;
-
-alter table user
-	add address nvarchar(200);
-
-alter table user
-	add "tel num" nvarchar(20);
+    on user (id);
 
 create unique index if not exists user_username_uindex
-	on user (username);
+    on user (username);
+
+
 
 
 create table if not exists skill
@@ -61,33 +51,39 @@ create table if not exists Experience
 	text nvarchar not null
 );
 
+create table if not exists Experience
+(
+    id         INTEGER      not null
+        constraint Experience_pk
+            primary key autoincrement,
+    user_id    INTEGER      not null
+        references user
+            on update cascade on delete cascade,
+    text       nvarchar     not null,
+    start_time nvarchar(50) not null,
+    end_time   nvarchar(50)
+);
+
 create unique index if not exists Experience_id_uindex
-	on Experience (id);
+    on Experience (id);
 
-alter table Experience
-	add start_time nvarchar(50) not null;
-
-alter table Experience
-	add end_time nvarchar(50);
 
 create table if not exists Connection
 (
-	id INTEGER not null
-		constraint Connection_pk
-			primary key autoincrement,
-	user_caller_id INTEGER not null
-		constraint Connection_user_id_fk
-			references user
-				on update cascade on delete cascade,
-	user_invited_id INTEGER not null
-		constraint Connection_user_id_fk_2
-			references user
-				on update cascade on delete cascade,
-	connected INTEGER not null
+    id              INTEGER not null
+        constraint Connection_pk
+            primary key autoincrement,
+    user_caller_id  INTEGER not null
+        references user
+            on update cascade on delete cascade,
+    user_invited_id INTEGER not null
+        references user
+            on update cascade on delete cascade,
+    connected       boolean default false not null
 );
 
 create unique index if not exists Connection_id_uindex
-	on Connection (id);
+    on Connection (id);
 
 
 create table if not exists Room
