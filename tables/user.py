@@ -91,8 +91,8 @@ class User(Table):
             return {'status': False, 'error': e}
     @classmethod
     def search(cls, username):
-        query = f'SELECT * FROM user WHERE username LIKE %s'
-        username = f'{username}%'
+        query = f'SELECT * FROM {cls._table_name} WHERE username LIKE ?'
+        username = f'%{username}%'
         try:
             users = exe_query(query, username)
             return {'status': True, 'users': users}

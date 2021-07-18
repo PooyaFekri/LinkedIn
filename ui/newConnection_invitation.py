@@ -116,10 +116,8 @@ class Ui_NewConnection(object):
         self.BackButton.setText(_translate("NewConnection", "Back"))
 
     def search(self):
-        variables = {
-            "username": self.lineEdit_username.text()
-        }
-        users = User.find_users(**variables).get("users")
+        username = self.lineEdit_username.text()
+        res = User.search(username).get("users")
         for user in users:
             frame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
             frame.setGeometry(QtCore.QRect(10, 10, 561, 71))
