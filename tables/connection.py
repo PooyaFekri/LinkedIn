@@ -1,7 +1,6 @@
 from typing import Union
 
 from app import exe_query
-from . import Like, Post, Comment
 from .table import Table
 
 
@@ -53,6 +52,7 @@ class Connection(Table):
 
     @classmethod
     def get_related_posts(cls, user_id):
+        from . import Like, Post, Comment
         res = cls.find_user_connections(user_id)
         if res.get('status'):
             connections = res.get('connections')
@@ -75,3 +75,21 @@ class Connection(Table):
 
         else:
             return res
+
+    @classmethod
+    def is_connected(cls, user1_id, user2_id):
+        _filter1 = {
+            'user_invited_id': user1_id,
+            'user_caller_id': user2_id
+        }
+
+        _filter2 = {
+            'user_invited_id': user2_id,
+            'user_caller_id': user1_id
+        }
+        try:
+            connection = super().find(_filter1) + super().find(_filter2)
+
+            return {'status': True, 'is_connected': bool(len(connection))}
+        except Exception as e:
+            return {'status': False, 'error': e}
