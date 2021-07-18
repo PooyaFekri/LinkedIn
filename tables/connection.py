@@ -1,7 +1,6 @@
 from typing import Union
 
 from app import exe_query
-from . import Like, Post, Comment
 from .table import Table
 
 
@@ -53,15 +52,17 @@ class Connection(Table):
 
     @classmethod
     def get_related_posts(cls, user_id):
+        from . import Like, Post, Comment
         res = cls.find_user_connections(user_id)
         if res.get('status'):
             connections = res.get('connections')
             res_posts = []
             try:
                 for connection in connections:
-                    likes: list = Like.get_user_likes(user_id).get('likes')
-                    posts: list = Post.get_post_by_user_id(user_id).get('posts')
-                    comments: list = Comment.get_comments_by_user_id.get('comments')
+                    connect_user_id = user_id if connection.user_caller_id != user_id else connection.user_caller_id
+                    likes: list = Like.get_user_likes(connect_user_id).get('likes')
+                    posts: list = Post.get_post_by_user_id(connect_user_id).get('posts')
+                    comments: list = Comment.get_comments_by_user_id(connect_user_id).get('comments')
                     res_posts += posts
                     for ele in likes + comments:
                         temp_post = Post.find_via_pk(ele.post_id).get('posts')
@@ -74,3 +75,21 @@ class Connection(Table):
 
         else:
             return res
+
+    @classmethod
+    def is_connected(cls, user1_id, user2_id):
+        _filter1 = {
+            'user_invited_id': user1_id,
+            'user_caller_id': user2_id
+        }
+
+        _filter2 = {
+            'user_invited_id': user2_id,
+            'user_caller_id': user1_id
+        }
+        try:
+            connection = super().find(_filter1) + super().find(_filter2)
+
+            return {'status': True, 'is_connected': bool(len(connection))}
+        except Exception as e:
+            return {'status': False, 'error': e}

@@ -1,3 +1,6 @@
+from typing import Union
+
+from . import Connection
 from .table import Table
 
 
@@ -50,5 +53,38 @@ class User(Table):
         try:
             super().update_via_pk(kwargs, self.id)
             return {'status': True}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    @classmethod
+    def find_users(cls, *args, **kwargs):
+        try:
+            users = super().find(kwargs)
+            return {'status': True, 'users': users}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    @classmethod
+    def find_via_pk(cls, pk: Union[str, int]) -> dict:
+        try:
+            user = super().find_via_pk(pk)
+            return {'status': True, 'user': user}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    def people_user_may_know(self):
+        try:
+            connections = Connection.find_user_connections(self.id)
+            users = []
+            for connection in connections:
+                connect_user_id = self.id if connection.user_caller_id != self.id else connection.user_caller_id
+                user2_connections = Connection.find_user_connections(connect_user_id)
+
+                for user2_connection in user2_connections:
+                    connect_user2_id = connect_user_id if user2_connection.user_caller_id != connect_user_id.id else user2_connection.user_caller_id
+                    if not Connection.is_connected(self.id, connect_user2_id).get('is_connected'):
+                        user = self.find_via_pk(connect_user2_id).get('user')
+                        users.append(user)
+            return {'status': True, 'users': users}
         except Exception as e:
             return {'status': False, 'error': e}

@@ -8,3 +8,4 @@ from .message import Message
 from .post import Post
 from .room import Room
 from .skill import Skill
+from .language import Language
