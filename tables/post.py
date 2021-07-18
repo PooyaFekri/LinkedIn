@@ -48,7 +48,8 @@ class Post(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
-    def get_shared_post(self, share_id):
+    @classmethod
+    def get_shared_post(cls, share_id):
         _filter = {
             'share': share_id
         }
