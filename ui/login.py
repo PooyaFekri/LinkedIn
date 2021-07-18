@@ -68,6 +68,7 @@ class Ui_MainWindow(object):
 
     def login(self, MainWindow):
         global user
+
         variables = {
             "username": self.UserName_lineEdit.text(),
             "password": self.Password_lineEdit.text()
@@ -79,8 +80,9 @@ class Ui_MainWindow(object):
             self.Error_textBrowser.setText('')
             res = User.login(**variables)
             if res["status"]:
+                # data = {"user":res["user"],"post":}
                 data = {"user":res["user"]}
-                ui_home.setupUi(MainWindow, **data)
+                ui_home.setupUi(MainWindow,data)
             else:
                 self.Error_textBrowser.setText(res["error"])
 

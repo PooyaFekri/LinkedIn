@@ -7,7 +7,7 @@ def find_skill(user):
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow,user):
+    def setupUi(self, MainWindow,data):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -68,9 +68,11 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         from .home import ui as ui_home
-        self.retranslateUi(MainWindow,user)
-        self.EditProfile.clicked.connect(lambda : ui_edit_profile.setupUi(MainWindow))
-        self.Back.clicked.connect(lambda : ui_home.setupUi(MainWindow))
+        # print(data)
+        self.retranslateUi(MainWindow,data.get("user"))
+        # print(data)
+        self.EditProfile.clicked.connect(lambda : ui_edit_profile.setupUi(MainWindow,data))
+        self.Back.clicked.connect(lambda : ui_home.setupUi(MainWindow,data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow,user):
