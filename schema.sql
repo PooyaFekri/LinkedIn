@@ -186,7 +186,7 @@ create table if not exists Like
             on update cascade on delete cascade
 );
 
-create unique index Like_id_uindex
+create unique index if not exists Like_id_uindex
     on Like (id);
 
 

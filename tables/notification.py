@@ -35,7 +35,7 @@ class Notification(Table):
     def user_notification(cls, user_id):
         query = f'SELECT * from {cls._table_name} WHERE user_id=? and visited=? ORDER BY time DESC'
         try:
-            notifications = exe_query(query, user_id, False)
+            notifications = [Notification(notification) for notification in exe_query(query, user_id, False)]
             return {'status': True, 'notifications': notifications}
         except Exception as e:
             return {'status': False, 'error': e}

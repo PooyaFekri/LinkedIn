@@ -45,7 +45,7 @@ class Connection(Table):
         }
         query = f'SELECT * from {cls._table_name} WHERE user_caller_id=? or user_invited_id=?'
         try:
-            connections = exe_query(query, user_id, user_id)
+            connections = [Connection(connection) for connection in exe_query(query, user_id, user_id)]
             return {'status': True, 'connections': connections}
         except Exception as e:
             return {'status': False, 'error': e}

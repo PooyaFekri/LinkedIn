@@ -8,7 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Language, connection, Connection
+from tables import Language
 
 
 class Ui_MainWindow(object):
@@ -86,15 +86,13 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow,data,user)
+        self.retranslateUi(MainWindow,user)
         from .home import ui as ui_home
-        # self.Back.clicked.connect(lambda :ui_home.setupUi(MainWindow,data))
-        self.Back.clicked.connect(lambda : self.back_home(MainWindow,data,user))
-        # self.connect_checkBox.clicked.connect(lambda : self.connect_or_disconnect())
+        self.Back.clicked.connect(lambda :ui_home.setupUi(MainWindow,data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
 
-    def retranslateUi(self, MainWindow,data,user):
+    def retranslateUi(self, MainWindow,user):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "userName:"))
