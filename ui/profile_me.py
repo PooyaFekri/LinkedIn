@@ -1,9 +1,16 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+
+from tables import Skill, Language
 from .edit_profile import ui as ui_edit_profile
 
 
 def find_skill(user):
-    pass
+    list_of_skill = Skill.find_user_id(user.id)
+    str1 = ""
+    if list_of_skill["status"]:
+        for i in list_of_skill["skills"]:
+            str1 += i+"\n"
+    return str1
 
 
 class Ui_MainWindow(object):
@@ -91,6 +98,10 @@ class Ui_MainWindow(object):
         self.label_8.setText(_translate("MainWindow", "about :"))
         # self.about.setText(user.)
         self.label_9.setText(_translate("MainWindow", "support language:"))
+        languages = Language.find_user_lang(user.id)
+        if languages["status"]:
+            for i in languages["languages"]:
+                self.SupportLanguage.addItem(i.text)
 
 
 # if __name__ == "__main__":

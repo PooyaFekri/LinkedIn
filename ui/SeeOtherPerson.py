@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'SeeOtherPerson.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from tables import Language, Connection
@@ -125,10 +117,18 @@ class Ui_MainWindow(object):
     def connect_or_disconnect(self,data,usr):
 
         if self.connect_checkBox.isTristate():
-            pass
+            if not Connection.is_connected(data.get('user').id,usr.id)["status"]:
+                data = {"user_caller_id":data["user"].id,"user_invited_id":usr.id}
+                Connection.connect_request(**data)
+
         else:
-            if Connection.is_connected(data.get('user').id,usr.id):
-                pass
+            if Connection.is_connected(data.get('user').id,usr.id)["status"]:
+                connection = Connection.get_connect_with_users_id(data.get('user').id,usr.id)
+                connection.delete()
+            elif Connection.get_connect_with_users_id(data.get("user").id,usr.id)["status"]:
+                connection = Connection.get_connect_with_users_id(data.get('user').id,usr.id)
+                connection.delete()
+
     def back_home(self,MainWindow,data, user):
 
         from .home import ui as ui_home
