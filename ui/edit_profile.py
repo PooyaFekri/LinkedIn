@@ -1,5 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QDate
+
 from .next_page_of_edite_person import ui as ui_next_page
+
+
+def make_date(birthday):
+    print(birthday)
+    time = birthday.split()[0].split('-')
+    return QDate(int(time[0]),int(time[1]),int(time[2]))
 
 
 class Ui_MainWindow(object):
@@ -111,9 +119,10 @@ class Ui_MainWindow(object):
             dict["tel num"] = user.tel_num
 
         if self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime() != user.birthday:
-            print(self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime())
-            dict["birthday"] = self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime()
-            user.birthday = self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime()
+            # print(self.dateEdit_birthday.dateTime().toPyDateTime())
+            dict["birthday"] = self.dateEdit_birthday.dateTime().toPyDateTime()
+            user.birthday = str(self.dateEdit_birthday.dateTime().toPyDateTime())
+            # print(user.birthday)
             # print(user.birthday)
         user.update(**dict)
         ui_next_page.setupUi(MainWindow, data)
@@ -133,8 +142,8 @@ class Ui_MainWindow(object):
         self.telNum.setText(_translate("MainWindow", "tel num"))
         self.submit_button.setText(_translate("MainWindow", "Submit"))
         self.username.setText(_translate("MainWindow", "username"))
-        print(user.birthday)
-        self.dateEdit_birthday.dateTimeFromText(user.birthday)
+        # print(user.birthday)
+        self.dateEdit_birthday.setDate(make_date(user.birthday))
 
 
 # if __name__ == "__main__":

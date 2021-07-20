@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow,data):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         from .home import ui as ui_home
-        self.BackButton.clicked.connect(lambda : ui_home.setupUi(MainWindow))
+        self.BackButton.clicked.connect(lambda : ui_home.setupUi(MainWindow,data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

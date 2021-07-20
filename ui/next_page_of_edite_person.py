@@ -1,5 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from tables import Skill, Language, Experience
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow,data):
@@ -80,7 +82,7 @@ class Ui_MainWindow(object):
         self.add_skill_Button.clicked.connect(lambda : self.add_skill(self.lineEdit_skill.text()))
         self.delete_skill_Button.clicked.connect(lambda : self.delete_skill(self.lineEdit_delete_skill.text()))
         self.add_language_Button.clicked.connect(lambda : self.add_language(self.lineEdit_language.text()))
-        self.remove_language_pushButton.clicked.connect(lambda : self.remove_languare(self.lineEdit_remove_language.text()))
+        self.remove_language_pushButton.clicked.connect(lambda : self.remove_language1(self.lineEdit_remove_language.text()))
         self.add_exprince.clicked.connect(lambda : self.add_exprince_to(self.dateEdit_start_date,self.dateEdit_end_date,self.lineEdit_exprince_name.text()))
         self.remove_language_pushButton.clicked.connect(lambda : self.remove_exprince(self.lineEdit_remove_exprince.text()))
         self.sumbit_pushButton.clicked.connect(lambda :ui_profile_me.setupUi(MainWindow,data))
@@ -103,22 +105,39 @@ class Ui_MainWindow(object):
         self.Back_LinkButton.setText(_translate("MainWindow", "back"))
 
     def add_skill(self, text):
-        pass
+        info = {"user_id":self.data["user"].id,"text":text}
+        Skill.insert(**info)
 
     def delete_skill(self, text):
-        pass
+
+        get_core = Skill.find_user_id(self.data["user"].id)
+        if get_core["status"]:
+            for i in get_core["skills"]:
+                if i.text == text:
+                    i.delete()
 
     def add_language(self, text):
-        pass
+        info = {"user_id":self.data["user"].id,"language":text}
+        Language.add(**info)
 
-    def remove_languare(self, param):
-        pass
+    def remove_language1(self, text):
+        get_core = Language.find_user_lang(self.data["user"].id)
+        if get_core["status"]:
+            for i in get_core["languages"]:
+                if i.language == text:
+                    i.delete()
 
     def add_exprince_to(self, dateEdit_start_date, dateEdit_end_date, text):
-        pass
+        info = {"user_id":self.data["user"].id,"start_time":dateEdit_start_date,"end_time":dateEdit_end_date,"text":text}
+        Experience.add(**info)
 
-    def remove_exprince(self, param):
-        pass
+    def remove_exprince(self, text):
+        get_core = Experience.find_user_experiences(self.data["user"].id)
+        if get_core["status"]:
+            for i in get_core["experiences"]:
+                if i.language == text:
+                    i.delete()
+
 
 
 ui = Ui_MainWindow()

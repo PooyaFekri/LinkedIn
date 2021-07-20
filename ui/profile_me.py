@@ -9,7 +9,7 @@ def find_skill(user):
     str1 = ""
     if list_of_skill["status"]:
         for i in list_of_skill["skills"]:
-            str1 += i+"\n"
+            str1 += i.text+"\n"
     return str1
 
 
@@ -101,7 +101,7 @@ class Ui_MainWindow(object):
         languages = Language.find_user_lang(user.id)
         if languages["status"]:
             for i in languages["languages"]:
-                self.SupportLanguage.addItem(i.text)
+                self.SupportLanguage.addItem(i.language)
 
 
 # if __name__ == "__main__":
