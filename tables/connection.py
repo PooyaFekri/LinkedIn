@@ -2,6 +2,7 @@ from typing import Union
 
 from app import exe_query
 from .table import Table
+from .user import User
 
 
 class Connection(Table):
@@ -87,8 +88,8 @@ class Connection(Table):
     @classmethod
     def find(cls, *args, **kwargs):
         try:
-            connection = super().find(kwargs)
-            return {'status': True, 'connection': connection}
+            connections = super().find(kwargs)
+            return {'status': True, 'connections': connections}
         except Exception as e:
             return {'status': False, 'error': e}
 
@@ -116,3 +117,6 @@ class Connection(Table):
             return {'status': True}
         except Exception as e:
             return {'status': False, 'error': e}
+
+    def get_connection_of_user(self, *args, **kwargs):
+        query = f'SELECT * FROM Connection, user WHERE '
