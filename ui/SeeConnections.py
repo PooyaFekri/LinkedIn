@@ -1,10 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from tables import Connection
+
 
 class Ui_SeeConnections(object):
-    def setupUi(self, SeeConnections):
+    def setupUi(self, SeeConnections, data):
         SeeConnections.setObjectName("SeeConnections")
         SeeConnections.resize(600, 600)
+        self.data = data
         self.centralwidget = QtWidgets.QWidget(SeeConnections)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -108,6 +111,16 @@ class Ui_SeeConnections(object):
         self.DisconnectButton.setText(_translate("SeeConnections", "Disconnect"))
         self.BackButton.setText(_translate("SeeConnections", "Back"))
 
+    def search(self):
+        __filter1 = {
+            'user_caller_id': self.data.get('user').id,
+
+        }
+        __filter2 = {
+            'user_invited_id': self.data.get('user').id,
+
+        }
+        Connection.find()
 
 # if __name__ == "__main__":
 #     import sys

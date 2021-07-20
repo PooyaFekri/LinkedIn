@@ -3,10 +3,8 @@ from .room import ui as ui_room
 from .network import ui as ui_network
 from .post import ui as ui_post
 from .profile_me import ui as ui_me
-<<<<<<< HEAD
-=======
 # from .SeeOtherPerson import ui as ui_ohter_persion
->>>>>>> af3c502d57e363cb3b99efc5ee8c48eb3687c5f6
+
 
 # from .notifi // TODO: notif should be completed
 # from .jobs // TODO: jobs should be completed
@@ -113,19 +111,11 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.data = data
         self.retranslateUi(MainWindow)
-<<<<<<< HEAD
-        self.message_button.clicked.connect(lambda : ui_room.setupUi(MainWindow))
-        self.homeButton.clicked.connect(lambda : ui.setupUi(MainWindow,self.data))
-        self.NetworkButton.clicked.connect(lambda : ui_network.setupUi(MainWindow,data))
-        self.NewPostButton.clicked.connect(lambda : ui_post.setupUi(MainWindow,self.data))
-        self.profile_button.clicked.connect(lambda : ui_me.setupUi(MainWindow,self.data))
-=======
         self.message_button.clicked.connect(lambda: ui_room.setupUi(MainWindow))
         self.homeButton.clicked.connect(lambda: ui.setupUi(MainWindow, self.data))
         self.NetworkButton.clicked.connect(lambda: ui_network.setupUi(MainWindow, self.data))
         self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data))
         self.profile_button.clicked.connect(lambda: ui_me.setupUi(MainWindow, self.data))
->>>>>>> af3c502d57e363cb3b99efc5ee8c48eb3687c5f6
         # self.notif //TODO
         # self.jobs //TODO
         self.LikeButton.clicked.connect(lambda: print("s2"))
