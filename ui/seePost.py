@@ -62,7 +62,7 @@ class Ui_MainWindow(object):
         self.ShareFrom_2.setObjectName("ShareFrom_2")
         self.verticalLayout_2.addWidget(self.ShareFrom_2)
         self.ShareFrom = QtWidgets.QLabel(self.frame)
-        self.ShareFrom.setText("")
+        self.ShareFrom.setText(User.find_via_pk(self.data['posts']['posts'][self.counter].share).get("user").username)
         self.ShareFrom.setObjectName("ShareFrom")
         self.verticalLayout_2.addWidget(self.ShareFrom)
         self.verticalLayout.addWidget(self.frame)
@@ -83,9 +83,9 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
+        self.set_page()
         from .home import ui as ui_home
-        from .SeeOtherPerson3 import ui as ui_seeOtherPerson
+        from .seeOtherPerson import ui as ui_seeOtherPerson
         from .post import ui as ui_post
         self.retranslateUi(MainWindow)
         self.pushButton.clicked.connect(lambda :ui.setupUi(MainWindow,data,self.counter_before))#back
@@ -94,7 +94,7 @@ class Ui_MainWindow(object):
         #todo add comment ui to this project
         self.CommentButton.clicked.connect(lambda :print("co"))
         self.ShareButton.clicked.connect(lambda :ui_post.setupUi(MainWindow,self.data,self.user.id))
-        self.SeeProfile.clicked.connect(lambda :ui_seeOtherPerson.setupUi(MainWindow,self.data,User.find_via_pk(self.data['posts']['posts'][self.counter].user_id)))
+        self.SeeProfile.clicked.connect(lambda :ui_seeOtherPerson.setupUi(MainWindow,self.data,User.find_via_pk(self.data['posts']['posts'][self.counter].user_id).get("user")))
 
         self.LikeButton.clicked.connect(lambda :print("like"))
 
@@ -115,6 +115,7 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "Next"))
         self.pushButton.setText(_translate("MainWindow", "Back"))
         self.pushButton_3.setText(_translate("MainWindow", "Home"))
+        self.UserName.setText(self.user.username)
 
     def set_counter(self):
         self.counter_after = self.counter_before = self.counter
@@ -124,9 +125,9 @@ class Ui_MainWindow(object):
             self.counter_before = self.counter - 1
 
     def set_page(self):
-         self.user = User.find_via_pk(self.data['posts']['posts'][self.counter].user_id)
+         self.user = User.find_via_pk(self.data['posts']['posts'][self.counter].user_id).get('user')
          self.UserName.setText(self.user.username)
-
+         self.textBrowserOfPost.setText(self.data['posts']['posts'][self.counter].text)
          # if
 
 # if __name__ == "__main__":
