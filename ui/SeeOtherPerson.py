@@ -5,7 +5,6 @@ from tables import Language, Connection
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow,data,user):
-        self.data = data
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(633, 724)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -102,7 +101,7 @@ class Ui_MainWindow(object):
         # self.textBrowser_about.setText(user.about)
         language_support = Language.find_user_lang(user.id)
         #todo check this after
-        if Connection.is_connected(self.data['user_id'],user.id):
+        if Connection.is_connected(data['user_id'],user.id):
             self.connect_checkBox.mask()
         if language_support['status']:
             for k in language_support['languages']:

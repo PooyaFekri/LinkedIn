@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -25,7 +25,73 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QTextBrowser" name="textBrowser_chat"/>
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>577</width>
+          <height>443</height>
+         </rect>
+        </property>
+        <widget class="QFrame" name="chat_frame">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>9</y>
+           <width>551</width>
+           <height>141</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QTextBrowser" name="textBrowser_message">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>371</width>
+            <height>131</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label">
+          <property name="geometry">
+           <rect>
+            <x>420</x>
+            <y>10</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>User_Name:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="username_label">
+          <property name="geometry">
+           <rect>
+            <x>430</x>
+            <y>40</y>
+            <width>71</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>user_name</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </widget>
      </item>
      <item>
       <widget class="QLineEdit" name="lineEdit_message"/>
