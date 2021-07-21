@@ -90,13 +90,17 @@ class User(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
-    @classmethod
-    def search(cls, username):
-        query = f'SELECT * FROM user WHERE username LIKE %s'
-        username = f'{username}%'
+    def search(self, username):
+        query = f'SELECT * FROM user WHERE username LIKE ? and user.id != ?'
+        username = f'%{username}%'
         try:
-            users = [User(user) for user in exe_query(query, username)]
+            res_users = [User(user) for user in exe_query(query, username, self.id)]
+            users = []
+            for user in res_users:
+                if Connection.get_connect_with_users_id(self.id, user.id).get('connection'):
+                    continue
+                users.append(user)
+
             return {'status': True, 'users': users}
         except Exception as e:
             return {'status': False, 'error': e}
-
