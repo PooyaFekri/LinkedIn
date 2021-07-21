@@ -2,7 +2,6 @@ from typing import Union
 
 from app import exe_query
 from .table import Table
-from .user import User
 
 
 class Connection(Table):
@@ -118,5 +117,6 @@ class Connection(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
-    def get_connection_of_user(self, *args, **kwargs):
-        query = f'SELECT * FROM Connection, user WHERE '
+    # def get_connection_of_user(self, *args, **kwargs):
+    #     query = f'SELECT * FROM Connection, user WHERE '
+    #     pass

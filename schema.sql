@@ -262,4 +262,10 @@ alter table Language_dg_tmp rename to Language;
 create unique index Language_id_uindex
 	on Language (id);
 
+alter table Experience
+	add start_time nvarchar not null;
+
+alter table Experience
+	add end_time nvarchar not null;
+
 
