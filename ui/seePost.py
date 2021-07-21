@@ -8,14 +8,17 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Connection
+from tables import Connection, User
 
 
 class Ui_MainWindow(object):
 
-    def setupUi(self, MainWindow, data):
-        # data['posts'] = Connection.get_related_posts(data['user'].id)
-        # self.data = data
+    def setupUi(self, MainWindow, data,counter = 0):
+        data['posts'] = Connection.get_related_posts(data['user'].id)
+        self.data = data
+        self.counter = counter
+        self.set_counter()
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -81,13 +84,18 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+        from .home import ui as ui_home
+        from .SeeOtherPerson import ui as ui_seeOtherPerson
+        from .post import ui as ui_post
         self.retranslateUi(MainWindow)
-        self.pushButton.clicked.connect(lambda :print("hi"))#back
-        self.pushButton_2.clicked.connect(lambda :print("go"))#next
-        self.pushButton_3.clicked.connect(lambda :print("event"))#home
+        self.pushButton.clicked.connect(lambda :ui.setupUi(MainWindow,data,self.counter_before))#back
+        self.pushButton_2.clicked.connect(lambda : ui.setupUi(MainWindow,data,self.counter_after))#next
+        self.pushButton_3.clicked.connect(lambda : ui_home.setupUi(MainWindow,data,self.data['posts']['posts'][self.counter].user_id))#home
+        #todo add comment ui to this project
         self.CommentButton.clicked.connect(lambda :print("co"))
-        self.ShareButton.clicked.connect(lambda :print("shate"))
-        self.SeeProfile.clicked.connect(lambda :print("qq"))
+        self.ShareButton.clicked.connect(lambda :ui_post.setupUi(MainWindow,self.data,))
+        self.SeeProfile.clicked.connect(lambda :ui_seeOtherPerson.setupUi(MainWindow,self.data,User.find_via_pk(self.data['posts']['posts'][self.counter].user_id)))
+
         self.LikeButton.clicked.connect(lambda :print("like"))
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -108,7 +116,18 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Back"))
         self.pushButton_3.setText(_translate("MainWindow", "Home"))
 
+    def set_counter(self):
+        self.counter_after = self.counter_before = self.counter
+        if self.data['posts'] != None and len(self.data['posts']) > self.counter + 1:
+            self.counter_after = self.counter + 1
+        if self.counter != 0:
+            self.counter_before = self.counter - 1
 
+    def set_page(self):
+         self.user = User.find_via_pk(self.data['posts']['posts'][self.counter].user_id)
+         self.UserName.setText(self.user.username)
+
+         # if
 
 # if __name__ == "__main__":
 #     import sys

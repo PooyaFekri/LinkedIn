@@ -112,7 +112,7 @@ class Ui_MainWindow(object):
         self.message_button.clicked.connect(lambda : ui_room.setupUi(MainWindow,self.data))
         self.homeButton.clicked.connect(lambda: ui_seePost.setupUi(MainWindow, self.data))
         self.NetworkButton.clicked.connect(lambda: ui_network.setupUi(MainWindow, data))
-        self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data))
+        self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data,-1))
         self.profile_button.clicked.connect(lambda: ui_me.setupUi(MainWindow, self.data))
 
         # self.notif //TODO

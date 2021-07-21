@@ -5,9 +5,10 @@ from tables.notification import Notification
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow, data):
+    def setupUi(self, MainWindow, data,share_id):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(601, 629)
+        self.share_id = share_id
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -51,7 +52,10 @@ class Ui_MainWindow(object):
         text = self.plainTextEdit.toPlainText()
         time = datetime.datetime.now()
         user_id = data.get("user").id
-        data = {"user_id": user_id, "time": time, "text": text}
+        if self.share_id != -1:
+            data = {"user_id": user_id, "time": time, "text": text}
+        else:
+            data = {"user_id": user_id, "time": time, "text": text,'share':self.share_id}
         Post.send(**data)
 
         post = Post.find(data)[-1]
