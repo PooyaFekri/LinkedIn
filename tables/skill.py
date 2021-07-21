@@ -32,7 +32,8 @@ class Skill(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
-    def find_user_id(self, user_id):
+    @classmethod
+    def find_user_id(cls, user_id):
         _filter = {
             'user_id': user_id
         }

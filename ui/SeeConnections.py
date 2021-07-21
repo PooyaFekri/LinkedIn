@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from tables import Connection, User
+from .OneConnection import ui as ui_OneConnection
 
 
 class Ui_SeeConnections(object):
@@ -57,7 +58,7 @@ class Ui_SeeConnections(object):
         self.retranslateUi(SeeConnections)
         from .network import ui as ui_network
         self.BackButton.clicked.connect(lambda: ui_network.setupUi(SeeConnections, self.data))
-        self.SearchButton.clicked.connect(lambda: self.search())
+        self.SearchButton.clicked.connect(lambda: self.search(SeeConnections))
 
         QtCore.QMetaObject.connectSlotsByName(SeeConnections)
 
@@ -72,7 +73,7 @@ class Ui_SeeConnections(object):
         self.SearchButton.setText(_translate("SeeConnections", "Search"))
         self.BackButton.setText(_translate("SeeConnections", "Back"))
 
-    def search(self):
+    def search(self, SeeConnections):
         user_id = self.data.get('user').id
         variables = {
             'user_id': user_id,
@@ -85,8 +86,13 @@ class Ui_SeeConnections(object):
         users = []
         for connection in connections:
             connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
-            user = User.find_via_pk(connect_user_id)
+            user = User.find_via_pk(connect_user_id).get('user')
             users.append(user)
+        page = {
+            'connections': connections,
+            'users': users
+        }
+        ui_OneConnection.setupUi(SeeConnections, self.data, page)
 
 
 ui = Ui_SeeConnections()

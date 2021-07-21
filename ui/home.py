@@ -8,9 +8,6 @@ from .profile_me import ui as ui_me
 
 # from .notifi // TODO: notif should be completed
 # from .jobs // TODO: jobs should be completed
-from .profile_me import ui as ui_profile
-
-
 # from .comment import ui as ui_comment //TODO: edit comment file
 
 
@@ -112,14 +109,9 @@ class Ui_MainWindow(object):
         self.data = data
         self.retranslateUi(MainWindow)
         # self.message_button.clicked.connect(lambda : ui_room.setupUi(MainWindow,self.data))
-        self.homeButton.clicked.connect(lambda : ui.setupUi(MainWindow,self.data))
-        self.NetworkButton.clicked.connect(lambda : ui_network.setupUi(MainWindow,data))
-        self.NewPostButton.clicked.connect(lambda : ui_post.setupUi(MainWindow,self.data))
-        self.profile_button.clicked.connect(lambda : ui_me.setupUi(MainWindow, self.data))
-        # self.message_button.clicked.connect(lambda: ui_room.setupUi(MainWindow,self.data))
-        # self.homeButton.clicked.connect(lambda: ui.setupUi(MainWindow, self.data))
-        # self.NetworkButton.clicked.connect(lambda: ui_network.setupUi(MainWindow, self.data))
-        # self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data))
+        self.homeButton.clicked.connect(lambda: ui.setupUi(MainWindow, self.data))
+        self.NetworkButton.clicked.connect(lambda: ui_network.setupUi(MainWindow, data))
+        self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data))
         self.profile_button.clicked.connect(lambda: ui_me.setupUi(MainWindow, self.data))
         # self.notif //TODO
         # self.jobs //TODO
@@ -149,15 +141,6 @@ class Ui_MainWindow(object):
         # self.label.setText(_translate("MainWindow", "Share from:"))
         # self.message_button.setText(_translate("MainWindow", "message"))
 
-
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     MainWindow = QtWidgets.QMainWindow()
-#     ui = Ui_MainWindow()
-#     ui.setupUi(MainWindow)
-#     MainWindow.show()
-#     sys.exit(app.exec_())
 
 
 ui = Ui_MainWindow()

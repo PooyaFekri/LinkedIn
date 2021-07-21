@@ -68,7 +68,7 @@ class Connection(Table):
                         temp_post = Post.find_via_pk(ele.post_id).get('posts')
                         res_posts.append(temp_post)
 
-                    return {'status': True, posts: res_posts}
+                    return {'status': True, "posts": res_posts}
 
             except Exception as e:
                 return {'status': False, 'error': e}
