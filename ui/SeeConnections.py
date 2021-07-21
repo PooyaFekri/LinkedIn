@@ -92,7 +92,9 @@ class Ui_SeeConnections(object):
             'connections': connections,
             'users': users
         }
-        ui_OneConnection.setupUi(SeeConnections, self.data, page)
-
+        if len(page["connections"])>0:
+            ui_OneConnection.setupUi(SeeConnections, self.data, page)
+        else:
+            ui.setupUi(SeeConnections,self.data)
 
 ui = Ui_SeeConnections()
