@@ -8,9 +8,14 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from tables import Connection
+
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+
+    def setupUi(self, MainWindow, data):
+        # data['posts'] = Connection.get_related_posts(data['user'].id)
+        # self.data = data
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -77,6 +82,14 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        self.pushButton.clicked.connect(lambda :print("hi"))#back
+        self.pushButton_2.clicked.connect(lambda :print("go"))#next
+        self.pushButton_3.clicked.connect(lambda :print("event"))#home
+        self.CommentButton.clicked.connect(lambda :print("co"))
+        self.ShareButton.clicked.connect(lambda :print("shate"))
+        self.SeeProfile.clicked.connect(lambda :print("qq"))
+        self.LikeButton.clicked.connect(lambda :print("like"))
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -94,7 +107,6 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "Next"))
         self.pushButton.setText(_translate("MainWindow", "Back"))
         self.pushButton_3.setText(_translate("MainWindow", "Home"))
-
 
 
 
