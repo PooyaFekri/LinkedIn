@@ -61,7 +61,7 @@ class Ui_MainWindow(object):
         self.set_user()
         self.set_counter()
         from .home import ui as ui_home
-        from .SeeOtherPerson import ui as ui_other_person
+        from .seeOtherPerson import ui as ui_other_person
         self.profile.clicked.connect(
             lambda: ui_other_person.setupUi(MainWindow, data, self.page.get("users")[self.counter]))
         # TODO: creat room and go to chatroom

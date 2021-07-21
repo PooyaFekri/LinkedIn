@@ -85,7 +85,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         from .home import ui as ui_home
-        from .SeeOtherPerson import ui as ui_seeOtherPerson
+        from .SeeOtherPerson3 import ui as ui_seeOtherPerson
         from .post import ui as ui_post
         self.retranslateUi(MainWindow)
         self.pushButton.clicked.connect(lambda :ui.setupUi(MainWindow,data,self.counter_before))#back

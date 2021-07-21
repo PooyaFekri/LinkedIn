@@ -52,7 +52,7 @@ class Ui_MainWindow(object):
         text = self.plainTextEdit.toPlainText()
         time = datetime.datetime.now()
         user_id = data.get("user").id
-        if self.share_id != -1:
+        if self.share_id == -1:
             data = {"user_id": user_id, "time": time, "text": text}
         else:
             data = {"user_id": user_id, "time": time, "text": text,'share':self.share_id}
@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
             connect_user_id = user_id if connection.user_caller_id != user_id else connection.user_caller_id
             _data = {"user_id": connect_user_id, "time": time, "type": "Post", 'type_id': post.id}
             res = Notification.notify(**_data)
-        ui.setupUi(MainWindow, data)
+        ui.setupUi(MainWindow, data,-1)
 
 
 # if __name__ == "__main__":
