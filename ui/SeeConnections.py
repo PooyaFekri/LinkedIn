@@ -1,8 +1,16 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'SeeConnections.ui'
+#
+# Created by: PyQt5 UI code generator 5.12.1
+#
+# WARNING! All changes made in this file will be lost!
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_SeeConnections(object):
-    def setupUi(self, SeeConnections):
+    def setupUi(self, SeeConnections,data):
         SeeConnections.setObjectName("SeeConnections")
         SeeConnections.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(SeeConnections)
@@ -39,41 +47,6 @@ class Ui_SeeConnections(object):
         self.SearchButton = QtWidgets.QPushButton(self.centralwidget)
         self.SearchButton.setObjectName("SearchButton")
         self.verticalLayout.addWidget(self.SearchButton)
-        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 580, 224))
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.frame_2 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
-        self.frame_2.setGeometry(QtCore.QRect(10, 10, 561, 111))
-        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_2.setObjectName("frame_2")
-        self.numberMututalConnection = QtWidgets.QLabel(self.frame_2)
-        self.numberMututalConnection.setGeometry(QtCore.QRect(300, 50, 251, 21))
-        self.numberMututalConnection.setObjectName("numberMututalConnection")
-        self.MessageButton = QtWidgets.QPushButton(self.frame_2)
-        self.MessageButton.setGeometry(QtCore.QRect(20, 80, 91, 23))
-        self.MessageButton.setObjectName("MessageButton")
-        self.SeeProfile = QtWidgets.QPushButton(self.frame_2)
-        self.SeeProfile.setGeometry(QtCore.QRect(10, 10, 281, 61))
-        self.SeeProfile.setObjectName("SeeProfile")
-        self.label_3 = QtWidgets.QLabel(self.frame_2)
-        self.label_3.setGeometry(QtCore.QRect(290, 20, 71, 16))
-        self.label_3.setObjectName("label_3")
-        self.UserName = QtWidgets.QLabel(self.frame_2)
-        self.UserName.setGeometry(QtCore.QRect(370, 20, 181, 20))
-        self.UserName.setObjectName("UserName")
-        self.ShareFrom = QtWidgets.QLabel(self.frame_2)
-        self.ShareFrom.setGeometry(QtCore.QRect(106, 160, 301, 20))
-        self.ShareFrom.setText("")
-        self.ShareFrom.setObjectName("ShareFrom")
-        self.DisconnectButton = QtWidgets.QPushButton(self.frame_2)
-        self.DisconnectButton.setGeometry(QtCore.QRect(140, 80, 89, 25))
-        self.DisconnectButton.setObjectName("DisconnectButton")
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.verticalLayout.addWidget(self.scrollArea)
         self.BackButton = QtWidgets.QCommandLinkButton(self.centralwidget)
         self.BackButton.setObjectName("BackButton")
         self.verticalLayout.addWidget(self.BackButton)
@@ -88,7 +61,8 @@ class Ui_SeeConnections(object):
 
         self.retranslateUi(SeeConnections)
         from .network import ui as ui_network
-        self.BackButton.clicked.connect(lambda : ui_network.setupUi(SeeConnections))
+        self.BackButton.clicked.connect(lambda : ui_network.setupUi(SeeConnections,data))
+
         QtCore.QMetaObject.connectSlotsByName(SeeConnections)
 
     def retranslateUi(self, SeeConnections):
@@ -100,22 +74,10 @@ class Ui_SeeConnections(object):
         self.label_5.setText(_translate("SeeConnections", "Search By Profile Language"))
         self.label_6.setText(_translate("SeeConnections", "Search By Current Company"))
         self.SearchButton.setText(_translate("SeeConnections", "Search"))
-        self.numberMututalConnection.setText(_translate("SeeConnections", "numberMututalConnection"))
-        self.MessageButton.setText(_translate("SeeConnections", "Message"))
-        self.SeeProfile.setText(_translate("SeeConnections", "see profile"))
-        self.label_3.setText(_translate("SeeConnections", "Username:"))
-        self.UserName.setText(_translate("SeeConnections", "User name "))
-        self.DisconnectButton.setText(_translate("SeeConnections", "Disconnect"))
         self.BackButton.setText(_translate("SeeConnections", "Back"))
 
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     SeeConnections = QtWidgets.QMainWindow()
-#     ui = Ui_SeeConnections()
-#     ui.setupUi(SeeConnections)
-#     SeeConnections.show()
-#     sys.exit(app.exec_())
+
+
 
 ui = Ui_SeeConnections()

@@ -242,4 +242,24 @@ create table if not exists Language
 create unique index if not exists Language_id_uindex
 	on Language (id);
 
+create table Language_dg_tmp
+(
+	id integer not null
+		constraint Language_pk
+			primary key autoincrement,
+	user_id integer not null
+		references user
+			on update cascade on delete cascade,
+	language nvarchar not null
+);
+
+insert into Language_dg_tmp(id, user_id, language) select id, user_id, language from Language;
+
+drop table Language;
+
+alter table Language_dg_tmp rename to Language;
+
+create unique index Language_id_uindex
+	on Language (id);
+
 

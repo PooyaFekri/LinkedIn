@@ -22,9 +22,9 @@ class Connection(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
-    def accept_request(self, user_caller_id):
+    def accept_request(self):
         try:
-            super().update_via_pk({'user_caller_id': user_caller_id}, self.id)
+            super().update_via_pk({'connected': True}, self.id)
             return {'status': True}
         except Exception as e:
             return {'status': False, 'error': e}
@@ -78,6 +78,22 @@ class Connection(Table):
 
     @classmethod
     def is_connected(cls, user1_id, user2_id):
+        try:
+            connection = cls.get_connect_with_users_id(user1_id, user2_id)
+            return {'status': True, 'is_connected': bool(connection) and connection.connected}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    @classmethod
+    def find(cls, *args, **kwargs):
+        try:
+            connections = super().find(kwargs)
+            return {'status': True, 'connections': connections}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    @classmethod
+    def get_connect_with_users_id(cls, user1_id, user2_id):
         _filter1 = {
             'user_invited_id': user1_id,
             'user_caller_id': user2_id
@@ -90,15 +106,14 @@ class Connection(Table):
         try:
             connection = super().find(_filter1) + super().find(_filter2)
 
-            return {'status': True, 'is_connected': bool(len(connection))}
+            return {'status': True, 'connection': connection[-1]}
         except Exception as e:
             return {'status': False, 'error': e}
 
-    @classmethod
-    def find(cls, *args, **kwargs):
+    def delete(self):
         try:
-            connection = super().find(kwargs)
-            return {'status': True, 'connection': connection}
+            super().delete_via_pk(self.id)
+            return {'status': True}
         except Exception as e:
             return {'status': False, 'error': e}
 

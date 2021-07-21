@@ -1,8 +1,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QDate
+
+from .next_page_of_edite_person import ui as ui_next_page
+
+
+def make_date(birthday):
+    print(birthday)
+    time = birthday.split()[0].split('-')
+    return QDate(int(time[0]),int(time[1]),int(time[2]))
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow,data):
+    def setupUi(self, MainWindow, data):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 645)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -77,12 +86,12 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         from .profile_me import ui as ui_profile_me
         # print(data)
-        self.retranslateUi(MainWindow)
-        self.back_button.clicked.connect(lambda : ui_profile_me.setupUi(MainWindow,data))
-        self.submit_button.clicked.connect(lambda : self.submit(MainWindow,data))
+        self.retranslateUi(MainWindow,data["user"])
+        self.back_button.clicked.connect(lambda: ui_profile_me.setupUi(MainWindow, data))
+        self.submit_button.clicked.connect(lambda: self.submit(MainWindow, data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def submit(self,MainWindow,data):
+    def submit(self, MainWindow, data):
         user = data.get("user")
         dict = {}
         if self.lineEdit_intro.text() != "":
@@ -110,11 +119,16 @@ class Ui_MainWindow(object):
             dict["tel num"] = user.tel_num
 
         if self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime() != user.birthday:
-            dict["birthday"] = self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime()
-            user.birthday = self.dateEdit_birthday.dateTime().currentDateTime().toPyDateTime()
+            # print(self.dateEdit_birthday.dateTime().toPyDateTime())
+            dict["birthday"] = self.dateEdit_birthday.dateTime().toPyDateTime()
+            user.birthday = str(self.dateEdit_birthday.dateTime().toPyDateTime())
+            # print(user.birthday)
+            # print(user.birthday)
         user.update(**dict)
-        self.setupUi(MainWindow,data)
-    def retranslateUi(self, MainWindow):
+        ui_next_page.setupUi(MainWindow, data)
+        # self.setupUi(MainWindow,data)
+
+    def retranslateUi(self, MainWindow,user):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.intro.setText(_translate("MainWindow", "intro"))
@@ -128,6 +142,8 @@ class Ui_MainWindow(object):
         self.telNum.setText(_translate("MainWindow", "tel num"))
         self.submit_button.setText(_translate("MainWindow", "Submit"))
         self.username.setText(_translate("MainWindow", "username"))
+        # print(user.birthday)
+        self.dateEdit_birthday.setDate(make_date(user.birthday))
 
 
 # if __name__ == "__main__":

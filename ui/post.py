@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         from .home import ui as ui_home
-        self.sendButton.clicked.connect(lambda: self.post(MainWindow, data))
+        self.sendButton.clicked.connect(lambda : self.post(MainWindow, data))
         self.Back_button.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -56,11 +56,9 @@ class Ui_MainWindow(object):
         connections = Connection.find_user_connections(user_id).get('connections')
         for connection in connections:
             connect_user_id = user_id if connection.user_caller_id != user_id else connection.user_caller_id
-            data = {"user_id": connect_user_id, "time": time, type: "Post"}
+            data = {"user_id":connect_user_id,"time":time,type:"Post"}
         Notification.notify(**data)
-        ui.setupUi(MainWindow, data)
-
-
+        ui.setupUi(MainWindow,data)
 # if __name__ == "__main__":
 #     import sys
 #     app = QtWidgets.QApplication(sys.argv)

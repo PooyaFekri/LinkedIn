@@ -1,7 +1,10 @@
 import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QLabel, QVBoxLayout, QWidget, QScrollArea
 
+from .simple import ui as ui_simple
 from tables import User, Connection
 from tables.notification import Notification
 
@@ -90,11 +93,12 @@ class Ui_NewConnection(object):
         NewConnection.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(NewConnection)
         self.statusbar.setObjectName("statusbar")
+        self.find_invitations()
         NewConnection.setStatusBar(self.statusbar)
 
         self.retranslateUi(NewConnection)
         from .network import ui as ui_network
-        self.BackButton.clicked.connect(lambda: ui_network.setupUi(NewConnection))
+        self.BackButton.clicked.connect(lambda: ui_network.setupUi(NewConnection,self.data))
         self.SearchButton.clicked.connect(lambda: self.search())
         QtCore.QMetaObject.connectSlotsByName(NewConnection)
 
@@ -116,49 +120,101 @@ class Ui_NewConnection(object):
         self.BackButton.setText(_translate("NewConnection", "Back"))
 
     def search(self):
-        variables = {
-            "username": self.lineEdit_username.text()
-        }
-        users = User.find_users(**variables).get("users")
+        username = self.lineEdit_username.text()
+        users = self.data.get("user").search(username).get("users")
+
         for user in users:
-            frame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
-            frame.setGeometry(QtCore.QRect(10, 10, 561, 71))
-            frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-            frame.setFrameShadow(QtWidgets.QFrame.Raised)
-            frame.setObjectName(user.id)
-            username = QtWidgets.QLabel(frame)
+            username = QtWidgets.QLabel()
             username.setGeometry(QtCore.QRect(10, 10, 141, 16))
             username.setObjectName("username")
-            username_text = QtWidgets.QLabel(frame)
+            username_text = QtWidgets.QLabel()
             username_text.setGeometry(QtCore.QRect(10, 40, 141, 16))
             username_text.setObjectName("username_edit")
-            seeProfile_search = QtWidgets.QPushButton(frame)
+            seeProfile_search = QtWidgets.QPushButton()
             seeProfile_search.setGeometry(QtCore.QRect(350, 20, 91, 23))
             seeProfile_search.setObjectName("seeProfile_search")
-            ConnectButton = QtWidgets.QPushButton(frame)
+            ConnectButton = QtWidgets.QPushButton()
             ConnectButton.setGeometry(QtCore.QRect(450, 20, 89, 25))
+            self.verticalLayout.addWidget(username)
+            self.verticalLayout.addWidget(username_text)
+            self.verticalLayout.addWidget(seeProfile_search)
+            self.verticalLayout.addWidget(ConnectButton)
             ConnectButton.setObjectName("ConnectButton")
-            username_text.setText(user.username)
+            username_text.setText(f'New Connection : {user.username}')
             seeProfile_search.setText("See Profile")
             ConnectButton.setText("Connect")
             # TODO: complete this part
             # seeProfile_search.clicked.connect(lambda )
             ConnectButton.clicked.connect(lambda: self.connect(user.id))
-
+            # self.scrollArea_users.setWidget(frame)
             # self.scrollArea_users.setWidget(self.scrollAreaWidgetContents)
+
+    def find_invitations(self):
+        _filter = {
+            'user_invited_id': self.data.get("user").id,
+            'connected': False
+        }
+        connections = Connection.find(**_filter).get('connections')
+
+        for connection in connections:
+            user = User.find_via_pk(connection.user_caller_id).get('user')
+            username = QtWidgets.QLabel()
+            username.setGeometry(QtCore.QRect(10, 10, 141, 16))
+            username.setObjectName("username_inv")
+            username_text = QtWidgets.QLabel()
+            username_text.setGeometry(QtCore.QRect(10, 40, 141, 16))
+            username_text.setObjectName("username_edit_inv")
+            seeProfile_inv = QtWidgets.QPushButton()
+            seeProfile_inv.setGeometry(QtCore.QRect(350, 20, 91, 23))
+            seeProfile_inv.setObjectName("seeProfile_inv")
+            NoConnectButton = QtWidgets.QPushButton()
+            YesConnectButton = QtWidgets.QPushButton()
+            NoConnectButton.setGeometry(QtCore.QRect(450, 20, 89, 25))
+            YesConnectButton.setGeometry(QtCore.QRect(450, 20, 89, 25))
+            self.verticalLayout.addWidget(username)
+            self.verticalLayout.addWidget(username_text)
+            self.verticalLayout.addWidget(seeProfile_inv)
+            self.verticalLayout.addWidget(YesConnectButton)
+            self.verticalLayout.addWidget(NoConnectButton)
+            YesConnectButton.setObjectName("YesConnectButton")
+            NoConnectButton.setObjectName("NoConnectButton")
+            username_text.setText(f'New Invitation : {user.username}')
+            seeProfile_inv.setText("See Profile")
+            YesConnectButton.setText("Yes, Connect")
+            NoConnectButton.setText("No")
+            # TODO: complete this part
+            # seeProfile_inv.clicked.connect(lambda: self.connect(user.id))
+            YesConnectButton.clicked.connect(lambda: self.accept_or_reject_inv(connection, True))
+            NoConnectButton.clicked.connect(lambda: self.accept_or_reject_inv(connection, False))
+            # self.scrollArea_users.setWidget(frame)
+            # self.scrollArea_users.setWidget(self.scrollAreaWidgetContents)
+
+    def accept_or_reject_inv(self, connection: 'Connection', action):
+        if action:
+            res = connection.accept_request()
+            if res['status']:
+                Notification.notify(
+                    user_id=connection.user_caller_id,
+                    type_id=connection.id,
+                    type='Connection',
+                    time=datetime.datetime.now(),
+                    event='Connect accepted'
+                )
+        else:
+            res = connection.delete()
 
     def connect(self, user):
         # TODO: check if user send connect request before
         kwargs = {
             'user_caller_id': self.data.get('user').id,
-            'user_invited_id': user.id
+            'user_invited_id': user
         }
         res = Connection.connect_request(**kwargs)
         if res.get('status'):
             res = Connection.find(**kwargs)
             if res.get('status'):
-                Notification.notify(user_id=user.id,
-                                    type_id=res.get('connection'),
+                Notification.notify(user_id=user,
+                                    type_id=res.get('connections')[-1].id,
                                     type='Connection',
                                     time=datetime.datetime.now(),
                                     )

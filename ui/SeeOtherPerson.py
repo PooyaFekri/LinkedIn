@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Language
+from tables import Language, Connection
 
 
 class Ui_MainWindow(object):
@@ -100,18 +100,41 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "about:"))
         # self.textBrowser_about.setText(user.about)
         language_support = Language.find_user_lang(user.id)
-        # self.connect_checkBox.
+        #todo check this after
+        if Connection.is_connected(data['user_id'],user.id):
+            self.connect_checkBox.mask()
         if language_support['status']:
             for k in language_support['languages']:
                 self.languages_fontComboBox.addItem(k)
         else:
             print(language_support['error'])
+        #todo check this after
         self.connect_checkBox.setText(_translate("MainWindow", "Connect"))
+
         self.nextPage_Button.setText(_translate("MainWindow", "next page"))
         self.Back.setText(_translate("MainWindow", "Back"))
 
+    def connect_or_disconnect(self,data,usr):
 
+        if self.connect_checkBox.isTristate():
+            if not Connection.is_connected(data.get('user').id,usr.id)["status"]:
+                data = {"user_caller_id":data["user"].id,"user_invited_id":usr.id}
+                Connection.connect_request(**data)
 
+        else:
+            if Connection.is_connected(data.get('user').id,usr.id)["status"]:
+                connection = Connection.get_connect_with_users_id(data.get('user').id,usr.id)
+                connection.delete()
+            elif Connection.get_connect_with_users_id(data.get("user").id,usr.id)["status"]:
+                connection = Connection.get_connect_with_users_id(data.get('user').id,usr.id)
+                connection.delete()
+
+    def back_home(self,MainWindow,data, user):
+
+        from .home import ui as ui_home
+
+        self.connect_or_disconnect(data,user)
+        ui_home.setupUi(MainWindow,data)
 
 # if __name__ == "__main__":
 #     import sys
@@ -121,5 +144,3 @@ class Ui_MainWindow(object):
 #     ui.setupUi(MainWindow)
 #     MainWindow.show()
 #     sys.exit(app.exec_())
-
-ui = Ui_MainWindow()
