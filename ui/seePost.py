@@ -90,10 +90,10 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.pushButton.clicked.connect(lambda :ui.setupUi(MainWindow,data,self.counter_before))#back
         self.pushButton_2.clicked.connect(lambda : ui.setupUi(MainWindow,data,self.counter_after))#next
-        self.pushButton_3.clicked.connect(lambda : ui_home.setupUi(MainWindow,data,self.data['posts']['posts'][self.counter].user_id))#home
+        self.pushButton_3.clicked.connect(lambda : ui_home.setupUi(MainWindow,data))#home
         #todo add comment ui to this project
         self.CommentButton.clicked.connect(lambda :print("co"))
-        self.ShareButton.clicked.connect(lambda :ui_post.setupUi(MainWindow,self.data,))
+        self.ShareButton.clicked.connect(lambda :ui_post.setupUi(MainWindow,self.data,self.user.id))
         self.SeeProfile.clicked.connect(lambda :ui_seeOtherPerson.setupUi(MainWindow,self.data,User.find_via_pk(self.data['posts']['posts'][self.counter].user_id)))
 
         self.LikeButton.clicked.connect(lambda :print("like"))
