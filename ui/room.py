@@ -1,19 +1,12 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'room.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow,data):
+    def setupUi(self, MainWindow, data, room, counter=0):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.data = data
+        self.room = room
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -67,10 +60,14 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
+        self.set_room()
         from .home import ui as ui_home
         self.retranslateUi(MainWindow)
-        self.BackButton.clicked.connect(lambda : ui_home.setupUi(MainWindow,data))
+        # self.NextButton.clicked.connect(lambda )
+        # self.BeforeButton.clicked.connect(lambda)
+        # self.ArchiveList.clicked.connect(lambda )
+
+        self.BackButton.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -89,15 +86,14 @@ class Ui_MainWindow(object):
         self.BeforeButton.setText(_translate("MainWindow", "Before"))
         self.BackButton.setText(_translate("MainWindow", "Back"))
 
+    def set_room(self):
+        pass
+        # user_id = self.room.user1_id if self.room.user1_id != self.data.get('user').id else self.room.
+        # self.UserName.setText()
+        # self.Archive_this_chat.clicked.connect(lambda )
+        # self.Delete_this_chat.clicked.connect(lambda )
+        # self.SeeChat.clicked.connect(lambda )
+        # self.checkBoxRead.clicked.connect(lambda )
 
 
-
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     MainWindow = QtWidgets.QMainWindow()
-#     ui = Ui_MainWindow()
-#     ui.setupUi(MainWindow)
-#     MainWindow.show()
-#     sys.exit(app.exec_())
 ui = Ui_MainWindow()

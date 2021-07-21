@@ -10,9 +10,10 @@ class Room(Table):
 
     def __init__(self, data):
         self.id = data[0]
-        self.name = data[1]
-        self.started_time = data[2]
-        self.archive = data[3]
+        self.started_time = data[1]
+        self.archive = data[2]
+        self.user1_id = data[3]
+        self.user2_id = data[4]
 
     @classmethod
     def create(cls, *args, **kwargs):
@@ -50,3 +51,20 @@ class Room(Table):
     @classmethod
     def room_info(cls, user_id):
         return Message.get_rooms_info(user_id)
+
+    @classmethod
+    def find_users_room(cls, user1_id, user2_id):
+        _filter1 = {
+            'user1_id': user1_id,
+            'user2_id': user2_id
+        }
+
+        _filter2 = {
+            'user1_id': user2_id,
+            'user2_id': user1_id
+        }
+        try:
+            rooms = super().find(_filter1) + super().find(_filter2)
+            return {'status': True, 'room': rooms[-1]}
+        except Exception as e:
+            return {'status': False, 'error': e}

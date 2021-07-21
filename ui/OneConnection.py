@@ -1,4 +1,10 @@
+import datetime
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
+from tables import Room, Message
+# from .room import ui as ui_room
+from .chat import ui as ui_chat
 
 
 class Ui_MainWindow(object):
@@ -65,8 +71,8 @@ class Ui_MainWindow(object):
         self.profile.clicked.connect(
             lambda: ui_other_person.setupUi(MainWindow, data, self.page.get("users")[self.counter]))
         # TODO: creat room and go to chatroom
-        # self.MessageButton.clicked.connect()
-        self.DisConnectButton.clicked.connect(lambda: self.dis_user(MainWindow))
+        self.MessageButton.clicked.connect(lambda: self.message(MainWindow))
+        self.DisConnectButton.clicked.connect(lambda: self.disconnect_user(MainWindow))
         self.next.clicked.connect(lambda: ui.setupUi(MainWindow, data, page, self.counter_after))
         self.Back.clicked.connect(lambda: ui.setupUi(MainWindow, data, page, self.counter_before))
         self.home.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
@@ -89,11 +95,10 @@ class Ui_MainWindow(object):
         self.Username.setText(self.page['users'][self.counter].username)
         # TODO: mutual connection
 
-    def dis_user(self, MainWindow):
+    def disconnect_user(self, MainWindow):
         from .home import ui as ui_home
         connection = self.page["connections"][self.counter].delete()
         ui_home.setupUi(MainWindow, self.data)
-
 
     def set_counter(self):
         self.counter_after = self.counter_before = self.counter
@@ -101,6 +106,20 @@ class Ui_MainWindow(object):
             self.counter_after = self.counter + 1
         if self.counter != 0:
             self.counter_before = self.counter - 1
+
+    def message(self, MainWindow):
+        room = Room.find_users_room(self.data.get('user').id, self.page['users'][self.counter].id).get('room')
+        if not room:
+            data = {
+                'started_time': datetime.datetime.now(),
+                'user1_id': self.data.get('user').id,
+                'user2_id': self.page['users'][self.counter].id
+            }
+            Room.create(**data)
+            room = Room.find_users_room(self.data.get('user').id, self.page['users'][self.counter].id).get('room')
+
+        ui_chat.setupUi(MainWindow, self.data, room)
+
 
 # if __name__ == "__main__":
 #     import sys

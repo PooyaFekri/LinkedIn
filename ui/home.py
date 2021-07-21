@@ -1,9 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+
+from tables import Message, Room, User
 from .room import ui as ui_room
 from .network import ui as ui_network
 from .post import ui as ui_post
 from .profile_me import ui as ui_me
 from .seePost import ui as ui_seePost
+
+
 # from .SeeOtherPerson import ui as ui_ohter_persion
 
 
@@ -109,10 +113,10 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.data = data
         self.retranslateUi(MainWindow)
-        self.message_button.clicked.connect(lambda : ui_room.setupUi(MainWindow,self.data))
+        self.message_button.clicked.connect(lambda: self.search_messages(MainWindow))
         self.homeButton.clicked.connect(lambda: ui_seePost.setupUi(MainWindow, self.data))
         self.NetworkButton.clicked.connect(lambda: ui_network.setupUi(MainWindow, data))
-        self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data,-1))
+        self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data, -1))
         self.profile_button.clicked.connect(lambda: ui_me.setupUi(MainWindow, self.data))
 
         # self.notif //TODO
@@ -143,6 +147,19 @@ class Ui_MainWindow(object):
         # self.label.setText(_translate("MainWindow", "Share from:"))
         self.message_button.setText(_translate("MainWindow", "message"))
 
+    def search_messages(self, MainWindow):
+        # ui_room.setupUi(MainWindow, self.data)
+        rooms = Message.get_rooms_info(self.data.get('user').id).get('rooms_info')
+        all_rooms_users = []
+        for room in rooms:
+            user_id = room.user_receiver_id if room.user_receiver_id != self.data.get(
+                'user').id else room.user_sender_id
+            user = User.find_via_pk(user_id)
+            all_rooms_users.append((user, Room.find_via_pk(room.id)))
+
+        page = {
+            'all_rooms_users': all_rooms_users
+        }
 
 
 ui = Ui_MainWindow()

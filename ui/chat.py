@@ -1,16 +1,15 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'chat.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
+import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from tables import Message, User
+from tables.notification import Notification
+
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, data, room):
+        self.data = data
+        self.room = room
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -41,8 +40,12 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.set_chat()
 
         self.retranslateUi(MainWindow)
+        self.Send_button.clicked.connect(lambda: self.send_message())
+        from .home import ui as ui_home
+        self.Back.clicked.connect(lambda: ui_home.setupUi(MainWindow, self.data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -51,14 +54,40 @@ class Ui_MainWindow(object):
         self.Send_button.setText(_translate("MainWindow", "Send"))
         self.Back.setText(_translate("MainWindow", "Back"))
 
+    def set_chat(self):
+        messages = Message.get_messages(self.room.id).get('messages')
+        str = ''
+        for message in messages:
+            user_receiver = User.find_via_pk(message.user_receiver_id).get('user')
+            user_sender = User.find_via_pk(message.user_sender_id).get('user')
+            str += f'{user_sender.username} to {user_receiver.username} : \n\n \t {message.text} \n\n {message.time} \n\n '
+
+        self.textBrowser.setText(str)
+
+    def send_message(self):
+        user_id = self.room.user1_id if self.room.user1_id != self.data.get('user').id else self.room.user2_id
+        time = datetime.datetime.now()
+        variables = {
+            'text': self.lineEdit_message.text(),
+            'user_sender_id': self.data.get('user').id,
+            'user_receiver_id': user_id,
+            'room_id': self.room.id,
+            'time': time
+        }
+        result = Message.insert(**variables)
+        if result['status']:
+            message = Message.find(variables).get('messages')[-1]
+            self.lineEdit_message.setText('')
+            res = Notification.notify(user_id=user_id,
+                                      type_id=message.id,
+                                      type="Message",
+                                      time=time,
+                                      event="Add new message")
+            self.set_chat()
+        else:
+            self.textBrowser.setText(result['error'])
+        #  notify
+        pass
 
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+ui = Ui_MainWindow()
