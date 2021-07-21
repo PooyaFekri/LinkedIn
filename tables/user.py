@@ -90,11 +90,12 @@ class User(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
-    def search(self, username):
-        query = f'SELECT * FROM {self._table_name} WHERE username LIKE ? and username != ?'
-        username = f'%{username}%'
+    @classmethod
+    def search(cls, username):
+        query = f'SELECT * FROM user WHERE username LIKE %s'
+        username = f'{username}%'
         try:
-            users = [User(user) for user in exe_query(query, username, self.username)]
+            users = [User(user) for user in exe_query(query, username)]
             return {'status': True, 'users': users}
         except Exception as e:
             return {'status': False, 'error': e}

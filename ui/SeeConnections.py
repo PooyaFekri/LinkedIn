@@ -1,16 +1,9 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'SeeConnections.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_SeeConnections(object):
-    def setupUi(self, SeeConnections,data):
+    def setupUi(self, SeeConnections, data):
+        self.data = data
         SeeConnections.setObjectName("SeeConnections")
         SeeConnections.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(SeeConnections)
@@ -61,7 +54,7 @@ class Ui_SeeConnections(object):
 
         self.retranslateUi(SeeConnections)
         from .network import ui as ui_network
-        self.BackButton.clicked.connect(lambda : ui_network.setupUi(SeeConnections,data))
+        self.BackButton.clicked.connect(lambda : ui_network.setupUi(SeeConnections, self.data))
 
         QtCore.QMetaObject.connectSlotsByName(SeeConnections)
 
@@ -75,9 +68,6 @@ class Ui_SeeConnections(object):
         self.label_6.setText(_translate("SeeConnections", "Search By Current Company"))
         self.SearchButton.setText(_translate("SeeConnections", "Search"))
         self.BackButton.setText(_translate("SeeConnections", "Back"))
-
-
-
 
 
 ui = Ui_SeeConnections()
