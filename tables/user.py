@@ -89,6 +89,7 @@ class User(Table):
             return {'status': True, 'users': users}
         except Exception as e:
             return {'status': False, 'error': e}
+
     @classmethod
     def search(cls, username):
         query = f'SELECT * FROM user WHERE username LIKE %s'
@@ -98,4 +99,3 @@ class User(Table):
             return {'status': True, 'users': users}
         except Exception as e:
             return {'status': False, 'error': e}
-

@@ -101,3 +101,48 @@ class Connection(Table):
             return {'status': True, 'connection': connection}
         except Exception as e:
             return {'status': False, 'error': e}
+
+    @classmethod
+    def search_connection(cls, *args, **kwargs):
+        from . import User, Language, Experience
+        user_id = kwargs['user_id']
+        connections = cls.find_user_connections(user_id).get('connections')
+        res_connections = []
+        try:
+            for connection in connections:
+                connect_user_id = user_id if connection.user_caller_id != user_id else connection.user_caller_id
+                user = User.find_via_pk(connect_user_id).get('user')
+                flag = 1
+                if username := kwargs.get('username'):
+                    search_by_username = User.search(username)
+                    for searched_user in search_by_username:
+                        if user.username == searched_user.username:
+                            flag = 1
+                            break
+                        else :
+                            flag = 0
+                if location := kwargs.get('location'):
+                    if user.nationality != location:
+                        continue
+                if lang := kwargs.get('language'):
+                    languages = Language.find_user_lang(connect_user_id).get('languages')
+                    for language in languages:
+                        if language.language != lang:
+                            flag = 0
+                        else:
+                            flag = 1
+                            break
+                if exp := kwargs.get('experience'):
+                    experiences :'experience' = Experience.find_user_experiences(connect_user_id)
+                    for experience in experiences:
+                        if exp != experience.text and not experience.end_time:
+                            flag = 1
+                            break
+                        else:
+                            flag = 0
+
+                res_connections.append(connection)
+
+            return  {'status': True, 'connections': res_connections}
+        except Exception as e:
+            return {'status': False, 'error': e}
