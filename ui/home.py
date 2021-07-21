@@ -3,6 +3,7 @@ from .room import ui as ui_room
 from .network import ui as ui_network
 from .post import ui as ui_post
 from .profile_me import ui as ui_me
+from .seePost import ui as ui_seePost
 # from .SeeOtherPerson import ui as ui_ohter_persion
 
 
@@ -108,11 +109,12 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.data = data
         self.retranslateUi(MainWindow)
-        # self.message_button.clicked.connect(lambda : ui_room.setupUi(MainWindow,self.data))
-        self.homeButton.clicked.connect(lambda: ui.setupUi(MainWindow, self.data))
+        self.message_button.clicked.connect(lambda : ui_room.setupUi(MainWindow,self.data))
+        self.homeButton.clicked.connect(lambda: ui_seePost.setupUi(MainWindow, self.data))
         self.NetworkButton.clicked.connect(lambda: ui_network.setupUi(MainWindow, data))
         self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data))
         self.profile_button.clicked.connect(lambda: ui_me.setupUi(MainWindow, self.data))
+
         # self.notif //TODO
         # self.jobs //TODO
         # self.LikeButton.clicked.connect(lambda: print("s2"))
@@ -129,7 +131,7 @@ class Ui_MainWindow(object):
         self.NotificationButton.setText(_translate("MainWindow", "Notification"))
         self.JobsButton.setText(_translate("MainWindow", "Jobs"))
         self.profile_button.setText(_translate("MainWindow", "Profile"))
-        # self.label_5.setText(_translate("MainWindow", "search :"))
+        self.label_5.setText(_translate("MainWindow", "search :"))
         # self.Number_of_like.setText(_translate("MainWindow", "number of like"))
         # self.numberComment.setText(_translate("MainWindow", "number of comment"))
         # self.CommentButton.setText(_translate("MainWindow", "Comment"))
@@ -139,7 +141,7 @@ class Ui_MainWindow(object):
         # self.label_3.setText(_translate("MainWindow", "from :"))
         # self.UserName.setText(_translate("MainWindow", "User name "))
         # self.label.setText(_translate("MainWindow", "Share from:"))
-        # self.message_button.setText(_translate("MainWindow", "message"))
+        self.message_button.setText(_translate("MainWindow", "message"))
 
 
 
