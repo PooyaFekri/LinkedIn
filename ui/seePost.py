@@ -8,7 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Connection, User
+from tables import Connection, User, Comment
 
 
 class Ui_MainWindow(object):
@@ -87,12 +87,13 @@ class Ui_MainWindow(object):
         from .home import ui as ui_home
         from .seeOtherPerson import ui as ui_seeOtherPerson
         from .post import ui as ui_post
+        from .commtopost import ui as ui_comment
         self.retranslateUi(MainWindow)
         self.pushButton.clicked.connect(lambda :ui.setupUi(MainWindow,data,self.counter_before))#back
         self.pushButton_2.clicked.connect(lambda : ui.setupUi(MainWindow,data,self.counter_after))#next
         self.pushButton_3.clicked.connect(lambda : ui_home.setupUi(MainWindow,data))#home
         #todo add comment ui to this project
-        self.CommentButton.clicked.connect(lambda :print("co"))
+        self.CommentButton.clicked.connect(lambda : ui_comment.setupUi(MainWindow,self.data,Comment.get_comments_by_post_id(self.data['posts']['posts'][self.counter].id).get("comments")))
         self.ShareButton.clicked.connect(lambda :ui_post.setupUi(MainWindow,self.data,self.user.id))
         self.SeeProfile.clicked.connect(lambda :ui_seeOtherPerson.setupUi(MainWindow,self.data,User.find_via_pk(self.data['posts']['posts'][self.counter].user_id).get("user")))
 
