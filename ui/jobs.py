@@ -44,7 +44,6 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         from .home import ui as ui_home
-        self.exprince = None
         self.retranslateUi(MainWindow)
         self.Back_button.clicked.connect(lambda : ui_home.setupUi(MainWindow,self.data))
         self.nextButton.clicked.connect(lambda : self.next(MainWindow))
@@ -57,8 +56,9 @@ class Ui_MainWindow(object):
         self.nextButton.setText(_translate("MainWindow", "next exprince"))
         self.BeforeButton.setText(_translate("MainWindow", "Before exprince"))
         self.Back_button.setText(_translate("MainWindow", "Back"))
+        # print(self.exprince)
         if self.exprince:
-            self.show_exprince.setText(self.exprince[self.counter])
+            self.show_exprince.setText(self.exprince[self.counter].text+"\n"+"start: "+str(self.exprince[self.counter].start_time)+"\n"+"End: "+str(self.exprince[self.counter].end_time))
 
     def next(self,MainWindow):
         if self.exprince and len(self.exprince) > self.counter+1:

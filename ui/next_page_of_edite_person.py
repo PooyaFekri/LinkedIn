@@ -84,7 +84,7 @@ class Ui_MainWindow(object):
         self.add_language_Button.clicked.connect(lambda : self.add_language(self.lineEdit_language.text()))
         self.remove_language_pushButton.clicked.connect(lambda : self.remove_language1(self.lineEdit_remove_language.text()))
         self.add_exprince.clicked.connect(lambda : self.add_exprince_to(self.dateEdit_start_date,self.dateEdit_end_date,self.lineEdit_exprince_name.text()))
-        self.remove_language_pushButton.clicked.connect(lambda : self.remove_exprince(self.lineEdit_remove_exprince.text()))
+        self.remove_exprince_Button.clicked.connect(lambda : self.remove_exprince(self.lineEdit_remove_exprince.text()))
         self.sumbit_pushButton.clicked.connect(lambda :ui_profile_me.setupUi(MainWindow,data))
         self.Back_LinkButton.clicked.connect(lambda : ui_edit_profile.setupUi(MainWindow,data))
 
@@ -128,14 +128,15 @@ class Ui_MainWindow(object):
                     i.delete()
 
     def add_exprince_to(self, dateEdit_start_date, dateEdit_end_date, text):
-        info = {"user_id":self.data["user"].id,"start_time":dateEdit_start_date.toPyDateTime(),"end_time":dateEdit_end_date.toPyDateTime(),"text":text}
+        # print(dateEdit_start_date.dateTime().toPyDateTime())
+        info = {"user_id":self.data["user"].id,"start_time":dateEdit_start_date.dateTime().toPyDateTime(),"end_time":dateEdit_end_date.dateTime().toPyDateTime(),"text":text}
         Experience.add(**info)
 
     def remove_exprince(self, text):
         get_core = Experience.find_user_experiences(self.data["user"].id)
         if get_core["status"]:
             for i in get_core["experiences"]:
-                if i.language == text:
+                if i.text == text:
                     i.delete()
 
 

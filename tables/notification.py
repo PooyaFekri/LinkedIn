@@ -23,8 +23,8 @@ class Notification(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
-    def visit_notification(self):
-        data = {'visited': True}
+    def visit_notification(self, status):
+        data = {'visited': status}
         try:
             super().update_via_pk(data, self.id)
             return {'status': True}

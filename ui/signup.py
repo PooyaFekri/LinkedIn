@@ -97,7 +97,7 @@ class Ui_MainWindow(object):
             "email": self.lineEdit_email.text(),
             "username": self.lineEdit_username.text(),
             "password": self.lineEdit_password.text(),
-            "birthday": self.dateEdit.dateTime().currentDateTime().toPyDateTime()
+            "birthday": self.dateEdit.dateTime().toPyDateTime()
         }
         from .login import ui as ui_login
         conf_password= self.lineEdit_confirm_password.text()

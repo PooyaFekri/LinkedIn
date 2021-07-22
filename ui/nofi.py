@@ -10,9 +10,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow,data,notif,counter = 0):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
+        self.data = data
+        self.notif = notif
+        self.cunter = counter
+        self.is_see = False
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -51,7 +55,12 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+        from .home import ui as ui_home
         self.retranslateUi(MainWindow)
+        self.BackButton.clicked.connect(lambda : ui_home.setupUi(MainWindow,self.data))
+        self.is_see_checkBox.clicked.connect(lambda : self.click_see(MainWindow))
+        self.next_notif_button.clicked.connect(lambda : self.next_notif_button(MainWindow))
+        self.before_notif_Button.clicked.connect(lambda : self.before_notif_Button(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -63,15 +72,36 @@ class Ui_MainWindow(object):
         self.next_notif_button.setText(_translate("MainWindow", "next"))
         self.before_notif_Button.setText(_translate("MainWindow", "before"))
         self.BackButton.setText(_translate("MainWindow", "Back"))
+        if self.notif:
+                self.type_label.setText(self.notif[self.cunter].type)
+                self.mesage_textBrowser.setText(self.notif[self.cunter].event)
+                if self.notif[self.cunter].visited:
+                    self.is_see_checkBox.click()
+                    self.is_see = True
+
+    def click_see(self, MainWindow):
+
+        if self.is_see:
+            self.notif[self.cunter].visit_notification(False)
+        else:
+            self.notif[self.cunter].visit_notification(True)
 
 
+    def next(self,MainWindow):
+        if self.notif and len(self.notif) > self.notif+1:
+          ui.setupUi(MainWindow,self.data,self.notif,self.cunter+1)
+
+    def before(self,MainWindow):
+        if self.notif > 0 :
+            ui.setupUi(MainWindow,self.data,self.notif,self.cunter-1)
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
+#     sys.exit(app.exec_())
+ui = Ui_MainWindow()
