@@ -57,9 +57,15 @@ class Message(Table):
 
     @staticmethod
     def get_rooms_info(user_id) -> dict:
-        query = f'SELECT DISTINCT room_id, user_receiver_id, user_sender_id from Message where (user_sender_id=? or user_receiver_id=?) group by room_id, user_sender_id, user_receiver_id'
+        # query = f'SELECT DISTINCT room_id, user_receiver_id, user_sender_id from Message ' \
+        #         f'where (user_sender_id=? or user_receiver_id=?) ' \
+        #         f'group by room_id, user_sender_id, user_receiver_id'
+        query = f'SELECT DISTINCT room_id, user_receiver_id, user_sender_id from Message ' \
+                f'group by room_id, user_sender_id, user_receiver_id ' \
+                f'Having (user_sender_id=? or user_receiver_id=?)'
         try:
             rooms_info = [Message(message) for message in exe_query(query, user_id, user_id)]
+            # rooms_info = exe_query(query, user_id, user_id)
             return {'status': True, 'rooms_info': rooms_info}
         except Exception as e:
             return {'status': False, 'error': e}

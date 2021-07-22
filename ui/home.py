@@ -113,7 +113,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.data = data
         self.retranslateUi(MainWindow)
-        self.message_button.clicked.connect(lambda: self.search_messages(MainWindow))
+        self.message_button.clicked.connect(lambda: self.search_rooms(MainWindow))
         self.homeButton.clicked.connect(lambda: ui_seePost.setupUi(MainWindow, self.data))
         self.NetworkButton.clicked.connect(lambda: ui_network.setupUi(MainWindow, data))
         self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data, -1))
@@ -147,8 +147,8 @@ class Ui_MainWindow(object):
         # self.label.setText(_translate("MainWindow", "Share from:"))
         self.message_button.setText(_translate("MainWindow", "message"))
 
-    def search_messages(self, MainWindow):
-        # ui_room.setupUi(MainWindow, self.data)
+    def search_rooms(self, MainWindow):
+
         rooms = Message.get_rooms_info(self.data.get('user').id).get('rooms_info')
         all_rooms_users = []
         for room in rooms:
@@ -160,6 +160,7 @@ class Ui_MainWindow(object):
         page = {
             'all_rooms_users': all_rooms_users
         }
+        ui_room.setupUi(MainWindow, self.data)
 
 
 ui = Ui_MainWindow()
