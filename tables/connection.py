@@ -16,7 +16,8 @@ class Connection(Table):
 
     @classmethod
     def connect_request(cls, *args, **kwargs):
-        connection = cls.get_connect_with_users_id(kwargs['user_caller_id'], kwargs['user_invited_id']).get('connection')
+        connection = cls.get_connect_with_users_id(kwargs['user_caller_id'], kwargs['user_invited_id']).get(
+            'connection')
         try:
             if not connection:
                 super().insert(kwargs)
@@ -38,7 +39,8 @@ class Connection(Table):
             return {'status': True, 'connection': connection}
         except Exception as e:
             return {'status': False, 'error': e}
-    #TODO : See all function called
+
+    # TODO : See all function called
     @classmethod
     def find_user_connections(cls, user_id):
         _filter = {
@@ -82,7 +84,7 @@ class Connection(Table):
     @classmethod
     def is_connected(cls, user1_id, user2_id):
         try:
-            connection = cls.get_connect_with_users_id(user1_id, user2_id)
+            connection = cls.get_connect_with_users_id(user1_id, user2_id).get('connection')
             return {'status': True, 'is_connected': bool(connection) and connection.connected}
         except Exception as e:
             return {'status': False, 'error': e}
@@ -128,7 +130,7 @@ class Connection(Table):
         res_connections = []
         try:
             for connection in connections:
-                connect_user_id = user_id if connection.user_caller_id != user_id else connection.user_caller_id
+                connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
                 user = User.find_via_pk(connect_user_id).get('user')
                 flag = 1
                 if username := kwargs.get('username'):
@@ -137,7 +139,7 @@ class Connection(Table):
                         if user.username == searched_user.username:
                             flag = 1
                             break
-                        else :
+                        else:
                             flag = 0
                 if location := kwargs.get('location'):
                     if user.nationality != location:
@@ -151,7 +153,7 @@ class Connection(Table):
                             flag = 1
                             break
                 if exp := kwargs.get('experience'):
-                    experiences :'experience' = Experience.find_user_experiences(connect_user_id)
+                    experiences: 'experience' = Experience.find_user_experiences(connect_user_id)
                     for experience in experiences:
                         if exp != experience.text and not experience.end_time:
                             flag = 1
@@ -161,6 +163,23 @@ class Connection(Table):
 
                 res_connections.append(connection)
 
-            return  {'status': True, 'connections': res_connections}
+            return {'status': True, 'connections': res_connections}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    @classmethod
+    def mutation_number(cls, user1_id, user2_id):
+        try:
+            user1_connections = cls.find_user_connections(user1_id).get('connections')
+            user2_connections = cls.find_user_connections(user2_id).get('connections')
+            mutation = 0
+            for user2_connection in user2_connections:
+                connect_user_id = user2_connection.user_caller_id if user2_connection.user_caller_id != user2_id \
+                    else user2_connection.user_invited_id
+
+                if cls.get_connect_with_users_id(user1_id, connect_user_id).get('connection'):
+                    mutation += 1
+
+            return {'status': True, 'mutation': mutation}
         except Exception as e:
             return {'status': False, 'error': e}
