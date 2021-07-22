@@ -1,23 +1,23 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from .chat import ui as ui_chat
-
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow, data, rooms, counter=0):
+    def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
-        self.data = data
-        self.rooms = rooms
-        self.counter = counter
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.NextButton = QtWidgets.QPushButton(self.centralwidget)
+        self.NextButton.setGeometry(QtCore.QRect(10, 272, 582, 23))
+        self.NextButton.setObjectName("NextButton")
+        self.BeforeButton = QtWidgets.QPushButton(self.centralwidget)
+        self.BeforeButton.setGeometry(QtCore.QRect(10, 301, 582, 23))
+        self.BeforeButton.setObjectName("BeforeButton")
         self.ArchiveList = QtWidgets.QPushButton(self.centralwidget)
+        self.ArchiveList.setGeometry(QtCore.QRect(10, 13, 582, 23))
         self.ArchiveList.setObjectName("ArchiveList")
-        self.verticalLayout.addWidget(self.ArchiveList)
         self.frame = QtWidgets.QFrame(self.centralwidget)
+        self.frame.setGeometry(QtCore.QRect(10, 42, 582, 224))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -42,40 +42,29 @@ class Ui_MainWindow(object):
         self.SeeChat = QtWidgets.QPushButton(self.frame)
         self.SeeChat.setGeometry(QtCore.QRect(44, 20, 101, 81))
         self.SeeChat.setObjectName("SeeChat")
-        self.Archive_this_chat = QtWidgets.QPushButton(self.frame)
-        self.Archive_this_chat.setGeometry(QtCore.QRect(440, 50, 75, 23))
-        self.Archive_this_chat.setObjectName("Archive_this_chat")
-        self.verticalLayout.addWidget(self.frame)
-        self.NextButton = QtWidgets.QPushButton(self.centralwidget)
-        self.NextButton.setObjectName("NextButton")
-        self.verticalLayout.addWidget(self.NextButton)
-        self.BeforeButton = QtWidgets.QPushButton(self.centralwidget)
-        self.BeforeButton.setObjectName("BeforeButton")
-        self.verticalLayout.addWidget(self.BeforeButton)
+        self.Unarchive_this_chat = QtWidgets.QPushButton(self.frame)
+        self.Unarchive_this_chat.setGeometry(QtCore.QRect(440, 50, 75, 23))
+        self.Unarchive_this_chat.setObjectName("Unarchive_this_chat")
         self.BackButton = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.BackButton.setGeometry(QtCore.QRect(10, 330, 582, 224))
         self.BackButton.setObjectName("BackButton")
-        self.verticalLayout.addWidget(self.BackButton)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
         self.retranslateUi(MainWindow)
-        self.set_room(MainWindow)
-        self.set_counter()
-        self.NextButton.clicked.connect(lambda: ui.setupUi(MainWindow, self.data, self.rooms, self.counter_after))
-        self.BeforeButton.clicked.connect(lambda: ui.setupUi(MainWindow, self.data, self.rooms, self.counter_before))
-        self.ArchiveList.clicked.connect(lambda: self.archive_list(MainWindow))
-        from .home import ui as ui_home
-        self.BackButton.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.NextButton.setText(_translate("MainWindow", "Next"))
+        self.BeforeButton.setText(_translate("MainWindow", "Before"))
         self.ArchiveList.setText(_translate("MainWindow", "Archive chat"))
         self.label_3.setText(_translate("MainWindow", "Name :"))
         self.Delete_this_chat.setText(_translate("MainWindow", "Delete"))
@@ -84,33 +73,15 @@ class Ui_MainWindow(object):
         self.checkBoxRead.setText(_translate("MainWindow", "Read"))
         self.UserName.setText(_translate("MainWindow", "User_"))
         self.SeeChat.setText(_translate("MainWindow", "Chat"))
-        self.Archive_this_chat.setText(_translate("MainWindow", "Archive"))
-        self.NextButton.setText(_translate("MainWindow", "Next"))
-        self.BeforeButton.setText(_translate("MainWindow", "Before"))
+        self.Unarchive_this_chat.setText(_translate("MainWindow", "Unarchive"))
         self.BackButton.setText(_translate("MainWindow", "Back"))
 
-    def archive_list(self, MainWindow):
-        pass
 
-    def set_counter(self):
-        self.counter_after = self.counter_before = self.counter
-        if len(self.rooms) > self.counter + 1:
-            self.counter_after = self.counter + 1
-        if self.counter != 0:
-            self.counter_before = self.counter - 1
-
-    def set_room(self, MainWindow):
-        another_user = self.rooms[self.counter][0]
-        another_room = self.rooms[self.counter][1]
-        self.UserName.setText(another_user.username)
-        self.FirstName_lastName.setText(f'{another_user.first_name}  {another_user.last_name}')
-        self.SeeChat.clicked.connect(lambda: ui_chat.setupUi(MainWindow, self.data, another_room))
-        self.Archive_this_chat.clicked.connect(lambda: another_room.archive_room())
-
-        self.Delete_this_chat.clicked.connect(lambda: another_room.delete())
-        # self.checkBoxRead.clicked.connect(lambda )
-        # self.checkBoxRead.isChecked('print checked')
-
-
-
-ui = Ui_MainWindow()
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
