@@ -168,18 +168,18 @@ class Connection(Table):
             return {'status': False, 'error': e}
 
     @classmethod
-    def mutation_number(cls, user1_id, user2_id):
+    def mutual_connection_number(cls, user1_id, user2_id):
         try:
             user1_connections = cls.find_user_connections(user1_id).get('connections')
             user2_connections = cls.find_user_connections(user2_id).get('connections')
-            mutation = 0
+            mutual = 0
             for user2_connection in user2_connections:
                 connect_user_id = user2_connection.user_caller_id if user2_connection.user_caller_id != user2_id \
                     else user2_connection.user_invited_id
 
                 if cls.get_connect_with_users_id(user1_id, connect_user_id).get('connection'):
-                    mutation += 1
+                    mutual += 1
 
-            return {'status': True, 'mutation': mutation}
+            return {'status': True, 'mutual': mutual}
         except Exception as e:
             return {'status': False, 'error': e}
