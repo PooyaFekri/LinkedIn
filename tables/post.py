@@ -30,6 +30,7 @@ class Post(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
+    @classmethod
     def find_via_pk(cls, pk: Union[str, int]) -> dict:
         try:
             post = super().find_via_pk(pk)

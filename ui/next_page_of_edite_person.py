@@ -128,7 +128,7 @@ class Ui_MainWindow(object):
                     i.delete()
 
     def add_exprince_to(self, dateEdit_start_date, dateEdit_end_date, text):
-        info = {"user_id":self.data["user"].id,"start_time":dateEdit_start_date,"end_time":dateEdit_end_date,"text":text}
+        info = {"user_id":self.data["user"].id,"start_time":dateEdit_start_date.toPyDateTime(),"end_time":dateEdit_end_date.toPyDateTime(),"text":text}
         Experience.add(**info)
 
     def remove_exprince(self, text):

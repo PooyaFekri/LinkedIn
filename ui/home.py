@@ -1,12 +1,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Message, Room, User
+from tables import Message, Room, User, Experience
 from .room import ui as ui_room
 from .network import ui as ui_network
 from .post import ui as ui_post
 from .profile_me import ui as ui_me
 from .seePost import ui as ui_seePost
-
+from .jobs import ui as ui_jobs
 
 # from .SeeOtherPerson import ui as ui_ohter_persion
 
@@ -118,7 +118,7 @@ class Ui_MainWindow(object):
         self.NetworkButton.clicked.connect(lambda: ui_network.setupUi(MainWindow, data))
         self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data, -1))
         self.profile_button.clicked.connect(lambda: ui_me.setupUi(MainWindow, self.data))
-
+        self.JobsButton.clicked.connect(lambda : ui_jobs.setupUi(MainWindow,self.data, Experience.find_user_experiences(self.data.get("user").id).get("experiences")))
         # self.notif //TODO
         # self.jobs //TODO
         # self.LikeButton.clicked.connect(lambda: print("s2"))

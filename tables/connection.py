@@ -61,14 +61,15 @@ class Connection(Table):
             res_posts = []
             try:
                 for connection in connections:
-                    connect_user_id = user_id if connection.user_caller_id != user_id else connection.user_caller_id
+                    connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
                     likes: list = Like.get_user_likes(connect_user_id).get('likes')
                     posts: list = Post.get_post_by_user_id(connect_user_id).get('posts')
                     comments: list = Comment.get_comments_by_user_id(connect_user_id).get('comments')
                     res_posts += posts
                     for ele in likes + comments:
-                        temp_post = Post.find_via_pk(ele.post_id).get('posts')
-                        res_posts.append(temp_post)
+                        if ele.post_id:
+                            temp_post = Post.find_via_pk(ele.post_id).get('post')
+                            res_posts.append(temp_post)
 
                     return {'status': True, "posts": res_posts}
 
