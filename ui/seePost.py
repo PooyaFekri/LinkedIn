@@ -5,10 +5,11 @@
 # Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
+from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Connection, User, Comment
+from tables import Connection, User, Comment, Like
 
 
 class Ui_MainWindow(object):
@@ -18,7 +19,14 @@ class Ui_MainWindow(object):
         self.data = data
         self.counter = counter
         self.set_counter()
-
+        self.post = None
+        self.is_like = False
+        self.this_like = None
+        self.comments = None
+        if self.data['posts']['posts']:
+            self.post = self.data['posts']['posts'][self.counter]
+            self.comments = Comment.get_comments_by_post_id(self.data['posts']['posts'][self.counter].id).get(
+                "comments")
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -62,7 +70,8 @@ class Ui_MainWindow(object):
         self.ShareFrom_2.setObjectName("ShareFrom_2")
         self.verticalLayout_2.addWidget(self.ShareFrom_2)
         self.ShareFrom = QtWidgets.QLabel(self.frame)
-        self.ShareFrom.setText(User.find_via_pk(self.data['posts']['posts'][self.counter].share).get("user").username)
+        if self.data['posts']['posts'][self.counter].share:
+            self.ShareFrom.setText(User.find_via_pk(self.data['posts']['posts'][self.counter].share).get("user").username)
         self.ShareFrom.setObjectName("ShareFrom")
         self.verticalLayout_2.addWidget(self.ShareFrom)
         self.verticalLayout.addWidget(self.frame)
@@ -92,12 +101,11 @@ class Ui_MainWindow(object):
         self.pushButton.clicked.connect(lambda :ui.setupUi(MainWindow,data,self.counter_before))#back
         self.pushButton_2.clicked.connect(lambda : ui.setupUi(MainWindow,data,self.counter_after))#next
         self.pushButton_3.clicked.connect(lambda : ui_home.setupUi(MainWindow,data))#home
-        #todo add comment ui to this project
-        self.CommentButton.clicked.connect(lambda : ui_comment.setupUi(MainWindow,self.data,Comment.get_comments_by_post_id(self.data['posts']['posts'][self.counter].id).get("comments")))
+        self.CommentButton.clicked.connect(lambda : ui_comment.setupUi(MainWindow,self.data,self.comments,self.post))
         self.ShareButton.clicked.connect(lambda :ui_post.setupUi(MainWindow,self.data,self.user.id))
-        self.SeeProfile.clicked.connect(lambda :ui_seeOtherPerson.setupUi(MainWindow,self.data,User.find_via_pk(self.data['posts']['posts'][self.counter].user_id).get("user")))
+        self.SeeProfile.clicked.connect(lambda :ui_seeOtherPerson.setupUi(MainWindow,self.data,User.find_via_pk(self.post.user_id).get("user")))
 
-        self.LikeButton.clicked.connect(lambda :print("like"))
+        self.LikeButton.clicked.connect(lambda : self.like())
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -120,16 +128,48 @@ class Ui_MainWindow(object):
 
     def set_counter(self):
         self.counter_after = self.counter_before = self.counter
-        if self.data['posts'] != None and len(self.data['posts']) > self.counter + 1:
+        if self.data['posts']['posts'] and len(self.data['posts']['posts']) > self.counter + 1:
             self.counter_after = self.counter + 1
         if self.counter != 0:
             self.counter_before = self.counter - 1
 
+
     def set_page(self):
-         self.user = User.find_via_pk(self.data['posts']['posts'][self.counter].user_id).get('user')
+         self.user = User.find_via_pk(self.post.user_id).get('user')
          self.UserName.setText(self.user.username)
-         self.textBrowserOfPost.setText(self.data['posts']['posts'][self.counter].text)
+         self.textBrowserOfPost.setText(self.post.text)
+         if self.comments:
+             self.numberComment.setText(str(len(self.comments)))
+
+         likes = []
+         if self.post:
+             likes = Like.get_post_likes(self.post.id).get("likes")
+             if likes:
+                 self.Number_of_like.setText(str(len(likes)))
+                 for i in likes:
+                     if i.user_id == self.data.get('user').id:
+                         self.LikeButton.click()
+                         self.is_like = True
+                         self.this_like = i
+
          # if
+
+    def like(self):
+        if self.is_like == True :
+            self.is_like = False
+            self.this_like.unlike()
+        else :
+            # print(self.comments)
+            if self.post:
+                data = {'post_id':self.post.id,'time':datetime.now(),'user_id':self.data.get('user').id}
+                Like.like(**data)
+                likes = Like.get_post_likes(self.post.id).get("likes")
+
+                for i in likes:
+                    if i.user_id == self.data.get('user').id:
+                        self.LikeButton.click()
+                        self.is_like = True
+                        self.this_like = i
 
 # if __name__ == "__main__":
 #     import sys

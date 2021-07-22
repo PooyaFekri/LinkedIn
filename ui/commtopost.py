@@ -5,15 +5,20 @@
 # Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
+from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from tables import Comment, Like
+
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow,data,comments,counter=0):
+    def setupUi(self, MainWindow, data, comments, post, counter=0):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
+        self.is_like = False
         self.data = data
+        self.post = post
         self.comments = comments
         self.counter = counter
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -57,16 +62,18 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         from .home import ui as ui_home
         self.retranslateUi(MainWindow)
-        self.homwButton.clicked.connect(lambda : ui_home.setupUi(MainWindow,self.data))
-        self.sendCommentButton.clicked.connect(lambda : self.send_comment())
-        self.nextButton.clicked.connect(lambda : self.next_comment())
-        self.beforeButton.clicked.connect(lambda : self.before_comment())
-        self.replayButton.clicked.connect(lambda : self.replay())
+        self.homwButton.clicked.connect(lambda: ui_home.setupUi(MainWindow, self.data))
+        self.sendCommentButton.clicked.connect(lambda: self.send_comment(MainWindow))
+        self.nextButton.clicked.connect(lambda: self.next_comment(MainWindow))
+        self.beforeButton.clicked.connect(lambda: self.before_comment(MainWindow))
+        self.replayButton.clicked.connect(lambda: self.replay(MainWindow))
+        self.like_checkBox.clicked.connect(lambda : self.like(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.set_up(MainWindow)
         self.homwButton.setText(_translate("MainWindow", "go home"))
         self.sendCommentButton.setText(_translate("MainWindow", "send comment"))
         self.nextButton.setText(_translate("MainWindow", "Next commend"))
@@ -74,20 +81,65 @@ class Ui_MainWindow(object):
         self.like_checkBox.setText(_translate("MainWindow", "like"))
         self.replayButton.setText(_translate("MainWindow", "replay"))
 
-    def send_comment(self):
-        # if self.textBrowser_show_commend
-        pass
-    def next_comment(self):
-        pass
+    def send_comment(self, MainWindow):
+        if self.textBrowser.toPlainText():
+            data = {"user_id": self.data.get('user').id, 'time': datetime.now(),
+                    'text': self.textBrowser.toPlainText(), 'post_id': self.post.id}
+            Comment.create(**data)
+            ui.setupUi(MainWindow, self.data, Comment.get_comments_by_post_id(self.post.id).get("comments"), self.post)
 
-    def before_comment(self):
-        pass
+    def next_comment(self, MainWindow):
 
-    def replay(self):
-        pass
+        if len(self.comments) > self.counter + 1:
+            ui.setupUi(MainWindow, self.data, self.comments, self.post, self.counter + 1)
 
-    def set_up(self):
-        pass
+    def before_comment(self, MainWindow):
+        if self.counter > 0:
+            ui.setupUi(MainWindow, self.data, self.comments, self.post, self.counter - 1)
+
+    def replay(self, MainWindow):
+        if self.replaycomment_textBrowser.toPlainText():
+            data = {"user_id": self.data.get('user').id, 'time': datetime.now(),
+                    'text': self.replaycomment_textBrowser.toPlainText()+"\n"+"replay : \n"+self.textBrowser_show_commend.toPlainText(), 'post_id': self.post.id,'comment_replay_id':self.comments[self.counter].id}
+            Comment.create(**data)
+            ui.setupUi(MainWindow,self.data,Comment.get_comments_by_post_id(self.post.id).get("comments"),self.post)
+
+    def set_up(self, MainWindow):
+        if self.comments:
+            # print(self.comments)
+            # print(self.comments[0].text)
+            self.textBrowser_show_commend.setText(self.comments[self.counter].text)
+
+        likes = []
+        if self.comments:
+            likes = Like.get_comment_likes(self.comments[self.counter].id).get("likes")
+            if likes:
+                for i in likes:
+                    if i.user_id == self.data.get('user').id:
+                        self.like_checkBox.click()
+                        self.is_like = True
+                        self.this_like = i
+
+    def like(self, MainWindow):
+
+        if self.is_like == True :
+            self.is_like = False
+            self.this_like.unlike()
+
+        else :
+            # print(self.comments)
+            if self.comments:
+                data = {'comment_id':self.comments[self.counter].id,'time':datetime.now(),'user_id':self.data.get('user').id}
+                Like.like(**data)
+                likes = Like.get_comment_likes(self.comments[self.counter].id).get("likes")
+
+                for i in likes:
+                    if i.user_id == self.data.get('user').id:
+                        self.like_checkBox.click()
+                        self.is_like = True
+                        self.this_like = i
+
+
 
 # if __name__ == "__main__":
 #     import sys
