@@ -1,10 +1,15 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from .chat import ui as ui_chat
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, data, un_rooms, arch_rooms, counter=0):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
+        self.data = data
+        self.un_rooms = un_rooms
+        self.counter = counter
+        self.arch_rooms = arch_rooms
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.NextButton = QtWidgets.QPushButton(self.centralwidget)
@@ -13,9 +18,9 @@ class Ui_MainWindow(object):
         self.BeforeButton = QtWidgets.QPushButton(self.centralwidget)
         self.BeforeButton.setGeometry(QtCore.QRect(10, 301, 582, 23))
         self.BeforeButton.setObjectName("BeforeButton")
-        self.ArchiveList = QtWidgets.QPushButton(self.centralwidget)
-        self.ArchiveList.setGeometry(QtCore.QRect(10, 13, 582, 23))
-        self.ArchiveList.setObjectName("ArchiveList")
+        self.ChatList = QtWidgets.QPushButton(self.centralwidget)
+        self.ChatList.setGeometry(QtCore.QRect(10, 13, 582, 23))
+        self.ChatList.setObjectName("ChatList")
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(10, 42, 582, 224))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -58,6 +63,16 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        self.set_room(MainWindow)
+        self.set_counter()
+        self.NextButton.clicked.connect(
+            lambda: ui.setupUi(MainWindow, self.data, self.un_rooms, self.arch_rooms, self.counter_after))
+        self.BeforeButton.clicked.connect(
+            lambda: ui.setupUi(MainWindow, self.data, self.un_rooms, self.arch_rooms, self.counter_before))
+        self.ChatList.clicked.connect(lambda: self.chat_list(MainWindow))
+        from .home import ui as ui_home
+        self.BackButton.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -65,7 +80,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.NextButton.setText(_translate("MainWindow", "Next"))
         self.BeforeButton.setText(_translate("MainWindow", "Before"))
-        self.ArchiveList.setText(_translate("MainWindow", "Archive chat"))
+        self.ChatList.setText(_translate("MainWindow", " Chat"))
         self.label_3.setText(_translate("MainWindow", "Name :"))
         self.Delete_this_chat.setText(_translate("MainWindow", "Delete"))
         self.FirstName_lastName.setText(_translate("MainWindow", "Name_last_name"))
@@ -76,12 +91,30 @@ class Ui_MainWindow(object):
         self.Unarchive_this_chat.setText(_translate("MainWindow", "Unarchive"))
         self.BackButton.setText(_translate("MainWindow", "Back"))
 
+    def chat_list(self, MainWindow):
+        if len(self.un_rooms) != 0:
+            from .room import ui as ui_room
+            ui_room.setupUi(MainWindow, self.data, self.un_rooms, self.arch_rooms)
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+    def set_counter(self):
+        self.counter_after = self.counter_before = self.counter
+        if len(self.arch_rooms) > self.counter + 1:
+            self.counter_after = self.counter + 1
+        if self.counter != 0:
+            self.counter_before = self.counter - 1
+
+    def set_room(self, MainWindow):
+        another_user = self.arch_rooms[self.counter][0]
+        another_room = self.arch_rooms[self.counter][1]
+        self.UserName.setText(another_user.username)
+        self.FirstName_lastName.setText(f'{another_user.first_name}  {another_user.last_name}')
+        self.SeeChat.clicked.connect(lambda: ui_chat.setupUi(MainWindow, self.data, another_room))
+        self.Unarchive_this_chat.clicked.connect(lambda: another_room.archive_room(False))
+
+        self.Delete_this_chat.clicked.connect(lambda: another_room.delete())
+        # TODO
+        # self.checkBoxRead.clicked.connect(lambda )
+        # self.checkBoxRead.isChecked('print checked')
+
+
+ui = Ui_MainWindow()

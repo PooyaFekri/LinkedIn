@@ -40,7 +40,7 @@
      <string>Before</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="ArchiveList">
+   <widget class="QPushButton" name="ChatList">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -50,7 +50,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Archive chat</string>
+     <string> Chat</string>
     </property>
    </widget>
    <widget class="QFrame" name="frame">

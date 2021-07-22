@@ -1,7 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 from tables import Message, Room, User, Experience
-from .room import ui as ui_room
+from .room import ui as ui_room_chat
+from .archive_chat import ui as ui_room_archive_chat
 from .network import ui as ui_network
 from .post import ui as ui_post
 from .profile_me import ui as ui_me
@@ -163,8 +165,9 @@ class Ui_MainWindow(object):
                 else:
                     all_rooms_users_archived.append((user, room_obj))
             if len(all_rooms_users_unarchive) != 0:
-                ui_room.setupUi(MainWindow, self.data, all_rooms_users_unarchive)
+                ui_room_chat.setupUi(MainWindow, self.data, all_rooms_users_unarchive, all_rooms_users_archived)
             elif len(all_rooms_users_archived) != 0:
-                ui_room.setupUi(MainWindow, self.data, all_rooms_users_archived)
+                ui_room_archive_chat.setupUi(MainWindow, self.data, all_rooms_users_unarchive, all_rooms_users_archived)
+
 
 ui = Ui_MainWindow()

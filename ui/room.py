@@ -4,12 +4,13 @@ from .chat import ui as ui_chat
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow, data, rooms, counter=0):
+    def setupUi(self, MainWindow, data, un_rooms, arch_rooms, counter=0):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.data = data
-        self.rooms = rooms
+        self.un_rooms = un_rooms
         self.counter = counter
+        self.arch_rooms = arch_rooms
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -66,8 +67,10 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.set_room(MainWindow)
         self.set_counter()
-        self.NextButton.clicked.connect(lambda: ui.setupUi(MainWindow, self.data, self.rooms, self.counter_after))
-        self.BeforeButton.clicked.connect(lambda: ui.setupUi(MainWindow, self.data, self.rooms, self.counter_before))
+        self.NextButton.clicked.connect(
+            lambda: ui.setupUi(MainWindow, self.data, self.un_rooms, self.arch_rooms, self.counter_after))
+        self.BeforeButton.clicked.connect(
+            lambda: ui.setupUi(MainWindow, self.data, self.un_rooms, self.arch_rooms, self.counter_before))
         self.ArchiveList.clicked.connect(lambda: self.archive_list(MainWindow))
         from .home import ui as ui_home
         self.BackButton.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
@@ -90,27 +93,29 @@ class Ui_MainWindow(object):
         self.BackButton.setText(_translate("MainWindow", "Back"))
 
     def archive_list(self, MainWindow):
-        pass
+        if len(self.arch_rooms) != 0:
+            from .archive_chat import ui as ui_archive_chat
+            ui_archive_chat.setupUi(MainWindow, self.data, self.un_rooms, self.arch_rooms)
 
     def set_counter(self):
         self.counter_after = self.counter_before = self.counter
-        if len(self.rooms) > self.counter + 1:
+        if len(self.un_rooms) > self.counter + 1:
             self.counter_after = self.counter + 1
         if self.counter != 0:
             self.counter_before = self.counter - 1
 
     def set_room(self, MainWindow):
-        another_user = self.rooms[self.counter][0]
-        another_room = self.rooms[self.counter][1]
+        another_user = self.un_rooms[self.counter][0]
+        another_room = self.un_rooms[self.counter][1]
         self.UserName.setText(another_user.username)
         self.FirstName_lastName.setText(f'{another_user.first_name}  {another_user.last_name}')
         self.SeeChat.clicked.connect(lambda: ui_chat.setupUi(MainWindow, self.data, another_room))
-        self.Archive_this_chat.clicked.connect(lambda: another_room.archive_room())
+        self.Archive_this_chat.clicked.connect(lambda: another_room.archive_room(True))
 
         self.Delete_this_chat.clicked.connect(lambda: another_room.delete())
+        # TODO
         # self.checkBoxRead.clicked.connect(lambda )
         # self.checkBoxRead.isChecked('print checked')
-
 
 
 ui = Ui_MainWindow()
