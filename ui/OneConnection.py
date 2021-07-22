@@ -73,8 +73,8 @@ class Ui_MainWindow(object):
         # TODO: creat room and go to chatroom
         self.MessageButton.clicked.connect(lambda: self.message(MainWindow))
         self.DisConnectButton.clicked.connect(lambda: self.disconnect_user(MainWindow))
-        self.next.clicked.connect(lambda: ui.setupUi(MainWindow, data, page, self.counter_after))
-        self.Back.clicked.connect(lambda: ui.setupUi(MainWindow, data, page, self.counter_before))
+        self.next.clicked.connect(lambda: ui.setupUi(MainWindow, self.data, self.page, self.counter_after))
+        self.Back.clicked.connect(lambda: ui.setupUi(MainWindow, self.data, self.page, self.counter_before))
         self.home.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

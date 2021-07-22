@@ -148,19 +148,23 @@ class Ui_MainWindow(object):
         self.message_button.setText(_translate("MainWindow", "message"))
 
     def search_rooms(self, MainWindow):
-
+        # TODO: Fix error that happened if rooms was None
         rooms = Message.get_rooms_info(self.data.get('user').id).get('rooms_info')
-        all_rooms_users = []
-        for room in rooms:
-            user_id = room.user_receiver_id if room.user_receiver_id != self.data.get(
-                'user').id else room.user_sender_id
-            user = User.find_via_pk(user_id)
-            all_rooms_users.append((user, Room.find_via_pk(room.id)))
+        all_rooms_users_unarchive = []
+        all_rooms_users_archived = []
 
-        page = {
-            'all_rooms_users': all_rooms_users
-        }
-        ui_room.setupUi(MainWindow, self.data)
-
+        if len(rooms) != 0:
+            for room in rooms:
+                user_id = room[1] if room[1] != self.data.get('user').id else room[2]
+                user = User.find_via_pk(user_id).get('user')
+                room_obj = Room.find_via_pk(room[0]).get('room')
+                if not room_obj.archive:
+                    all_rooms_users_unarchive.append((user, room_obj))
+                else:
+                    all_rooms_users_archived.append((user, room_obj))
+            if len(all_rooms_users_unarchive) != 0:
+                ui_room.setupUi(MainWindow, self.data, all_rooms_users_unarchive)
+            elif len(all_rooms_users_archived) != 0:
+                ui_room.setupUi(MainWindow, self.data, all_rooms_users_archived)
 
 ui = Ui_MainWindow()

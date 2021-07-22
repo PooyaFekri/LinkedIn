@@ -30,7 +30,7 @@ class Room(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
-    def archive(self, *args, **kwargs):
+    def archive_room(self, *args, **kwargs):
         try:
             super().update_via_pk({'archive': True}, self.id)
             return {'status': True}
