@@ -1,11 +1,10 @@
 import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QLabel, QVBoxLayout, QWidget, QScrollArea
 
 from .simple import ui as ui_simple
 from tables import User, Connection
+from .seeOtherPerson import ui as ui_see_other_person
 from tables.notification import Notification
 
 
@@ -93,13 +92,13 @@ class Ui_NewConnection(object):
         NewConnection.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(NewConnection)
         self.statusbar.setObjectName("statusbar")
-        self.find_invitations()
+        self.find_invitations(NewConnection)
         NewConnection.setStatusBar(self.statusbar)
 
         self.retranslateUi(NewConnection)
         from .network import ui as ui_network
-        self.BackButton.clicked.connect(lambda: ui_network.setupUi(NewConnection,self.data))
-        self.SearchButton.clicked.connect(lambda: self.search())
+        self.BackButton.clicked.connect(lambda: ui_network.setupUi(NewConnection, self.data))
+        self.SearchButton.clicked.connect(lambda: self.search(NewConnection))
         QtCore.QMetaObject.connectSlotsByName(NewConnection)
 
     def retranslateUi(self, NewConnection):
@@ -119,7 +118,7 @@ class Ui_NewConnection(object):
         # self.ConnnectButton_Yes.setText(_translate("NewConnection", "Yes, Connect"))
         self.BackButton.setText(_translate("NewConnection", "Back"))
 
-    def search(self):
+    def search(self, NewConnection):
         username = self.lineEdit_username.text()
         users = self.data.get("user").search(username).get("users")
 
@@ -144,12 +143,10 @@ class Ui_NewConnection(object):
             seeProfile_search.setText("See Profile")
             ConnectButton.setText("Connect")
             # TODO: complete this part
-            # seeProfile_search.clicked.connect(lambda )
+            seeProfile_search.clicked.connect(lambda: ui_see_other_person.setupUi(NewConnection,self.data, user))
             ConnectButton.clicked.connect(lambda: self.connect(user.id))
-            # self.scrollArea_users.setWidget(frame)
-            # self.scrollArea_users.setWidget(self.scrollAreaWidgetContents)
 
-    def find_invitations(self):
+    def find_invitations(self, NewConnection):
         _filter = {
             'user_invited_id': self.data.get("user").id,
             'connected': False
@@ -183,11 +180,10 @@ class Ui_NewConnection(object):
             YesConnectButton.setText("Yes, Connect")
             NoConnectButton.setText("No")
             # TODO: complete this part
+            seeProfile_inv.clicked.connect(lambda: ui_see_other_person.setupUi(NewConnection, self.data, connection))
             # seeProfile_inv.clicked.connect(lambda: self.connect(user.id))
             YesConnectButton.clicked.connect(lambda: self.accept_or_reject_inv(connection, True))
             NoConnectButton.clicked.connect(lambda: self.accept_or_reject_inv(connection, False))
-            # self.scrollArea_users.setWidget(frame)
-            # self.scrollArea_users.setWidget(self.scrollAreaWidgetContents)
 
     def accept_or_reject_inv(self, connection: 'Connection', action):
         if action:

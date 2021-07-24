@@ -2,7 +2,7 @@ import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Room, Message
+from tables import Room, Message, Connection
 # from .room import ui as ui_room
 from .chat import ui as ui_chat
 
@@ -93,7 +93,9 @@ class Ui_MainWindow(object):
 
     def set_user(self):
         self.Username.setText(self.page['users'][self.counter].username)
-        # TODO: mutual connection
+        mutual_number = Connection.mutual_connection_number(self.page['users'][self.counter].id,
+                                                            self.data.get('user').id).get('mutual')
+        self.mutualConnection.setText(str(mutual_number))
 
     def disconnect_user(self, MainWindow):
         from .home import ui as ui_home
