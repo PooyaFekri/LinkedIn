@@ -2,7 +2,7 @@ from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Connection, Language, Skill, Endorse
+from tables import Connection, Language, Skill, Endorse, Post
 from tables.notification import Notification
 
 
@@ -90,6 +90,7 @@ class Ui_MainWindow(object):
         from .SeeOtherAccom import ui as ui_other_accom
         self.acc_button.clicked.connect(lambda: ui_other_accom.setupUi(MainWindow, self.data, self.user))
         self.Back.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
+        self.nextPage_Button.clicked.connect(lambda : self.other_featured(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow, user):
@@ -197,6 +198,13 @@ class Ui_MainWindow(object):
         _data = {"user_id": self.user.id, "time": time, "event": event, "type": "User",
                  'type_id': user_id}
         res = Notification.notify(**_data)
+
+    def other_featured(self, MainWindow):
+
+        other_post = Post.get_post_by_user_id(self.user.id).get("posts")
+        from .featured_of_other import ui as ui_featured
+
+        ui_featured.setupUi(MainWindow,self.data,other_post)
 
 
 ui = Ui_MainWindow()
