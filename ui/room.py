@@ -3,6 +3,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from .chat import ui as ui_chat
 
 
+def click_box(state):
+    if state == QtCore.Qt.Checked:
+        print('checked')
+    else:
+        print('unchecked')
+
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow, data, un_rooms, arch_rooms, counter=0):
         MainWindow.setObjectName("MainWindow")
@@ -111,11 +118,8 @@ class Ui_MainWindow(object):
         self.FirstName_lastName.setText(f'{another_user.first_name}  {another_user.last_name}')
         self.SeeChat.clicked.connect(lambda: ui_chat.setupUi(MainWindow, self.data, another_room))
         self.Archive_this_chat.clicked.connect(lambda: another_room.archive_room(True))
-
         self.Delete_this_chat.clicked.connect(lambda: another_room.delete())
-        # TODO
-        # self.checkBoxRead.clicked.connect(lambda )
-        # self.checkBoxRead.isChecked('print checked')
+        self.checkBoxRead.stateChanged.connect(click_box)
 
 
 ui = Ui_MainWindow()

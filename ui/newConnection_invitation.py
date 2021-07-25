@@ -143,7 +143,7 @@ class Ui_NewConnection(object):
             seeProfile_search.setText("See Profile")
             ConnectButton.setText("Connect")
             # TODO: complete this part
-            seeProfile_search.clicked.connect(lambda: ui_see_other_person.setupUi(NewConnection,self.data, user))
+            seeProfile_search.clicked.connect(lambda: ui_see_other_person.setupUi(NewConnection, self.data, user))
             ConnectButton.clicked.connect(lambda: self.connect(user.id))
 
     def find_invitations(self, NewConnection):
