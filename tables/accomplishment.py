@@ -12,16 +12,35 @@ class Accomplishment(Table):
         self.time = data[4]
 
     @classmethod
-    def create(cls):
-        pass
+    def create(cls, **kwargs):
+        try:
+            super().insert(kwargs)
+            return {'status': True}
+        except Exception as e:
+            return {'status': False, 'error': e}
 
     @classmethod
-    def get_accomplishments_by_user_id(cls):
-        pass
+    def get_accomplishments_by_user_id(cls, user_id):
+        _filter = {
+            'user_id': user_id,
+        }
+        try:
+            accomplishments = super().find(_filter)
+            return {'status': True, 'accomplishments': accomplishments}
+        except Exception as e:
+            return {'status': False, 'error': e}
 
     def delete(self):
-        pass
+        try:
+            super().delete_via_pk(self.id)
+            return {'status': True}
+        except Exception as e:
+            return {'status': False, 'error': e}
 
-    def update(self):
-        pass
+    def update(self, **kwargs):
+        try:
+            super().update_via_pk(kwargs, self.id)
+            return {'status': True}
+        except Exception as e:
+            return {'status': False, 'error': e}
 
