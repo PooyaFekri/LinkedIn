@@ -43,6 +43,9 @@ class Ui_SeeConnections(object):
         self.SearchButton = QtWidgets.QPushButton(self.centralwidget)
         self.SearchButton.setObjectName("SearchButton")
         self.verticalLayout.addWidget(self.SearchButton)
+        self.SearchByMutual = QtWidgets.QPushButton(self.centralwidget)
+        self.SearchByMutual.setObjectName("SearchByMutualConnections")
+        self.verticalLayout.addWidget(self.SearchByMutual)
         self.BackButton = QtWidgets.QCommandLinkButton(self.centralwidget)
         self.BackButton.setObjectName("BackButton")
         self.verticalLayout.addWidget(self.BackButton)
@@ -59,6 +62,8 @@ class Ui_SeeConnections(object):
         from .network import ui as ui_network
         self.BackButton.clicked.connect(lambda: ui_network.setupUi(SeeConnections, self.data))
         self.SearchButton.clicked.connect(lambda: self.search(SeeConnections))
+        # TODO
+        self.SearchByMutual.clicked.connect(lambda: self.search_by_mutual_connections(SeeConnections))
 
         QtCore.QMetaObject.connectSlotsByName(SeeConnections)
 
@@ -71,6 +76,7 @@ class Ui_SeeConnections(object):
         self.label_5.setText(_translate("SeeConnections", "Search By Profile Language"))
         self.label_6.setText(_translate("SeeConnections", "Search By Current Company"))
         self.SearchButton.setText(_translate("SeeConnections", "Search"))
+        self.SearchByMutual.setText(_translate("SeeConnections", "Search By Mutual Connections"))
         self.BackButton.setText(_translate("SeeConnections", "Back"))
 
     def search(self, SeeConnections):
@@ -92,7 +98,40 @@ class Ui_SeeConnections(object):
             'connections': connections,
             'users': users
         }
+        print(page)
         if len(page["connections"]) > 0:
+            ui_OneConnection.setupUi(SeeConnections, self.data, page)
+        else:
+            ui.setupUi(SeeConnections, self.data)
+
+    def search_by_mutual_connections(self, SeeConnections):
+        user_id = self.data.get('user').id
+        connections = Connection.find_user_connections(user_id).get('connections')
+        ls = []
+
+        for connection in connections:
+            connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
+            user = User.find_via_pk(connect_user_id).get('user')
+            mutual_connection = Connection.mutual_connection_number(user_id, connect_user_id).get('mutual')
+            ls.append((mutual_connection, user, connection))
+
+
+        ls.sort(key=lambda x: x[0], reverse=True)
+        conn = []
+        users = []
+        mutual_connections_count = []
+        for element in ls:
+            mutual_connections_count.append(element[0])
+            users.append(element[1])
+            conn.append(element[2])
+
+        page = {
+            'connections': conn,
+            'users': users,
+            'mutual_connections_count': mutual_connections_count
+        }
+
+        if len(connections) > 0:
             ui_OneConnection.setupUi(SeeConnections, self.data, page)
         else:
             ui.setupUi(SeeConnections, self.data)
