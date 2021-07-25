@@ -9,7 +9,8 @@ from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Comment, Like
+from tables import Comment, Like, Connection
+from tables.notification import Notification
 
 
 class Ui_MainWindow(object):
@@ -83,10 +84,27 @@ class Ui_MainWindow(object):
         self.replayButton.setText(_translate("MainWindow", "replay"))
 
     def send_comment(self, MainWindow):
+        time = datetime.now()
+        user_id = self.data.get("user").id
+        connections = Connection.find_user_connections(user_id).get('connections')
         if self.textBrowser.toPlainText():
             data = {"user_id": self.data.get('user').id, 'time': datetime.now(),
                     'text': self.textBrowser.toPlainText(), 'post_id': self.post.id}
             Comment.create(**data)
+
+
+            comment = Comment.find(data)[-1]
+            event = "this post comment by :" + self.data.get("user").username + "in :" + str(time) + "\n" + self.post.text +"\n*******"+"\n"+"comment  : \n"+comment.text
+            _data = {"user_id": comment.user_id, "time": time, "event": event, "type": "Comment",
+            'type_id': comment.id}
+            res = Notification.notify(**_data)
+            for connection in connections:
+
+                connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
+                if connect_user_id != comment.user_id:
+                    _data = {"user_id": connect_user_id, "time": time, "event": event, "type": "Comment",
+                             'type_id': comment.id}
+                    res = Notification.notify(**_data)
             ui.setupUi(MainWindow, self.data, Comment.get_comments_by_post_id(self.post.id).get("comments"), self.post)
 
     def next_comment(self, MainWindow):
@@ -99,10 +117,34 @@ class Ui_MainWindow(object):
             ui.setupUi(MainWindow, self.data, self.comments, self.post, self.counter - 1)
 
     def replay(self, MainWindow):
+
+        time = datetime.now()
+        user_id = self.data.get("user").id
+        connections = Connection.find_user_connections(user_id).get('connections')
+
         if self.replaycomment_textBrowser.toPlainText():
+
             data = {"user_id": self.data.get('user').id, 'time': datetime.now(),
                     'text': self.replaycomment_textBrowser.toPlainText()+"\n"+"replay : \n"+self.textBrowser_show_commend.toPlainText(), 'post_id': self.post.id,'comment_replay_id':self.comments[self.counter].id}
             Comment.create(**data)
+
+            comment = Comment.find(data)[-1]
+            event = "your comment replay by :" + self.data.get("user").username + "in :" + str(time) + "\n" + self.comments[self.counter].text +"\n*******"+"\n"+"comment  : \n"+comment.text
+            event_1 = "this comment replay by :" + self.data.get("user").username + "in :" + str(time) + "\n" + self.comments[self.counter].text +"\n*******"+"\n"+"comment  : \n"+comment.text
+
+            _data = {"user_id": comment.user_id, "time": time, "event": event, "type": "Comment",
+            'type_id': comment.id}
+            res = Notification.notify(**_data)
+            for connection in connections:
+
+                connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
+                if connect_user_id != comment.user_id:
+                    _data = {"user_id": connect_user_id, "time": time, "event": event_1, "type": "Comment",
+                             'type_id': comment.id}
+                    res = Notification.notify(**_data)
+
+
+
             ui.setupUi(MainWindow,self.data,Comment.get_comments_by_post_id(self.post.id).get("comments"),self.post)
 
     def set_up(self, MainWindow):
@@ -122,6 +164,9 @@ class Ui_MainWindow(object):
                         self.this_like = i
 
     def like(self, MainWindow):
+        user_id = self.data.get("user").id
+        time = datetime.now()
+        connections = Connection.find_user_connections(user_id).get('connections')
 
         if self.is_like == True :
             self.is_like = False
@@ -130,15 +175,31 @@ class Ui_MainWindow(object):
         else :
             # print(self.comments)
             if self.comments:
+                comment = self.comments[self.counter]
                 data = {'comment_id':self.comments[self.counter].id,'time':datetime.now(),'user_id':self.data.get('user').id}
                 Like.like(**data)
-                likes = Like.get_comment_likes(self.comments[self.counter].id).get("likes")
 
-                for i in likes:
-                    if i.user_id == self.data.get('user').id:
-                        self.like_checkBox.click()
-                        self.is_like = True
-                        self.this_like = i
+                self.this_like = Like.find(data)[-1]
+                event = "your comment like by :" + self.data.get("user").username + "in :" + str(time) +"\npost:"+ "\n" + self.post.text + "\n*******\ncomment:"+comment.text
+                event_other = "this comment like by :" + self.data.get("user").username + "in :" + str(time) +"\npost:"+ "\n" + self.post.text + "\n*******\ncomment:"+comment.text
+
+                _data = {"user_id": comment.user_id, "time": time, "event": event, "type": "Like",
+                         'type_id': self.this_like.id}
+                res = Notification.notify(**_data)
+                for connection in connections:
+
+                    connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
+                    if connect_user_id != self.this_like.id:
+                        _data = {"user_id": connect_user_id, "time": time, "event": event_other, "type": "Like",
+                                 'type_id': self.this_like.id}
+                        res = Notification.notify(**_data)
+                # likes = Like.get_comment_likes(self.comments[self.counter].id).get("likes")
+                #
+                # for i in likes:
+                #     if i.user_id == self.data.get('user').id:
+                #         self.like_checkBox.click()
+                #         self.is_like = True
+                #         self.this_like = i
 
 
 

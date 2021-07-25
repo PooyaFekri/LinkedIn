@@ -5,10 +5,12 @@
 # Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
+from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from tables import Connection, Language, Skill, Endorse
+from tables.notification import Notification
 
 
 class Ui_MainWindow(object):
@@ -113,6 +115,7 @@ class Ui_MainWindow(object):
         self.Username.setText(user.username)
         language_support = Language.find_user_lang(user.id)
         self.textBrowser_intro.setText(user.intro)
+        self.notif_seePerson()
         if self.skill != []:
              # endors = Endorse.find_user_endorses()
              who_enodors = ""
@@ -161,6 +164,9 @@ class Ui_MainWindow(object):
             self.lineEdit.setText(self.skill[self.skill_number].text)
 
     def enrol_skill(self):
+        user_id = self.data.get("user").id
+        time = datetime.now()
+
         if self.lineEdit.text()!= None:
             this_endors = False
             endors_user = Endorse.find_user_endorses(self.user.id)
@@ -174,8 +180,25 @@ class Ui_MainWindow(object):
             if not this_endors:
                 data = {'skill_id': self.skill[self.skill_number].id, 'user_id': self.data['user'].id}
                 Endorse.create(**data)
+
+                endors = Endorse.find(data)
+                event = self.data.get("user").username + "endorse your "+self.skill[self.skill_number].text
+                _data = {"user_id": self.user.id, "time": time, "event": event, "type": "Endorse",
+                         'type_id': user_id}
+                res = Notification.notify(**_data)
+
+
             else:
                 find_endors.delete()
+
+    def notif_seePerson(self):
+
+        user_id = self.data.get("user").id
+        time = datetime.now()
+        event = self.data.get("user").username + "see your profile:"
+        _data = {"user_id": self.user.id, "time": time, "event": event, "type": "User",
+                 'type_id': user_id}
+        res = Notification.notify(**_data)
 
 
 # if __name__ == "__main__":

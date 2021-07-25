@@ -1,6 +1,9 @@
+from datetime import datetime
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from tables import Skill, Language, Experience
+from tables import Skill, Language, Experience, Connection
+from tables.notification import Notification
 
 
 class Ui_MainWindow(object):
@@ -130,7 +133,15 @@ class Ui_MainWindow(object):
     def add_exprince_to(self, dateEdit_start_date, dateEdit_end_date, text):
         # print(dateEdit_start_date.dateTime().toPyDateTime())
         info = {"user_id":self.data["user"].id,"start_time":dateEdit_start_date.dateTime().toPyDateTime(),"end_time":dateEdit_end_date.dateTime().toPyDateTime(),"text":text}
+        time = datetime.now()
+        user_id = self.data.get("user").id
+        connections = Connection.find_user_connections(user_id).get('connections')
         Experience.add(**info)
+        event = self.data.get.username+" add this skill in his experience "+text
+        for connection in connections:
+            connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
+            _data = {"user_id": connect_user_id, "time": time, "event" : event ,"type": "Post", 'type_id': user_id}
+            res = Notification.notify(**_data)
 
     def remove_exprince(self, text):
         get_core = Experience.find_user_experiences(self.data["user"].id)
