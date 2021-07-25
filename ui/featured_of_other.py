@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from .home import ui as ui_home
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow,data,other_post,counter):
+    def setupUi(self, MainWindow,data,other_post,counter=0):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.data = data
@@ -34,7 +34,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        if self.counter:
+        if self.other_post:
             self.NextButton.clicked.connect(lambda : self.next_page(MainWindow))
             self.BeforeButton.clicked.connect(lambda : self.befor_page(MainWindow))
         self.homeButton.clicked.connect(lambda : ui_home.setupUi(MainWindow,self.data))
@@ -49,11 +49,12 @@ class Ui_MainWindow(object):
         if self.other_post:
             self.post_textBrowser.setText(self.other_post[self.counter].text)
 
-    def befor_page(self, MainWindow):
+    def next_page(self, MainWindow):
         if self.counter + 1 < len(self.other_post):
             ui.setupUi(MainWindow, self.data, self.other_post, self.counter + 1)
 
-    def next_page(self, MainWindow):
+
+    def befor_page(self, MainWindow):
         if self.counter > 0 :
             ui.setupUi(MainWindow,self.data,self.other_post,self.counter-1)
 

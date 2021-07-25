@@ -83,7 +83,7 @@ class Ui_MainWindow(object):
 
     def featured(self):
 
-        self.is_featured = not self.featured()
+        self.is_featured = not self.is_featured
 
         self.myPost[self.counter].change_featured(self.is_featured)
 

@@ -201,10 +201,11 @@ class Ui_MainWindow(object):
 
     def other_featured(self, MainWindow):
 
-        other_post = Post.get_post_by_user_id(self.user.id).get("posts")
+        other_post = Post.get_featured_posts(self.user.id).get("posts")
         from .featured_of_other import ui as ui_featured
-
+        print(self.user.username)
         ui_featured.setupUi(MainWindow,self.data,other_post)
+
 
 
 ui = Ui_MainWindow()
