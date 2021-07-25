@@ -246,7 +246,7 @@ create table if not exists Language
     language integer not null
 );
 
-create unique index if not exists Language_id_uindex
+create unique index Language_id_uindex
     on Language (id);
 
 create table Language_dg_tmp
@@ -272,4 +272,17 @@ alter table Language_dg_tmp
 create unique index Language_id_uindex
     on Language (id);
 
+
+create table if not exists Accomplishment
+(
+    id                  integer      not null
+        constraint Accomplishment_pk
+            primary key autoincrement,
+    user_id             integer      not null
+        references user
+            on update cascade on delete cascade,
+    title               nvarchar(50) not null,
+    accomplishment_time nvarchar(50) not null,
+    time                nvarchar(50) not null
+);
 
