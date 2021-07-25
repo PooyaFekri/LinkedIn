@@ -122,7 +122,7 @@ class Ui_MainWindow(object):
         self.NewPostButton.clicked.connect(lambda: ui_post.setupUi(MainWindow, self.data, -1))
         self.profile_button.clicked.connect(lambda: ui_me.setupUi(MainWindow, self.data))
         self.JobsButton.clicked.connect(lambda : ui_jobs.setupUi(MainWindow,self.data, Experience.find_user_experiences(self.data.get("user").id).get("experiences")))
-        self.NotificationButton.clicked.connect(lambda : ui_nofi.setupUi(MainWindow,self.data,Notification.user_notification(self.data.get("user")).get('notifications')))
+        self.NotificationButton.clicked.connect(lambda : ui_nofi.setupUi(MainWindow,self.data,Notification.user_notification(self.data.get("user").id).get('notifications')))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

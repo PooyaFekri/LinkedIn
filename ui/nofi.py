@@ -90,11 +90,11 @@ class Ui_MainWindow(object):
 
 
     def next(self,MainWindow):
-        if self.notif and len(self.notif) > self.notif+1:
+        if self.notif and len(self.notif) > self.cunter+1:
           ui.setupUi(MainWindow,self.data,self.notif,self.cunter+1)
 
     def before(self,MainWindow):
-        if self.notif > 0 :
+        if self.notif and len(self.notif) > 0 :
             ui.setupUi(MainWindow,self.data,self.notif,self.cunter-1)
 
 

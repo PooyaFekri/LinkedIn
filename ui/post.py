@@ -9,6 +9,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(601, 629)
         self.share_id = share_id
+        self.data = data
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -59,12 +60,14 @@ class Ui_MainWindow(object):
         Post.send(**data)
 
         post = Post.find(data)[-1]
+        print(post.text)
         connections = Connection.find_user_connections(user_id).get('connections')
+        event = self.data.get("user").username + " post this : ("+str(post.time)+")"+ "\n"+post.text
         for connection in connections:
-            connect_user_id = user_id if connection.user_caller_id != user_id else connection.user_caller_id
-            _data = {"user_id": connect_user_id, "time": time, "type": "Post", 'type_id': post.id}
+            connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
+            _data = {"user_id": connect_user_id, "time": time, "event" : event ,"type": "Post", 'type_id': post.id}
             res = Notification.notify(**_data)
-        ui.setupUi(MainWindow, data,-1)
+        ui.setupUi(MainWindow, self.data,-1)
 
 
 # if __name__ == "__main__":
