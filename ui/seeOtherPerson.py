@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'SeeOtherPerson2.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
 from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -53,6 +46,9 @@ class Ui_MainWindow(object):
         self.enrolButton = QtWidgets.QPushButton(self.centralwidget)
         self.enrolButton.setObjectName("enrolButton")
         self.verticalLayout.addWidget(self.enrolButton)
+        self.acc_button = QtWidgets.QPushButton(self.centralwidget)
+        self.acc_button.setObjectName("acc_button")
+        self.verticalLayout.addWidget(self.acc_button)
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
@@ -91,7 +87,8 @@ class Ui_MainWindow(object):
         self.NextButton.clicked.connect(lambda: self.next_skill())
         self.BeforeButton.clicked.connect(lambda: self.before_skill())
         self.enrolButton.clicked.connect(lambda: self.enrol_skill())
-
+        from .SeeOtherAccom import ui as ui_other_accom
+        self.acc_button.clicked.connect(lambda: ui_other_accom.setupUi(MainWindow, self.data, self.user))
         self.Back.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -106,6 +103,7 @@ class Ui_MainWindow(object):
         self.NextButton.setText(_translate("MainWindow", "Next skill"))
         self.BeforeButton.setText(_translate("MainWindow", "Before skill"))
         self.enrolButton.setText(_translate("MainWindow", "endorse or dendorse this skill"))
+        self.acc_button.setText(_translate("MainWindow", "Accomplishments"))
         self.label_2.setText(_translate("MainWindow", "Intro :"))
         self.label_4.setText(_translate("MainWindow", "about:"))
         self.connect_checkBox.setText(_translate("MainWindow", "Connect"))
@@ -201,12 +199,4 @@ class Ui_MainWindow(object):
         res = Notification.notify(**_data)
 
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     MainWindow = QtWidgets.QMainWindow()
-#     ui = Ui_MainWindow()
-#     ui.setupUi(MainWindow)
-#     MainWindow.show()
-#     sys.exit(app.exec_())
 ui = Ui_MainWindow()
