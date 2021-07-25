@@ -71,7 +71,7 @@ class Ui_MainWindow(object):
         self.ShareFrom_2.setObjectName("ShareFrom_2")
         self.verticalLayout_2.addWidget(self.ShareFrom_2)
         self.ShareFrom = QtWidgets.QLabel(self.frame)
-        if self.data['posts'] and self.data['posts']['posts'][self.counter].share:
+        if self.data['posts'] and  self.data['posts']['posts'] gand  self.data['posts']['posts'][self.counter].share:
             self.ShareFrom.setText(User.find_via_pk(self.data['posts']['posts'][self.counter].share).get("user").username)
         self.ShareFrom.setObjectName("ShareFrom")
         self.verticalLayout_2.addWidget(self.ShareFrom)
@@ -161,6 +161,9 @@ class Ui_MainWindow(object):
          # if
 
     def like(self):
+        user_id = self.data.get("user").id
+        time = datetime.now()
+        connections = Connection.find_user_connections(user_id).get('connections')
         if self.is_like == True :
             self.is_like = False
             self.this_like.unlike()
@@ -170,12 +173,18 @@ class Ui_MainWindow(object):
                 data = {'post_id':self.post.id,'time':datetime.now(),'user_id':self.data.get('user').id}
                 Like.like(**data)
                 likes = Like.get_post_likes(self.post.id).get("likes")
-
-                for i in likes:
-                    if i.user_id == self.data.get('user').id:
-                        self.LikeButton.click()
-                        self.is_like = True
-                        self.this_like = i
+                self.this_like = Like.find(data)[-1]
+                # for connection in connections:
+                #     connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
+                #     _data = {"user_id": connect_user_id, "time": time, "event": event, "type": "Post",
+                #              'type_id': self.this_like.id}
+                #     res = Notification.notify(**_data)
+                # for i in likes:
+                #     if i.user_id == self.data.get('user').id:
+                #         self.LikeButton.click()
+                #         self.is_like = True
+                #         self.this_like = i
+                #
 
 # if __name__ == "__main__":
 #     import sys
