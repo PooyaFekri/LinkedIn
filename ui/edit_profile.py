@@ -105,8 +105,8 @@ class Ui_MainWindow(object):
         if self.lineEdit_password.text() != "":
             dict["password"] = self.lineEdit_password.text()
         if self.lineEdit_address.text() != "":
-            user.address = self.lineEdit_address.text()
-            dict["address"] = user.address
+            user.nationality = self.lineEdit_address.text()
+            dict["nationality"] = user.nationality
         if self.lineEdit_firstName.text() != "":
             user.first_name = self.lineEdit_firstName.text()
             dict["first_name"] = user.first_name

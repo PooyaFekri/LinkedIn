@@ -20,7 +20,6 @@ class Ui_MainWindow(object):
         self.data = data
         self.counter = counter
         self.set_counter()
-        self.number_comment_before = 0
         self.post = None
         self.user = None
         self.is_like = False
@@ -31,8 +30,6 @@ class Ui_MainWindow(object):
             self.post = self.data['posts']['posts'][self.counter]
             self.comments = Comment.get_comments_by_post_id(self.data['posts']['posts'][self.counter].id).get(
                 "comments")
-            self.number_comment_before = len(self.comments)
-
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -104,7 +101,6 @@ class Ui_MainWindow(object):
         from .post import ui as ui_post
         from .commtopost import ui as ui_comment
         self.retranslateUi(MainWindow)
-        self.set_page()
         # self.pushButton.clicked.connect(lambda :ui.setupUi(MainWindow,data,self.counter_before))#back
         # self.pushButton_2.clicked.connect(lambda : ui.setupUi(MainWindow,data,self.counter_after))#next
         self.pushButton_3.clicked.connect(lambda : ui_home.setupUi(MainWindow,data))#home
@@ -124,11 +120,11 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "from :"))
         self.UserName.setText(_translate("MainWindow", "User name "))
         self.SeeProfile.setText(_translate("MainWindow", "see profile"))
-        self.numberComment.setText(_translate("MainWindow", str(self.number_comment_before)))
+        self.numberComment.setText(_translate("MainWindow", "number of comment"))
         self.CommentButton.setText(_translate("MainWindow", "Comment"))
         self.ShareButton.setText(_translate("MainWindow", "share"))
         self.LikeButton.setText(_translate("MainWindow", "like"))
-        self.Number_of_like.setText(_translate("MainWindow", "0"))
+        self.Number_of_like.setText(_translate("MainWindow", "number of like"))
         self.ShareFrom_2.setText(_translate("MainWindow", "Share from:"))
         self.pushButton_2.setText(_translate("MainWindow", "Next"))
         self.pushButton.setText(_translate("MainWindow", "Back"))

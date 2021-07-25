@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-from tables import Message, Room, User, Experience
+from tables import Message, Room, User, Experience, Post
 from tables.notification import Notification
 from .room import ui as ui_room_chat
 from .archive_chat import ui as ui_room_archive_chat
@@ -11,6 +11,7 @@ from .profile_me import ui as ui_me
 from .seePost import ui as ui_seePost
 from .jobs import ui as ui_jobs
 from .nofi import ui as ui_nofi
+from .seeMyPost import ui as ui_seeMyPost
 # from .SeeOtherPerson import ui as ui_ohter_persion
 
 
@@ -106,6 +107,9 @@ class Ui_MainWindow(object):
         self.message_button = QtWidgets.QPushButton(self.centralwidget)
         self.message_button.setGeometry(QtCore.QRect(200, 90, 75, 23))
         self.message_button.setObjectName("message_button")
+        self.myPost = QtWidgets.QPushButton(self.centralwidget)
+        self.myPost.setGeometry(QtCore.QRect(400,90,75,23))
+        self.myPost.setObjectName("MyPost")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 21))
@@ -123,6 +127,7 @@ class Ui_MainWindow(object):
         self.profile_button.clicked.connect(lambda: ui_me.setupUi(MainWindow, self.data))
         self.JobsButton.clicked.connect(lambda : ui_jobs.setupUi(MainWindow,self.data, Experience.find_user_experiences(self.data.get("user").id).get("experiences")))
         self.NotificationButton.clicked.connect(lambda : ui_nofi.setupUi(MainWindow,self.data,Notification.user_notification(self.data.get("user").id).get('notifications')))
+        self.myPost.clicked.connect(lambda :ui_seeMyPost.setupUi(MainWindow,self.data,Post.get_post_by_user_id(self.data.get("user").id).get("posts")))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -145,6 +150,7 @@ class Ui_MainWindow(object):
         # self.UserName.setText(_translate("MainWindow", "User name "))
         # self.label.setText(_translate("MainWindow", "Share from:"))
         self.message_button.setText(_translate("MainWindow", "message"))
+        self.myPost.setText(_translate("MainWindow","MyPost"))
 
     def search_rooms(self, MainWindow):
         # TODO: Fix error that happened if rooms was None
