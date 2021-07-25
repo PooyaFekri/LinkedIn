@@ -97,7 +97,7 @@ class User(Table):
             res_users = [User(user) for user in exe_query(query, username, self.id)]
             users = []
             for user in res_users:
-                if Connection.get_connect_with_users_id(self.id, user.id).get('connection'):
+                if not Connection.get_connect_with_users_id(self.id, user.id).get('connection'):
                     continue
                 users.append(user)
 
