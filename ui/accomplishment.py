@@ -69,8 +69,13 @@ class Ui_Accomplishment(object):
         self.statusbar = QtWidgets.QStatusBar(Accomplishment)
         self.statusbar.setObjectName("statusbar")
         Accomplishment.setStatusBar(self.statusbar)
-
+        self.set_accomplishment()
         self.retranslateUi(Accomplishment)
+        self.Add_Accomplish.clicked.connect(lambda: self.add_accomplishment(Accomplishment))
+        self.delete_accomplish.clicked.connect(lambda: self.delete_accomplishment(Accomplishment))
+        self.edit_accomplish.clicked.connect(lambda: self.edit_accomplishment(Accomplishment))
+        # self.pushButton_see_profile.clicked.connect(lambda: )
+        # self.commandLinkButton.clicked.connect(lambda: )
         QtCore.QMetaObject.connectSlotsByName(Accomplishment)
 
     def retranslateUi(self, Accomplishment):
@@ -89,14 +94,17 @@ class Ui_Accomplishment(object):
         self.label_for_error.setText(_translate("Accomplishment", "Text Error:"))
         self.pushButton_see_profile.setText(_translate("Accomplishment", "See Profile"))
 
+    def set_accomplishment(self):
+        pass
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     Accomplishment = QtWidgets.QMainWindow()
-#     ui = Ui_Accomplishment()
-#     ui.setupUi(Accomplishment)
-#     Accomplishment.show()
-#     sys.exit(app.exec_())
+    def add_accomplishment(self, Accomplishment):
+        pass
+
+    def delete_accomplishment(self, Accomplishment):
+        pass
+
+    def edit_accomplishment(self, Accomplishment):
+        pass
+
 
 ui = Ui_Accomplishment()
