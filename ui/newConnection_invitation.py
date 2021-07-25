@@ -106,16 +106,7 @@ class Ui_NewConnection(object):
         NewConnection.setWindowTitle(_translate("NewConnection", "MainWindow"))
         self.label.setText(_translate("NewConnection", "Username"))
         self.SearchButton.setText(_translate("NewConnection", "Search"))
-        # self.username_3.setText(_translate("NewConnection", "Username:"))
-        # self.username_edit_3.setText(_translate("NewConnection", "username"))
-        # self.seeProfile_search.setText(_translate("NewConnection", "See Profile"))
-        # self.ConnectButton.setText(_translate("NewConnection", "Connect"))
-        # self.label_2.setText(_translate("NewConnection", "Invitations"))
-        # self.username_4.setText(_translate("NewConnection", "Username:"))
-        # self.username_edit_4.setText(_translate("NewConnection", "username"))
-        # self.seeProfile_invitations.setText(_translate("NewConnection", "See Profile"))
-        # self.ConnectButton_NO.setText(_translate("NewConnection", "No"))
-        # self.ConnnectButton_Yes.setText(_translate("NewConnection", "Yes, Connect"))
+
         self.BackButton.setText(_translate("NewConnection", "Back"))
 
     def search(self, NewConnection):
@@ -215,13 +206,5 @@ class Ui_NewConnection(object):
                                     )
 
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     NewConnection = QtWidgets.QMainWindow()
-#     ui = Ui_NewConnection()
-#     ui.setupUi(NewConnection)
-#     NewConnection.show()
-#     sys.exit(app.exec_())
 
 ui = Ui_NewConnection()

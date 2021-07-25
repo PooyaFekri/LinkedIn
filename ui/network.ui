@@ -14,136 +14,36 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="newConnection">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>-2</y>
-      <width>582</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>New Connection</string>
-    </property>
-   </widget>
-   <widget class="QCommandLinkButton" name="back_button">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>510</y>
-      <width>582</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Back</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="connections">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>29</y>
-      <width>582</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Connections</string>
-    </property>
-   </widget>
-   <widget class="QScrollArea" name="scrollArea">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>60</y>
-      <width>581</width>
-      <height>441</height>
-     </rect>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents_3">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>579</width>
-       <height>439</height>
-      </rect>
-     </property>
-     <widget class="QFrame" name="frame_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>561</width>
-        <height>71</height>
-       </rect>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="newConnection">
+      <property name="text">
+       <string>New Connection</string>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <widget class="QLabel" name="username_3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>141</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Username:</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="username_edit_3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>141</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>username</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="Is_connect_3">
-       <property name="geometry">
-        <rect>
-         <x>460</x>
-         <y>20</y>
-         <width>70</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Connect</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="seeProfile_3">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>20</y>
-         <width>91</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>See Profile</string>
-       </property>
-      </widget>
      </widget>
-    </widget>
-   </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="connections">
+      <property name="text">
+       <string>Connections</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="MayKnow">
+      <property name="text">
+       <string>People You May Know</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCommandLinkButton" name="back_button">
+      <property name="text">
+       <string>Back</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -151,7 +51,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

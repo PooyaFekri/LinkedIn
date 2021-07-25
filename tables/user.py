@@ -77,15 +77,15 @@ class User(Table):
 
     def people_user_may_know(self):
         try:
-            connections = Connection.find_user_connections(self.id)
+            connections = Connection.find_user_connections(self.id).get('connections')
             users = []
             for connection in connections:
-                connect_user_id = self.id if connection.user_caller_id != self.id else connection.user_caller_id
-                user2_connections = Connection.find_user_connections(connect_user_id)
+                connect_user_id = connection.user_caller_id if connection.user_caller_id != self.id else connection.user_invited_id
+                user2_connections = Connection.find_user_connections(connect_user_id).get('connections')
 
                 for user2_connection in user2_connections:
-                    connect_user2_id = connect_user_id if user2_connection.user_caller_id != connect_user_id.id else user2_connection.user_caller_id
-                    if not Connection.is_connected(self.id, connect_user2_id).get('is_connected'):
+                    connect_user2_id = user2_connection.user_caller_id if user2_connection.user_caller_id != connect_user_id else user2_connection.user_invited_id
+                    if self.id != connect_user2_id and not Connection.get_connect_with_users_id(self.id, connect_user2_id).get('connection'):
                         user = self.find_via_pk(connect_user2_id).get('user')
                         users.append(user)
             return {'status': True, 'users': users}
