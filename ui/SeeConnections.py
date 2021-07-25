@@ -62,7 +62,6 @@ class Ui_SeeConnections(object):
         from .network import ui as ui_network
         self.BackButton.clicked.connect(lambda: ui_network.setupUi(SeeConnections, self.data))
         self.SearchButton.clicked.connect(lambda: self.search(SeeConnections))
-        # TODO
         self.SearchByMutual.clicked.connect(lambda: self.search_by_mutual_connections(SeeConnections))
 
         QtCore.QMetaObject.connectSlotsByName(SeeConnections)

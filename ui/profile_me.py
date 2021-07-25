@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from tables import Skill, Language
 from .edit_profile import ui as ui_edit_profile
+from .accomplishment import ui as ui_accom
 
 
 def find_skill(user):
@@ -9,12 +10,12 @@ def find_skill(user):
     str1 = ""
     if list_of_skill["status"]:
         for i in list_of_skill["skills"]:
-            str1 += i.text+"\n"
+            str1 += i.text + "\n"
     return str1
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow,data):
+    def setupUi(self, MainWindow, data):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -66,6 +67,9 @@ class Ui_MainWindow(object):
         self.label_9 = QtWidgets.QLabel(self.centralwidget)
         self.label_9.setGeometry(QtCore.QRect(440, 200, 121, 16))
         self.label_9.setObjectName("label_9")
+        self.add_accom = QtWidgets.QPushButton(self.centralwidget)
+        self.add_accom.setGeometry(QtCore.QRect(440, 420, 75, 23))
+        self.add_accom.setObjectName("add_accom")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 22))
@@ -76,18 +80,19 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         from .home import ui as ui_home
         # print(data)
-        self.retranslateUi(MainWindow,data.get("user"))
+        self.retranslateUi(MainWindow, data.get("user"))
         # print(data)
-        self.EditProfile.clicked.connect(lambda : ui_edit_profile.setupUi(MainWindow,data))
-        self.Back.clicked.connect(lambda : ui_home.setupUi(MainWindow,data))
+        self.EditProfile.clicked.connect(lambda: ui_edit_profile.setupUi(MainWindow, data))
+        self.Back.clicked.connect(lambda: ui_home.setupUi(MainWindow, data))
+        self.add_accom.clicked.connect(lambda: ui_accom.setupUi(MainWindow, data))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, MainWindow,user):
+    def retranslateUi(self, MainWindow, user):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.Username_info.setText(_translate("MainWindow", user.username))
         self.label_4.setText(_translate("MainWindow", "Name :"))
-        self.FirstnameAndLastName.setText(_translate("MainWindow", user.first_name+" "+user.last_name))
+        self.FirstnameAndLastName.setText(_translate("MainWindow", user.first_name + " " + user.last_name))
         self.label_6.setText(_translate("MainWindow", "Introduction:"))
         self.about.setText(user.intro)
         self.label.setText(_translate("MainWindow", "user name :"))
@@ -102,6 +107,7 @@ class Ui_MainWindow(object):
         if languages["status"]:
             for i in languages["languages"]:
                 self.SupportLanguage.addItem(i.language)
+        self.add_accom.setText(_translate("MainWindow", "Add Accom"))
 
 
 # if __name__ == "__main__":

@@ -131,7 +131,7 @@ class Ui_NewConnection(object):
             username_text.setObjectName("username_edit")
             seeProfile_search = QtWidgets.QPushButton()
             seeProfile_search.setGeometry(QtCore.QRect(350, 20, 91, 23))
-            seeProfile_search.setObjectName("seeProfile_search")
+            seeProfile_search.setObjectName(f"seeProfile_search {user.id}" )
             ConnectButton = QtWidgets.QPushButton()
             ConnectButton.setGeometry(QtCore.QRect(450, 20, 89, 25))
             self.verticalLayout.addWidget(username)
@@ -140,7 +140,7 @@ class Ui_NewConnection(object):
             self.verticalLayout.addWidget(ConnectButton)
             ConnectButton.setObjectName("ConnectButton")
             username_text.setText(f'New Connection : {user.username}')
-            seeProfile_search.setText("See Profile")
+            seeProfile_search.setText(f"See Profile {user.id}")
             ConnectButton.setText("Connect")
             # TODO: complete this part
             seeProfile_search.clicked.connect(lambda: ui_see_other_person.setupUi(NewConnection, self.data, user))
@@ -181,7 +181,6 @@ class Ui_NewConnection(object):
             NoConnectButton.setText("No")
             # TODO: complete this part
             seeProfile_inv.clicked.connect(lambda: ui_see_other_person.setupUi(NewConnection, self.data, connection))
-            # seeProfile_inv.clicked.connect(lambda: self.connect(user.id))
             YesConnectButton.clicked.connect(lambda: self.accept_or_reject_inv(connection, True))
             NoConnectButton.clicked.connect(lambda: self.accept_or_reject_inv(connection, False))
 
