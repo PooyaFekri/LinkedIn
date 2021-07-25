@@ -12,6 +12,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(600, 600)
         self.data = data
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.is_check_box_click = False
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -49,6 +50,9 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
         self.dateEdit_end_date = QtWidgets.QDateEdit(self.centralwidget)
+        self.is_end_experience = QtWidgets.QCheckBox(self.label_2)
+        self.is_end_experience.setObjectName("is_end_experience")
+        self.verticalLayout.addWidget(self.is_end_experience)
         self.dateEdit_end_date.setObjectName("dateEdit_end_date")
         self.verticalLayout.addWidget(self.dateEdit_end_date)
         self.lineEdit_exprince_name = QtWidgets.QLineEdit(self.centralwidget)
@@ -90,7 +94,7 @@ class Ui_MainWindow(object):
         self.remove_exprince_Button.clicked.connect(lambda : self.remove_exprince(self.lineEdit_remove_exprince.text()))
         self.sumbit_pushButton.clicked.connect(lambda :ui_profile_me.setupUi(MainWindow,data))
         self.Back_LinkButton.clicked.connect(lambda : ui_edit_profile.setupUi(MainWindow,data))
-
+        self.is_end_experience.clicked.connect(lambda : self.click_checkbox() )
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -106,6 +110,7 @@ class Ui_MainWindow(object):
         self.remove_exprince_Button.setText(_translate("MainWindow", "remove exprince"))
         self.sumbit_pushButton.setText(_translate("MainWindow", "Submit"))
         self.Back_LinkButton.setText(_translate("MainWindow", "back"))
+        self.is_end_experience.setText(_translate("MainWindow","is_end_experience"))
 
     def add_skill(self, text):
         info = {"user_id":self.data["user"].id,"text":text}
@@ -132,15 +137,20 @@ class Ui_MainWindow(object):
 
     def add_exprince_to(self, dateEdit_start_date, dateEdit_end_date, text):
         # print(dateEdit_start_date.dateTime().toPyDateTime())
-        info = {"user_id":self.data["user"].id,"start_time":dateEdit_start_date.dateTime().toPyDateTime(),"end_time":dateEdit_end_date.dateTime().toPyDateTime(),"text":text}
+        end_time = None
+        if self.is_check_box_click:
+            end_time = dateEdit_end_date.dateTime().toPyDateTime()
+        info = {"user_id":self.data["user"].id,"start_time":dateEdit_start_date.dateTime().toPyDateTime(),"end_time":end_time,"text":text}
         time = datetime.now()
         user_id = self.data.get("user").id
         connections = Connection.find_user_connections(user_id).get('connections')
+        del info['end_time']
         Experience.add(**info)
+        ex = Experience.find(info)[-1]
         event = self.data.get('user').username+" add this skill in his experience "+text
         for connection in connections:
             connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
-            _data = {"user_id": connect_user_id, "time": time, "event" : event ,"type": "Experience", 'type_id': user_id}
+            _data = {"user_id": connect_user_id, "time": time, "event" : event ,"type": "Experience", 'type_id': ex.id}
             res = Notification.notify(**_data)
 
     def remove_exprince(self, text):
@@ -150,6 +160,8 @@ class Ui_MainWindow(object):
                 if i.text == text:
                     i.delete()
 
+    def click_checkbox(self):
+        self.is_check_box_click = not self.is_check_box_click
 
 
 ui = Ui_MainWindow()
