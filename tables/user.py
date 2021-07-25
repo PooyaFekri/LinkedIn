@@ -1,7 +1,9 @@
+import datetime
 from typing import Union
 
 from app import exe_query
 from . import Connection
+from .notification import Notification
 from .table import Table
 
 
@@ -102,5 +104,35 @@ class User(Table):
                 users.append(user)
 
             return {'status': True, 'users': users}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    def birthday_notification(self):
+        try:
+            notifications = Notification.user_notification(self.id).get('notifications')
+            connections = Connection.find_user_connections(self.id).get('connections')
+            for connection in connections:
+                connect_user_id = connection.user_caller_id if connection.user_caller_id != self.id \
+                    else connection.user_invited_id
+                user = User.find_via_pk(connect_user_id)
+                date = user.birthday.split()[0]
+                date = datetime.datetime.strptime(date, '%Y-%m-%d')
+                now = datetime.datetime.now()
+                if date.month == now.month and date.day == now.day:
+                    for notification in notifications:
+                        notification_time = notification.time.split()[0]
+                        notification_time = datetime.datetime.strptime(notification_time, '%Y-%m-%d')
+                        if notification.type == 'user' and notification.type_id == connect_user_id \
+                                and notification_time.year == now.year and notification.event == 'birthday':
+                            break
+                    else:
+                        data = {
+                            'type': 'user',
+                            'type_id': connect_user_id,
+                            'event': 'birthday',
+                            'user_id': self.id,
+                            'time': now
+                        }
+            return {'status': True}
         except Exception as e:
             return {'status': False, 'error': e}

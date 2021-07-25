@@ -71,7 +71,7 @@ class Ui_MainWindow(object):
         self.ShareFrom_2.setObjectName("ShareFrom_2")
         self.verticalLayout_2.addWidget(self.ShareFrom_2)
         self.ShareFrom = QtWidgets.QLabel(self.frame)
-        if self.data['posts'] and  self.data['posts']['posts'] gand  self.data['posts']['posts'][self.counter].share:
+        if self.data['posts'] and  self.data['posts']['posts'] and  self.data['posts']['posts'][self.counter].share:
             self.ShareFrom.setText(User.find_via_pk(self.data['posts']['posts'][self.counter].share).get("user").username)
         self.ShareFrom.setObjectName("ShareFrom")
         self.verticalLayout_2.addWidget(self.ShareFrom)
