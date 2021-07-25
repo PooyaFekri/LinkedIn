@@ -63,11 +63,12 @@ class Ui_MainWindow(object):
         from .home import ui as ui_home
         self.retranslateUi(MainWindow)
         self.homwButton.clicked.connect(lambda: ui_home.setupUi(MainWindow, self.data))
-        self.sendCommentButton.clicked.connect(lambda: self.send_comment(MainWindow))
-        self.nextButton.clicked.connect(lambda: self.next_comment(MainWindow))
-        self.beforeButton.clicked.connect(lambda: self.before_comment(MainWindow))
-        self.replayButton.clicked.connect(lambda: self.replay(MainWindow))
-        self.like_checkBox.clicked.connect(lambda : self.like(MainWindow))
+        if self.comments:
+            self.sendCommentButton.clicked.connect(lambda: self.send_comment(MainWindow))
+            self.nextButton.clicked.connect(lambda: self.next_comment(MainWindow))
+            self.beforeButton.clicked.connect(lambda: self.before_comment(MainWindow))
+            self.replayButton.clicked.connect(lambda: self.replay(MainWindow))
+            self.like_checkBox.clicked.connect(lambda : self.like(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

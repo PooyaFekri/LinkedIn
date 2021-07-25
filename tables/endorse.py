@@ -25,6 +25,7 @@ class Endorse(Table):
         except Exception as e:
             return {'status': False, 'error': e}
 
+    #todo wrong
     @classmethod
     def find_user_endorses(cls, user_id):
         _filter = {

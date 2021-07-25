@@ -57,10 +57,12 @@ class Ui_MainWindow(object):
 
         from .home import ui as ui_home
         self.retranslateUi(MainWindow)
+
         self.BackButton.clicked.connect(lambda : ui_home.setupUi(MainWindow,self.data))
-        self.is_see_checkBox.clicked.connect(lambda : self.click_see(MainWindow))
-        self.next_notif_button.clicked.connect(lambda : self.next_notif_button(MainWindow))
-        self.before_notif_Button.clicked.connect(lambda : self.before_notif_Button(MainWindow))
+        if self.notif:
+            self.is_see_checkBox.clicked.connect(lambda : self.click_see(MainWindow))
+            self.next_notif_button.clicked.connect(lambda : self.next(MainWindow))
+            self.before_notif_Button.clicked.connect(lambda : self.before(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

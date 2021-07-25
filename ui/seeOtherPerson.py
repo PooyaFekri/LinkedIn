@@ -114,7 +114,9 @@ class Ui_MainWindow(object):
         language_support = Language.find_user_lang(user.id)
         self.textBrowser_intro.setText(user.intro)
         if self.skill != []:
-             self.lineEdit.setText(self.skill[self.skill_number].text)
+             # endors = Endorse.find_user_endorses()
+             who_enodors = ""
+             self.lineEdit.setText(self.skill[self.skill_number].text+" ("+who_enodors+" )")
         if Connection.is_connected(self.data['user'].id, user.id):
             self.connect_checkBox.mask()
         if language_support['status']:
