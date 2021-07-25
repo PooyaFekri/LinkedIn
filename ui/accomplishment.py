@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from .profile_me import ui as ui_me
 
 
 class Ui_Accomplishment(object):
@@ -69,13 +70,15 @@ class Ui_Accomplishment(object):
         self.statusbar = QtWidgets.QStatusBar(Accomplishment)
         self.statusbar.setObjectName("statusbar")
         Accomplishment.setStatusBar(self.statusbar)
-        self.set_accomplishment()
         self.retranslateUi(Accomplishment)
+
+        self.set_accomplishment()
         self.Add_Accomplish.clicked.connect(lambda: self.add_accomplishment(Accomplishment))
         self.delete_accomplish.clicked.connect(lambda: self.delete_accomplishment(Accomplishment))
         self.edit_accomplish.clicked.connect(lambda: self.edit_accomplishment(Accomplishment))
-        # self.pushButton_see_profile.clicked.connect(lambda: )
+        self.pushButton_see_profile.clicked.connect(lambda: ui_me.setupUi(Accomplishment, self.data))
         # self.commandLinkButton.clicked.connect(lambda: )
+
         QtCore.QMetaObject.connectSlotsByName(Accomplishment)
 
     def retranslateUi(self, Accomplishment):
