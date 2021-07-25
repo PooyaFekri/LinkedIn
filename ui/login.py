@@ -68,7 +68,6 @@ class Ui_MainWindow(object):
         self.LoginButton.setText(_translate("MainWindow", "Login"))
 
     def login(self, MainWindow):
-        global user
 
         variables = {
             "username": self.UserName_lineEdit.text(),
@@ -83,6 +82,7 @@ class Ui_MainWindow(object):
             if res["status"]:
                 # data = {"user":res["user"],"post":}
                 user_id = res["user"].id
+                res.get('user').birthday_notification()
                 data = {"user": res["user"], "posts": Connection.get_related_posts(user_id)}
                 ui_home.setupUi(MainWindow, data)
             else:

@@ -177,7 +177,7 @@ class Ui_MainWindow(object):
                 Like.like(**data)
                 self.this_like = Like.find(data)[-1]
                 event = "your post like by :"+self.data.get("user").username + "in :"+str(time)+"\n"+self.post.text
-                event_other = "this comment like by :" + self.data.get("user").username + "in :" + str(time) +"\npost:"+ "\n" + self.post.text + "\n*******\ncomment:"+comment.text
+                event_other = "this comment like by :" + self.data.get("user").username + "in :" + str(time) +"\npost:"+ "\n" + self.post.text
 
                 _data = {"user_id": self.post.user_id, "time": time, "event": event, "type": "Like",
                          'type_id': self.this_like.id}

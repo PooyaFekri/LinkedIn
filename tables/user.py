@@ -99,7 +99,7 @@ class User(Table):
             res_users = [User(user) for user in exe_query(query, username, self.id)]
             users = []
             for user in res_users:
-                if not Connection.get_connect_with_users_id(self.id, user.id).get('connection'):
+                if Connection.get_connect_with_users_id(self.id, user.id).get('connection'):
                     continue
                 users.append(user)
 
@@ -114,7 +114,7 @@ class User(Table):
             for connection in connections:
                 connect_user_id = connection.user_caller_id if connection.user_caller_id != self.id \
                     else connection.user_invited_id
-                user = User.find_via_pk(connect_user_id)
+                user = User.find_via_pk(connect_user_id).get('user')
                 date = user.birthday.split()[0]
                 date = datetime.datetime.strptime(date, '%Y-%m-%d')
                 now = datetime.datetime.now()
@@ -133,6 +133,7 @@ class User(Table):
                             'user_id': self.id,
                             'time': now
                         }
+                        Notification.notify(**data)
             return {'status': True}
         except Exception as e:
             return {'status': False, 'error': e}

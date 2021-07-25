@@ -137,10 +137,10 @@ class Ui_MainWindow(object):
         user_id = self.data.get("user").id
         connections = Connection.find_user_connections(user_id).get('connections')
         Experience.add(**info)
-        event = self.data.get.username+" add this skill in his experience "+text
+        event = self.data.get('user').username+" add this skill in his experience "+text
         for connection in connections:
             connect_user_id = connection.user_caller_id if connection.user_caller_id != user_id else connection.user_invited_id
-            _data = {"user_id": connect_user_id, "time": time, "event" : event ,"type": "Post", 'type_id': user_id}
+            _data = {"user_id": connect_user_id, "time": time, "event" : event ,"type": "Experience", 'type_id': user_id}
             res = Notification.notify(**_data)
 
     def remove_exprince(self, text):

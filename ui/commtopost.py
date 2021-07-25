@@ -64,8 +64,8 @@ class Ui_MainWindow(object):
         from .home import ui as ui_home
         self.retranslateUi(MainWindow)
         self.homwButton.clicked.connect(lambda: ui_home.setupUi(MainWindow, self.data))
+        self.sendCommentButton.clicked.connect(lambda: self.send_comment(MainWindow))
         if self.comments:
-            self.sendCommentButton.clicked.connect(lambda: self.send_comment(MainWindow))
             self.nextButton.clicked.connect(lambda: self.next_comment(MainWindow))
             self.beforeButton.clicked.connect(lambda: self.before_comment(MainWindow))
             self.replayButton.clicked.connect(lambda: self.replay(MainWindow))
@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
         if self.replaycomment_textBrowser.toPlainText():
 
             data = {"user_id": self.data.get('user').id, 'time': datetime.now(),
-                    'text': self.replaycomment_textBrowser.toPlainText()+"\n"+"replay : \n"+self.textBrowser_show_commend.toPlainText(), 'post_id': self.post.id,'comment_replay_id':self.comments[self.counter].id}
+                    'text': self.replaycomment_textBrowser.toPlainText()+"\n"+"replay : \n"+self.textBrowser_show_commend.toPlainText(), 'post_id': self.post.id,'comment_reply_id':self.comments[self.counter].id}
             Comment.create(**data)
 
             comment = Comment.find(data)[-1]
