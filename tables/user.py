@@ -91,7 +91,7 @@ class User(Table):
             return {'status': False, 'error': e}
 
     def search(self, username):
-        query = f'SELECT * FROM user WHERE username LIKE ? and user.id != ?'
+        query = f'SELECT * FROM user WHERE username LIKE ? and id != ?'
         username = f'%{username}%'
         try:
             res_users = [User(user) for user in exe_query(query, username, self.id)]

@@ -134,7 +134,7 @@ class Connection(Table):
                 user = User.find_via_pk(connect_user_id).get('user')
                 flag = 1
                 if username := kwargs.get('username'):
-                    search_by_username = User.search(username)
+                    search_by_username = user.search(username).get('users')
                     for searched_user in search_by_username:
                         if user.username == searched_user.username:
                             flag = 1
