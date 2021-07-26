@@ -14,6 +14,7 @@ class Post(Table):
         self.text = data[3]
         self.time = data[4]
         self.share = data[5]
+        self.is_featured = data[6]
 
     @classmethod
     def send(cls, *args, **kwargs):
@@ -57,5 +58,26 @@ class Post(Table):
         try:
             posts = super().find(_filter)
             return {'status': True, 'posts': posts}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    def change_featured(self, status):
+        data = {'is_featured': status}
+        try:
+            super().update_via_pk(data, self.id)
+            return {'status': True}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    @classmethod
+    def get_featured_posts(cls, user_id):
+        _filter = {
+            'user_id': user_id,
+            'is_featured': True
+        }
+        try:
+            posts = super().find(_filter)
+            return {'status': True, 'posts': posts}
+
         except Exception as e:
             return {'status': False, 'error': e}

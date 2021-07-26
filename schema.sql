@@ -133,24 +133,24 @@ create unique index if not exists Message_id_uindex
 
 create table if not exists Post
 (
-    user_id INTEGER      not null
-        constraint Post_user_id_fk
-            references user
+    user_id     INTEGER      not null
+        references user
             on update cascade on delete cascade,
-    id      INTEGER      not null
+    id          INTEGER      not null
         constraint Post_pk
             primary key autoincrement,
-    picture blob,
-    text    text,
-    time    nvarchar(50) not null,
-    share   INTEGER
-        constraint Post_Post_id_fk
-            references Post
-            on update cascade
+    picture     blob,
+    text        text,
+    time        nvarchar(50) not null,
+    share       INTEGER
+        references Post
+            on update cascade,
+    is_featured boolean default false not null
 );
 
 create unique index if not exists Post_id_uindex
     on Post (id);
+
 
 create table if not exists Comment
 (
