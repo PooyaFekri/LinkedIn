@@ -114,7 +114,6 @@ class Ui_SeeConnections(object):
             mutual_connection = Connection.mutual_connection_number(user_id, connect_user_id).get('mutual')
             ls.append((mutual_connection, user, connection))
 
-
         ls.sort(key=lambda x: x[0], reverse=True)
         conn = []
         users = []

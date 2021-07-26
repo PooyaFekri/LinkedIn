@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from .newConnection_invitation import ui as ui_newConnection
 from .SeeConnections import ui as ui_seeConnection
+from .PeopleMayKnow import ui as ui_may_know
 
 
 class Ui_MainWindow(object):
@@ -11,7 +12,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.newConnection = QtWidgets.QPushButton(self.centralwidget)
-        self.newConnection.setGeometry(QtCore.QRect(10, -2, 582, 25))
+        self.newConnection.setGeometry(QtCore.QRect(10, 0, 582, 25))
         self.newConnection.setObjectName("newConnection")
         self.back_button = QtWidgets.QCommandLinkButton(self.centralwidget)
         self.back_button.setGeometry(QtCore.QRect(10, 510, 582, 36))
@@ -19,31 +20,10 @@ class Ui_MainWindow(object):
         self.connections = QtWidgets.QPushButton(self.centralwidget)
         self.connections.setGeometry(QtCore.QRect(10, 29, 582, 25))
         self.connections.setObjectName("connections")
-        # self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        # self.scrollArea.setGeometry(QtCore.QRect(10, 60, 581, 441))
-        # self.scrollArea.setWidgetResizable(True)
-        # self.scrollArea.setObjectName("scrollArea")
-        # self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
-        # self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 579, 439))
-        # self.scrollAreaWidgetContents_3.setObjectName("scrollAreaWidgetContents_3")
-        # self.frame_3 = QtWidgets.QFrame(self.scrollAreaWidgetContents_3)
-        # self.frame_3.setGeometry(QtCore.QRect(10, 10, 561, 71))
-        # self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        # self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
-        # self.frame_3.setObjectName("frame_3")
-        # self.username_3 = QtWidgets.QLabel(self.frame_3)
-        # self.username_3.setGeometry(QtCore.QRect(10, 10, 141, 16))
-        # self.username_3.setObjectName("username_3")
-        # self.username_edit_3 = QtWidgets.QLabel(self.frame_3)
-        # self.username_edit_3.setGeometry(QtCore.QRect(10, 40, 141, 16))
-        # self.username_edit_3.setObjectName("username_edit_3")
-        # self.Is_connect_3 = QtWidgets.QCheckBox(self.frame_3)
-        # self.Is_connect_3.setGeometry(QtCore.QRect(460, 20, 70, 31))
-        # self.Is_connect_3.setObjectName("Is_connect_3")
-        # self.seeProfile_3 = QtWidgets.QPushButton(self.frame_3)
-        # self.seeProfile_3.setGeometry(QtCore.QRect(350, 20, 91, 23))
-        # self.seeProfile_3.setObjectName("seeProfile_3")
-        # self.scrollArea.setWidget(self.scrollAreaWidgetContents_3)
+        # MainWindow.setCentralWidget(self.centralwidget)
+        self.MayKnow = QtWidgets.QPushButton(self.centralwidget)
+        self.MayKnow.setGeometry(QtCore.QRect(10, 60, 582, 25))
+        self.MayKnow.setObjectName("MayKnow")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 22))
@@ -59,6 +39,7 @@ class Ui_MainWindow(object):
         self.back_button.clicked.connect(lambda: ui_home.setupUi(MainWindow, self.data))
         self.newConnection.clicked.connect(lambda: ui_newConnection.setupUi(MainWindow, self.data))
         self.connections.clicked.connect(lambda: ui_seeConnection.setupUi(MainWindow, self.data))
+        self.MayKnow.clicked.connect(lambda: self.you_may_know(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -67,10 +48,16 @@ class Ui_MainWindow(object):
         self.newConnection.setText(_translate("MainWindow", "New Connection"))
         self.back_button.setText(_translate("MainWindow", "Back"))
         self.connections.setText(_translate("MainWindow", "Connections"))
-        # self.username_3.setText(_translate("MainWindow", "Username:"))
-        # self.username_edit_3.setText(_translate("MainWindow", "username"))
-        # self.Is_connect_3.setText(_translate("MainWindow", "Connect"))
-        # self.seeProfile_3.setText(_translate("MainWindow", "See Profile"))
+        self.MayKnow.setText(_translate("MainWindow", "People You May Know"))
+
+    def you_may_know(self, MainWindow):
+        res = self.data.get('user').people_user_may_know().get('users')
+        page = {
+            'users': res
+        }
+        if len(res) > 0:
+            ui_may_know.setupUi(MainWindow, self.data, page)
+
 
 
 ui = Ui_MainWindow()

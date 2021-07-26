@@ -95,12 +95,13 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.set_page()
         from .home import ui as ui_home
         from .seeOtherPerson import ui as ui_seeOtherPerson
         from .post import ui as ui_post
         from .commtopost import ui as ui_comment
         self.retranslateUi(MainWindow)
+        self.set_page()
+
         # self.pushButton.clicked.connect(lambda :ui.setupUi(MainWindow,data,self.counter_before))#back
         # self.pushButton_2.clicked.connect(lambda : ui.setupUi(MainWindow,data,self.counter_after))#next
         self.pushButton_3.clicked.connect(lambda : ui_home.setupUi(MainWindow,data))#home
@@ -141,26 +142,24 @@ class Ui_MainWindow(object):
 
 
     def set_page(self):
-
         if self.post:
             self.user = User.find_via_pk(self.post.user_id).get('user')
             self.UserName.setText(self.user.username)
             self.textBrowserOfPost.setText(self.post.text)
-        if self.comments:
-             self.numberComment.setText(str(len(self.comments)))
 
-        likes = []
-        if self.post:
-             likes = Like.get_post_likes(self.post.id).get("likes")
-             if likes:
-                 self.Number_of_like.setText(str(len(likes)))
-                 for i in likes:
-                     if i.user_id == self.data.get('user').id:
-                         self.LikeButton.click()
-                         self.is_like = True
-                         self.this_like = i
+            comment_number = self.post.get_comment_number().get('comment_number')
+            self.numberComment.setText(str(comment_number))
+            like_number = self.post.get_like_number().get('like_number')
+            likes = Like.get_post_likes(self.post.id).get("likes")
+            self.Number_of_like.setText(str(like_number))
+            if likes:
+                for i in likes:
+                    if i.user_id == self.data.get('user').id:
+                        self.LikeButton.click()
+                        self.is_like = True
+                        self.this_like = i
 
-         # if
+        # if
 
     def like(self):
         user_id = self.data.get("user").id

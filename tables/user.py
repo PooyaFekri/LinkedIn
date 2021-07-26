@@ -77,17 +77,39 @@ class User(Table):
 
     def people_user_may_know(self):
         try:
-            connections = Connection.find_user_connections(self.id)
-            users = []
-            for connection in connections:
-                connect_user_id = self.id if connection.user_caller_id != self.id else connection.user_caller_id
-                user2_connections = Connection.find_user_connections(connect_user_id)
+            # connections = Connection.find_user_connections(self.id).get('connections')
+            # users = []
+            # for connection in connections:
+            #     connect_user_id = connection.user_caller_id if connection.user_caller_id != self.id else connection.user_invited_id
+            #     user2_connections = Connection.find_user_connections(connect_user_id).get('connections')
+            #
+            #     for user2_connection in user2_connections:
+            #         connect_user2_id = user2_connection.user_caller_id if user2_connection.user_caller_id != connect_user_id else user2_connection.user_invited_id
+            #         if self.id != connect_user2_id and not Connection.get_connect_with_users_id(self.id,
+            #                                                                                     connect_user2_id).get(
+            #             'connection'):
+            #             user = self.find_via_pk(connect_user2_id).get('user')
+            #             users.append(user)
+            query1 = f'SELECT * FROM Connection WHERE Connection.user_caller_id = ?'
+            query2 = f'SELECT Connection.* FROM Connection JOIN ({query1}) as C ON Connection.user_invited_id = C.user_invited_id and Connection.user_caller_id != ?'
+            query3 = f'SELECT * FROM ({query2}) WHERE ({query2}) NOT IN ({query1})'
+            query4 = f'SELECT * FROM Connection WHERE Connection.user_caller_id = ?'
+            query5 = f'SELECT Connection.* FROM Connection JOIN ({query4}) as C ON Connection.user_caller_id = C.user_invited_id and Connection.user_caller_id != ?'
+            query6 = f'SELECT * FROM ({query5}) WHERE ({query5}) NOT IN ({query4})'
+            query7 = f'SELECT * FROM Connection WHERE Connection.user_invited_id = ?'
+            query8 = f'SELECT Connection.* FROM Connection JOIN ({query7}) as C ON Connection.user_caller_id = C.user_caller_id and Connection.user_invited_id != ?'
+            query9 = f'SELECT * FROM ({query8}) WHERE ({query8}) NOT IN ({query8})'
+            query10 = f'SELECT * FROM Connection WHERE Connection.user_invited_id = ?'
+            query11 = f'SELECT Connection.* FROM Connection JOIN ({query10}) as C ON Connection.user_invited_id = C.user_caller_id and Connection.user_invited_id != ?'
+            query12 = f'SELECT * FROM ({query11}) WHERE ({query11}) NOT IN ({query10})'
+            query13 = f'SELECT user.* FROM user JOIN ({query3}) ON user.id = user_caller_id'
+            query14 = f'SELECT user.* FROM user JOIN ({query6}) ON user.id = user_invited_id'
+            query15 = f'SELECT user.* FROM user JOIN ({query9}) ON user.id = user_caller_id'
+            query16 = f'SELECT user.* FROM user JOIN ({query12}) ON user.id = user_invited_id'
 
-                for user2_connection in user2_connections:
-                    connect_user2_id = connect_user_id if user2_connection.user_caller_id != connect_user_id.id else user2_connection.user_caller_id
-                    if not Connection.is_connected(self.id, connect_user2_id).get('is_connected'):
-                        user = self.find_via_pk(connect_user2_id).get('user')
-                        users.append(user)
+            user_id = [self.id] * 21
+            final_query = f'{query13} UNION {query14} UNION {query15} UNION {query16}'
+            users = [User(user) for user in exe_query(final_query, *user_id)]
             return {'status': True, 'users': users}
         except Exception as e:
             return {'status': False, 'error': e}
@@ -137,3 +159,5 @@ class User(Table):
             return {'status': True}
         except Exception as e:
             return {'status': False, 'error': e}
+
+

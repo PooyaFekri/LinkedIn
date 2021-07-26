@@ -1,5 +1,6 @@
 from typing import Union
 
+from app import exe_query
 from .table import Table
 
 
@@ -78,6 +79,21 @@ class Post(Table):
         try:
             posts = super().find(_filter)
             return {'status': True, 'posts': posts}
+        except Exception as e:
+            return {'status': False, 'error': e}
 
+    def get_like_number(self):
+        query = f'SELECT COUNT(id) FROM Like WHERE Like.post_id = ?'
+        try:
+            like_number = exe_query(query, self.id)[-1][-1]
+            return {'status': True, 'like_number': like_number}
+        except Exception as e:
+            return {'status': False, 'error': e}
+
+    def get_comment_number(self):
+        query = f'SELECT COUNT(id) FROM Comment WHERE Comment.post_id = ?'
+        try:
+            like_number = exe_query(query, self.id)[-1][-1]
+            return {'status': True, 'comment_number': like_number}
         except Exception as e:
             return {'status': False, 'error': e}
